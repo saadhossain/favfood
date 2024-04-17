@@ -17,13 +17,13 @@ const HeaderNavigation = () => {
   return (
     <div className='w-full bg-lt_gray'>
       <div className='w-10/12 mx-auto flex justify-between items-center'>
-        <Image src={FavFood} alt='Favfood' width={60} height={60} />
+        <Link href='/'><Image src={FavFood} alt='Favfood' width={60} height={60} /></Link>
         <ul className='flex gap-5 items-center relative'>
           <li><Link href='/' className={`${navStyle} ${activePath === '/' ? 'text-secondary':'text-black'}`}><FaHome />Home</Link></li>
           <li><Link href='/menus' className={`${navStyle} ${activePath === '/menus' ? 'text-secondary':'text-black'}`}><BiSolidDish />Menus</Link></li>
           <li><Link href='/restaurants' className={`${navStyle} ${activePath === '/restaurants' ? 'text-secondary':'text-black'}`}><IoFastFood />Restaurants</Link></li>
           <li><Link href='/favourite' className={`${navStyle} ${activePath === '/favourite' ? 'text-secondary':'text-black'}`}><FaHeart />Favourite</Link></li>
-          <FaSearch onClick={()=> setHideSearch(false)} className={`${!hideSearch && 'hidden'} text-black`}/>
+          <FaSearch onClick={()=> setHideSearch(false)} className={`${!hideSearch && 'hidden'} text-black hover:text-secondary cursor-pointer h-6 w-6`}/>
           <HeaderSearch hideSearch={hideSearch} setHideSearch={setHideSearch}/>
         </ul>
       </div>
