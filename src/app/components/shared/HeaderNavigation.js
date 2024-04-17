@@ -7,7 +7,7 @@ import { IoFastFood } from "react-icons/io5";
 import FavFood from '/public/favfood-for-web.png';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import HeaderSearch from './HeaderSearch';
+import HeaderSearch from '@/app/components/ui/HeaderSearch';
 const HeaderNavigation = () => {
   const activePath = usePathname();
   const navStyle = `flex items-center gap-1 hover:text-secondary duration-300 ease-in-out}`;
@@ -23,7 +23,7 @@ const HeaderNavigation = () => {
           <li><Link href='/menus' className={`${navStyle} ${activePath === '/menus' ? 'text-secondary':'text-black'}`}><BiSolidDish />Menus</Link></li>
           <li><Link href='/restaurants' className={`${navStyle} ${activePath === '/restaurants' ? 'text-secondary':'text-black'}`}><IoFastFood />Restaurants</Link></li>
           <li><Link href='/favourite' className={`${navStyle} ${activePath === '/favourite' ? 'text-secondary':'text-black'}`}><FaHeart />Favourite</Link></li>
-          <FaSearch onClick={()=> setHideSearch(false)} className={`${!hideSearch && 'hidden'}`}/>
+          <FaSearch onClick={()=> setHideSearch(false)} className={`${!hideSearch && 'hidden'} text-black`}/>
           <HeaderSearch hideSearch={hideSearch} setHideSearch={setHideSearch}/>
         </ul>
       </div>
