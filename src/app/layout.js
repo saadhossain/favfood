@@ -1,6 +1,7 @@
 import { Fira_Code } from "next/font/google";
 import Footer from './components/shared/Footer';
 import HeaderNavigation from './components/shared/HeaderNavigation';
+import DataProvider from './context/DataContext';
 import "./globals.css";
 
 const inter = Fira_Code({
@@ -18,11 +19,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.variable} fira_code`}>
-        <HeaderNavigation />
-        <div className='min-h-[70vh]'>
-          {children}
-        </div>
-        <Footer />
+        <DataProvider>
+          <HeaderNavigation />
+          <div className='min-h-[70vh]'>
+            {children}
+          </div>
+          <Footer />
+        </DataProvider>
       </body>
     </html>
   );
