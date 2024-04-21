@@ -7,7 +7,7 @@ const HeaderSearch = ({ hideSearch, setHideSearch }) => {
 
     };
     return (
-        <div className={`w-full absolute duration-300 ease-in-out ${hideSearch && 'hidden'} ${!hideSearch ? '-top-3 right-0' : 'top-[-99px]'}`}>
+        <div className={`w-full absolute duration-300 ease-in-out ${hideSearch && 'hidden'} ${!hideSearch ? '-top-1 right-0' : 'top-[-99px]'}`}>
             <form
                 onSubmit={handleSearch}
                 className='bg-lt_gray shadow-lg p-2 flex gap-3 items-center w-full h-12 border-2 border-primary rounded-md'
