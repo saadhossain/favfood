@@ -1,7 +1,40 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { uploadImgToImgbb } from '../utils/uploadImgToImgbb';
 import LoginBg from '/public/login-bg.jpg';
 const RegisterPage = () => {
+
+    const handleUserRegistration = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const fullName = form.fullname.value;
+        const password = form.password.value;
+
+        //Handle profile image and upload to Imgbb
+        const profileImage = form.profileImage.files[0];
+        const formData = new FormData();
+        formData.append('image', profileImage);
+        const profileImg = await uploadImgToImgbb(formData);
+
+
+        //Save user data to database
+        const res = await fetch(`/api/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email,
+                fullName,
+                password,
+                profileImg
+            })
+        })
+        // const data = await res.json();
+        // console.log(data);
+    };
     return (
         <div className='w-10/12 mx-auto my-10 flex justify-center'>
             <Image src={LoginBg} alt='Login BG' className='rounded-l-md' />
@@ -9,7 +42,7 @@ const RegisterPage = () => {
                 <div className="mb-8 text-center">
                     <h1 className="my-3 text-4xl font-bold">Register</h1>
                 </div>
-                <form className="space-y-12">
+                <form onSubmit={(e) => handleUserRegistration(e)} className="space-y-12">
                     <div className="space-y-4">
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm">Email address</label>
@@ -23,10 +56,14 @@ const RegisterPage = () => {
                             <label htmlFor="password" className="text-sm">Password</label>
                             <input type="password" name="password" id="password" placeholder="***************" className="w-full px-3 py-2 rounded-md bg-[#FDF3F7] text-gray-900" />
                         </div>
+                        <div>
+                            <label htmlFor="profileImage" className="text-sm">Select Profile Image</label>
+                            <input type="file" name="profileImage" id="profileImage" className="w-full px-3 py-2 rounded-md bg-[#FDF3F7] text-gray-900" />
+                        </div>
                     </div>
                     <div className="space-y-2">
                         <div>
-                            <button type="button" className="w-full px-8 py-3 font-semibold rounded-md bg-primary text-white">Register</button>
+                            <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md bg-primary text-white">Register</button>
                         </div>
                         <p className="px-6 text-sm text-center text-gray-400">Already have an account?
                             <Link href="/login" className="hover:text-secondary">Login</Link>.
