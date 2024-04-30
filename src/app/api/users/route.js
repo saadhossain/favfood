@@ -9,3 +9,12 @@ export const GET = async()=>{
     // console.log(users);
     return NextResponse.json(users);
 }
+//route for saving users in database
+export const POST = async (request) => {
+    await mongoose.connect(mongoUrl);
+    const payload = await request.json();
+    // return;
+    const user = new userSchema(payload);
+    const result = await user.save();
+    return NextResponse.json({status:true, result});
+};
