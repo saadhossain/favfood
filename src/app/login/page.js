@@ -27,8 +27,8 @@ const LoginPage = () => {
                         <div>
                             <button type="button" className="w-full px-8 py-3 font-semibold rounded-md bg-primary text-white">Login</button>
                         </div>
-                        <p className="px-6 text-sm text-center text-gray-400">Don't have an account yet?
-                            <Link href="/register" className="hover:text-secondary">Register</Link>.
+                        <p className="px-6 text-sm text-center text-gray-400">New to this sit?
+                            <Link href="/register" className="text-primary hover:text-secondary ml-2 text-lg font-semibold">Register</Link>.
                         </p>
                     </div>
                 </form>

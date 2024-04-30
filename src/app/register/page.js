@@ -1,11 +1,16 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import Processing from '../components/spinner/Processing';
 import { uploadImgToImgbb } from '../utils/uploadImgToImgbb';
 import LoginBg from '/public/login-bg.jpg';
-const RegisterPage = () => {
 
+const RegisterPage = () => {
+    const [processing, setProcessing] = useState(false);
     const handleUserRegistration = async (e) => {
+        setProcessing(true);
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
@@ -31,9 +36,13 @@ const RegisterPage = () => {
                 password,
                 profileImg
             })
-        })
-        // const data = await res.json();
-        // console.log(data);
+        });
+        const data = await res.json();
+        if (data.status) {
+            form.reset();
+            setProcessing(false);
+            toast.success('User Registration Successful.');
+        }
     };
     return (
         <div className='w-10/12 mx-auto my-10 flex justify-center'>
@@ -63,10 +72,10 @@ const RegisterPage = () => {
                     </div>
                     <div className="space-y-2">
                         <div>
-                            <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md bg-primary text-white">Register</button>
+                            <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">{processing ? <Processing title={'Processing'}/> : 'Register'}</button>
                         </div>
                         <p className="px-6 text-sm text-center text-gray-400">Already have an account?
-                            <Link href="/login" className="hover:text-secondary">Login</Link>.
+                            <Link href="/login" className="text-primary hover:text-secondary ml-2 text-lg font-semibold">Login</Link>.
                         </p>
                     </div>
                 </form>

@@ -3,6 +3,7 @@ import Footer from './components/shared/Footer';
 import HeaderNavigation from './components/shared/HeaderNavigation';
 import DataProvider from './context/DataContext';
 import "./globals.css";
+import { Toaster } from 'react-hot-toast';
 
 const inter = Fira_Code({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
           </div>
           <Footer />
         </DataProvider>
+        <Toaster/>
       </body>
     </html>
   );
