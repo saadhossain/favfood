@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  color:#333333;
+}
+
 .fira_code {
   font-family: var(--font-fira_code);
 }

@@ -7,7 +7,7 @@ const DataProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     //
-    const [tabQuery, setTabQuery] = useState('nearby');
+    const [tabQuery, setTabQuery] = useState('all-food');
 
     const allData = { loading, setLoading, tabQuery, setTabQuery };
     return (
