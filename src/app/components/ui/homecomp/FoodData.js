@@ -1,16 +1,19 @@
-import FoodCard from '@/app/lib/models/FoodCard';
+import FoodCard from '@/app/components/ui/homecomp/FoodCard';
 import { fetchFoodData } from '@/app/utils/fetchFoodData';
-
-const DisplayFoods = async () => {
-    const foods = await fetchFoodData();
+import ProductLoader from '../../spinner/ProductLoader';
+const FoodData = ({ tabQuery, loading }) => {
+    const foods = fetchFoodData(tabQuery);
     // console.log(foods);
+    if (loading) {
+        return <ProductLoader/>;
+    }
     return (
         <div className='grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-5 my-5'>
             {
-                foods.map((food) => <FoodCard key={food._id} food={food} />)
+                foods && foods.map((food) => <FoodCard key={food._id} food={food} />)
             }
         </div>
     );
 };
 
-export default DisplayFoods;
+export default FoodData;

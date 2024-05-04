@@ -10,7 +10,8 @@ const foodsModel = new mongoose.Schema({
     category:String,
     reviewCount:Number,
     itemSold:Number,
-    discountPercentage:Number
+    discountPercentage:Number,
+    createdAt: { type: Date, default: Date.now },
 })
 
 export const foodSchema = mongoose.models.foods || mongoose.model('foods', foodsModel);
