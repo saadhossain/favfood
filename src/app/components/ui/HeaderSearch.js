@@ -1,20 +1,17 @@
-import { FaSearch, FaWindowClose } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 
-const HeaderSearch = ({ hideSearch, setHideSearch }) => {
+const HeaderSearch = () => {
     const handleSearch = (e) => {
         e.preventDefault();
-        setHideSearch(!hideSearch);
-
     };
     return (
-        <div className={`w-full absolute duration-300 ease-in-out ${hideSearch && 'hidden'} ${!hideSearch ? '-top-1 right-0' : 'top-[-99px]'}`}>
+        <div className='w-2/5 hidden md:block'>
             <form
                 onSubmit={handleSearch}
-                className='bg-lt_gray shadow-lg p-2 flex gap-3 items-center w-full h-12 border-2 border-primary rounded-md'
+                className='border-2 border-gray-200 px-4 flex gap-3 items-center w-full h-10 rounded-3xl'
             >
-                <button type='submit'><FaSearch className='text-[#9CA3BE] h-6 w-6' /></button>
-                <input type="text" name="searchtext" className='bg-transparent focus:outline-none w-full' placeholder='What would you like to eat?' />
-                <FaWindowClose onClick={() => setHideSearch(!hideSearch)} className='text-[#9CA3BE] h-6 w-6' />
+                <input type="text" name="searchtext" className='bg-transparent focus:outline-none w-full text-gray-500' placeholder='What would you like to eat?' />
+                <button type='submit'><FaSearch className='text-gray-400 h-6 w-6' /></button>
             </form>
         </div>
     );
