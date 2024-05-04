@@ -23,7 +23,7 @@ const HorizontalTab = () => {
             <FoodData tabQuery={tabQuery} loading={loading} />
 
             {/* Arrow Buttons */}
-            <div className='w-full flex justify-between absolute top-0 -z-50 text-primary'>
+            <div className='w-full flex justify-between absolute top-0 -z-50 text-primary md:hidden'>
                 <IoIosArrowBack className='-ml-5 h-6 w-6'/>
                 <IoIosArrowForward className='-mr-5 h-6 w-6'/>
             </div>

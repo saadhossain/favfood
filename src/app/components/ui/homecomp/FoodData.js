@@ -5,7 +5,7 @@ const FoodData = ({ tabQuery, loading }) => {
     const foods = fetchFoodData(tabQuery);
     // console.log(foods);
     if (loading) {
-        return <ProductLoader/>;
+        return <ProductLoader />;
     }
     return (
         <div className='grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 my-5'>
