@@ -12,7 +12,7 @@ const HeaderNavigation = () => {
 
   return (
     <div className='w-full bg-gray-100'>
-      <div className='w-10/12 mx-auto flex justify-between items-center'>
+      <div className='w-11/12 md:w-10/12 mx-auto flex justify-between items-center'>
         <Link href='/'><Image src={FavFood} alt='Favfood' width={60} height={60} /></Link>
         <HeaderSearch />
         {/* buttons and login register */}

@@ -5,7 +5,7 @@ import Link from 'next/link';
 const Footer = () => {
     return (
         <div className='w-full bg-gray-100 py-5'>
-            <div className='w-10/12 mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 justify-between'>
+            <div className='w-11/12 md:w-10/12 mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 justify-between'>
                 <Image src={FavFood} alt='FavFood' width={150} height={150} className='hidden md:block'/>
                 <div>
                     <h4 className='text-lg font-semibold text-primary border-l-4 border-primary pl-2 mb-5'>Quick Links</h4>

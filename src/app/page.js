@@ -5,7 +5,7 @@ import HeroBanner from '/public/hero-banner.jpg';
 
 const HomePage = () => {
   return (
-    <div className='w-10/12 mx-auto my-10'>
+    <div className='w-11/12 md:w-10/12 mx-auto my-2 md:my-10'>
       <Image src={HeroBanner} alt='Hero Banner' width={1180} className='rounded-md' />
       <HorizontalTab />
       {/* <ProductLoader /> */}
