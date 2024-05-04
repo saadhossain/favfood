@@ -15,7 +15,7 @@ const HeaderNavigation = () => {
   //Header Search bar functionality
   const [hideSearch, setHideSearch] = useState(true);
   return (
-    <div className='w-full bg-lt_gray'>
+    <div className='w-full bg-lt_gray hidden md:block'>
       <div className='w-10/12 mx-auto flex justify-between items-center'>
         <Link href='/'><Image src={FavFood} alt='Favfood' width={60} height={60} /></Link>
         <div className='flex gap-5 items-center relative'>
