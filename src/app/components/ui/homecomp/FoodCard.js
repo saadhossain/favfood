@@ -1,3 +1,4 @@
+import { handleAddToCart } from '@/app/utils/handleAddToCart';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaCartShopping, FaShop, FaStar } from "react-icons/fa6";
@@ -23,9 +24,13 @@ const FoodCard = ({ food }) => {
                 <div className='w-full flex items-end absolute bottom-2 md:bottom-3'>
                     <h5 className='font-semibold text-primary'>${food.price}</h5>
                     {/* Cart button for pc */}
-                    <Link href='/' className='hidden md:flex gap-1 items-center justify-center py-2 px-5 rounded-md bg-primary text-white hover:bg-secondary duration-200 ease-in-out absolute right-7'><FaCartShopping />Order</Link>
+                    <button
+                        onClick={() => handleAddToCart(food._id)}
+                        className='hidden md:flex gap-1 items-center justify-center py-2 px-5 rounded-md bg-primary text-white hover:bg-secondary duration-200 ease-in-out absolute right-7'><FaCartShopping />Order</button>
                     {/* Cart button for mobile */}
-                    <Link href='/' className='md:hidden absolute right-7'><FaCartShopping className='text-primary hover:text-secondary duration-200 ease-in-out '/></Link>
+                    <button
+                        onClick={() => handleAddToCart(food._id)}
+                        className='md:hidden absolute right-7'><FaCartShopping className='text-primary hover:text-secondary duration-200 ease-in-out ' /></button>
                 </div>
             </div>
         </div>

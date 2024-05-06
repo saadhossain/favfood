@@ -10,6 +10,8 @@ const HeaderNavigation = () => {
   const activePath = usePathname();
   const navStyle = `hover:text-secondary duration-300 ease-in-out}`;
 
+  const cartCount = JSON.parse(localStorage.getItem('favFoodCart'));
+
   return (
     <div className='w-full bg-gray-100'>
       <div className='w-11/12 md:w-10/12 mx-auto flex justify-between items-center'>
@@ -18,8 +20,8 @@ const HeaderNavigation = () => {
         {/* buttons and login register */}
         <div className='flex items-center gap-2'>
           <Link href='/favourite' className={`${navStyle} ${activePath === '/favourite' ? 'text-secondary' : 'text-gray-700'}`}><FaHeart className='w-6 h-6' /></Link>
-          <Link href='/cart' className={`${navStyle} ${activePath === '/cart' ? 'text-secondary' : 'text-gray-700'}`}><FaCartShopping className='w-6 h-6' /></Link>
-          <div className='flex gap-2'>
+          <Link href='/cart' className={`${navStyle} ${activePath === '/cart' ? 'text-secondary' : 'text-gray-700'}`}><FaCartShopping className='w-6 h-6 relative' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${!cartCount && 'hidden'}`}>{cartCount && cartCount.length}</span></Link>
+          <div className='flex gap-2 ml-3'>
             <Link href='/login' className='bg-primary text-white py-2 px-8 rounded-3xl hover:bg-secondary duration-200 ease-in'>Login</Link>
           </div>
         </div>

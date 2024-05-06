@@ -10,7 +10,6 @@ export const fetchFoodData = (tabQuery) => {
             setLoading(true);
             const res = await fetch(`http://localhost:3000/api/foods?tabQuery=${tabQuery}`, { next: { revalidate: 30 } });
             const { result } = await res.json();
-            console.log(result);
             setFoods(result);
             setLoading(false);
         };
