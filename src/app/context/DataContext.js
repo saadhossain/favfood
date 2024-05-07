@@ -16,9 +16,11 @@ const DataProvider = ({ children }) => {
         if (cartCount) {
             setCartQuantity(cartCount.length);
         }
-    },[])
+    },[]);
+    //Set the product to the state from localStorage
+    const [productsInLocalStorage, setProductsInLocalStorage] = useState();
 
-    const allData = { loading, setLoading, tabQuery, setTabQuery, cartQuantity, setCartQuantity };
+    const allData = { loading, setLoading, tabQuery, setTabQuery, cartQuantity, setCartQuantity, productsInLocalStorage, setProductsInLocalStorage };
     return (
         <div>
             <DataContext.Provider value={allData}>

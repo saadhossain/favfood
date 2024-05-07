@@ -89,7 +89,7 @@ const ProductsTable = ({ productsInCart, setProductsInLocalStorage }) => {
                                                 </div>
                                             </td>
                                             <td className="p-3">
-                                                <p>$ {(cartProduct?.product?.price * cartProduct?.quantity)}</p>
+                                                <p>$ {((cartProduct?.product?.price * cartProduct?.quantity).toFixed(2))}</p>
                                             </td>
                                         </tr>)
                                     }
