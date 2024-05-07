@@ -25,7 +25,6 @@ const FoodCard = ({ food }) => {
         // Save the updated cart back to local storage
         localStorage.setItem('favFoodCart', JSON.stringify(productsInCart));
         setCartQuantity(productsInCart.length);
-        console.log(productsInCart.length)
     };
     return (
         <div className='bg-gray-100 border-gray-100 rounded-md h-56 md:h-[350px] relative'>

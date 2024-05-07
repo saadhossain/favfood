@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 export const DataContext = createContext();
 const DataProvider = ({ children }) => {
@@ -10,6 +10,13 @@ const DataProvider = ({ children }) => {
 
     //Set Cart Quantity from localStorage
     const [cartQuantity, setCartQuantity] = useState(0);
+    //Get the initial cart quantity from the localStorage
+    useEffect(()=>{
+        const cartCount = JSON.parse(localStorage.getItem('favFoodCart'));
+        if (cartCount) {
+            setCartQuantity(cartCount.length);
+        }
+    },[])
 
     const allData = { loading, setLoading, tabQuery, setTabQuery, cartQuantity, setCartQuantity };
     return (
