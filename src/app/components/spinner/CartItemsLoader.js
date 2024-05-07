@@ -1,5 +1,5 @@
 
-const CartItemLading = () => {
+const CartItemsLoader = () => {
     return (
         <div className='mx-5'>
             {Array.from({ length: 6 }).map((_, index) => (
@@ -26,4 +26,4 @@ const CartItemLading = () => {
     );
 };
 
-export default CartItemLading;
+export default CartItemsLoader;

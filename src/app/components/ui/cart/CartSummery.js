@@ -32,7 +32,7 @@ const CartSummery = ({totalPrice}) => {
             </div>
             {/* Tax Amount */}
             <div className='flex items-center justify-between'>
-                <p>TAX</p>
+                <p>TAX (5%)</p>
                 <p className='font-semibold'>${taxAmount.toFixed(2)}</p>
             </div>
             <hr className='border-t-2 border-gray-500'/>
