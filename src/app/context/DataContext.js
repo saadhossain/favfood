@@ -8,7 +8,10 @@ const DataProvider = ({ children }) => {
 
     const [tabQuery, setTabQuery] = useState('all-food');
 
-    const allData = { loading, setLoading, tabQuery, setTabQuery };
+    //Set Cart Quantity from localStorage
+    const [cartQuantity, setCartQuantity] = useState(0);
+
+    const allData = { loading, setLoading, tabQuery, setTabQuery, cartQuantity, setCartQuantity };
     return (
         <div>
             <DataContext.Provider value={allData}>

@@ -1,4 +1,4 @@
-export const handleAddToCart = (foodId) => {
+const handleAddToCart = (foodId) => {
     // Retrieve existing cart items from local storage
     let productsInCart = JSON.parse(localStorage.getItem('favFoodCart')) || [];
 
