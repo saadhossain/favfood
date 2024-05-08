@@ -1,39 +1,24 @@
-'use client'
-import { DataContext } from '@/app/context/DataContext';
+'use client';
+import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext } from 'react';
 import { FaCartShopping, FaShop, FaStar } from "react-icons/fa6";
 import { MdSell } from "react-icons/md";
 
 const FoodCard = ({ food }) => {
-    const {setCartQuantity} = useContext(DataContext);
-    const handleAddToCart = (foodId) => {
-        // Retrieve existing cart items from local storage
-        let productsInCart = JSON.parse(localStorage.getItem('favFoodCart')) || [];
-
-        // Check if the product already exists in the cart
-        const existingItemIndex = productsInCart.findIndex(item => item.productId === foodId);
-
-        if (existingItemIndex !== -1) {
-            // If the product exists, increment its quantity by 1
-            productsInCart[existingItemIndex].quantity += 1;
-        } else {
-            // If the product doesn't exist, add it to the cart with quantity 1
-            productsInCart.push({ productId: foodId, quantity: 1 });
-        }
-        // Save the updated cart back to local storage
-        localStorage.setItem('favFoodCart', JSON.stringify(productsInCart));
-        setCartQuantity(productsInCart.length);
-    };
+    const handleAddToCart = useHandleAddToCart();
     return (
         <div className='bg-gray-100 border-gray-100 rounded-md h-56 md:h-[350px] relative'>
-            <Image src={food.image} alt={food.name} width={400} height={250} className='rounded-t-md relative h-28 md:h-44' />
+            <Link href={`/food/${food.restaurant_Name}/${food.slug}`}>
+                <Image src={food.image} alt={food.name} width={400} height={250} className='rounded-t-md relative h-28 md:h-44' />
+            </Link>
             <Link href='/' className='flex gap-1 items-center md:hidden absolute top-1 right-1 bg-gray-100 rounded-md px-2'><FaStar className='text-primary' />{food.reviewCount}</Link>
             <div className='flex flex-col justify-between p-2 md:p-4'>
                 {/* Food name and its Reviews */}
                 <div className='flex items-start justify-between'>
-                    <h3 className='w-full md:w-9/12 text-sm md:text-lg font-semibold'><Link href={`/food/${food.restaurant_Name}/${food.name}`}>{food.name}</Link></h3>
+                    <Link href={`/food/${food.restaurant_Name}/${food.slug}`}>
+                        <h3 className='w-full md:w-9/12 text-sm md:text-lg font-semibold'>{food.name}</h3>
+                    </Link>
                     <Link href='/' className='w-3/12 md:flex gap-1 items-center underline hover:text-primary hidden'><FaStar className='text-primary' />{food.reviewCount}</Link>
                 </div>
                 {/* Restaurant Name and Item Sold */}

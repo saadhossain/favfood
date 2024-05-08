@@ -8,7 +8,7 @@ export const fetchFoodData = (tabQuery) => {
     useEffect(() => {
         const getFoodData = async () => {
             setLoading(true);
-            const res = await fetch(`/api/foods?tabQuery=${tabQuery}`, { next: { revalidate: 30 } });
+            const res = await fetch(`/api/foods?tabQuery=${tabQuery}`, { cache: 'no-store' });
             const { result } = await res.json();
             setFoods(result);
             setLoading(false);
