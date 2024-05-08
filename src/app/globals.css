@@ -9,28 +9,7 @@ body{
 .fira_code {
   font-family: var(--font-fira_code);
 }
-.horizontal-tab{
-  display: flex!important;
-  align-items: center !important;
-  justify-content: center;
-  gap: 5px;
-  text-align: center;
-}
 
-.slick-prev:before{
-  content: url('../../public/left-arrow.png');
-  margin-left:10px;
-}
-.slick-next:before{
-  content: url('../../public/right-arrow.png');
-  margin-left:-10px;
-}
 .slick-prev:before, .slick-next:before{
   display: none !important;
-}
-
-@media only screen and (max-width: 600px) {
-  .slick-prev:before, .slick-next:before{
-    display: block !important;
-  }
 }
