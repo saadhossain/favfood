@@ -51,13 +51,6 @@ const HorizontalTab = () => {
                 <div className={`${tabStyle} ${tabQuery === 'newcomers' ? 'text-secondary border-secondary' : 'text-black border-gray-100'}`} onClick={() => setTabQuery('newcomers')}><MdFiberNew className='w-5 h-5' />Newcomers</div>
                 <div className={`${tabStyle} ${tabQuery === 'best-seller' ? 'text-secondary border-secondary' : 'text-black border-gray-100'}`} onClick={() => setTabQuery('best-seller')}><FaAward className='w-5 h-5' />Best Seller</div>
                 <div className={`${tabStyle} ${tabQuery === 'top-rated' ? 'text-secondary border-secondary' : 'text-black border-gray-100'}`} onClick={() => setTabQuery('top-rated')}><FaStar className='w-5 h-5' />Top Rated</div>
-                {/* <ul className='flex gap-2 items-center justify-between overflow-x-auto'>
-                    <li className={`${tabStyle} ${tabQuery === 'all-food' ? 'text-secondary border-secondary' : 'text-black border-gray-100'}`} onClick={() => setTabQuery('all-food')}><BiSolidDish className='w-5 h-5' />All Food</li>
-                    <li className={`${tabStyle} ${tabQuery === 'promotions' ? 'text-secondary border-secondary' : 'text-black border-gray-100'}`} onClick={() => setTabQuery('promotions')}><BiSolidOffer className='w-5 h-5' />Promotions</li>
-                    <li className={`${tabStyle} ${tabQuery === 'newcomers' ? 'text-secondary border-secondary' : 'text-black border-gray-100'}`} onClick={() => setTabQuery('newcomers')}><MdFiberNew className='w-5 h-5' />Newcomers</li>
-                    <li className={`${tabStyle} ${tabQuery === 'best-seller' ? 'text-secondary border-secondary' : 'text-black border-gray-100'}`} onClick={() => setTabQuery('best-seller')}><FaAward className='w-5 h-5' />Best Sellers</li>
-                    <li className={`${tabStyle} ${tabQuery === 'top-rated' ? 'text-secondary border-secondary' : 'text-black border-gray-100'}`} onClick={() => setTabQuery('top-rated')}><FaStar className='w-5 h-5' />Top Rated</li>
-                </ul> */}
             </Slider>
             <hr className='border-b-4 border-gray-100 -mt-1' />
             <FoodData tabQuery={tabQuery} loading={loading} />

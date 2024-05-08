@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const foodsModel = new mongoose.Schema({
     name:String,
+    slug:String,
     description:String,
     price:Number,
     restaurant_Name:String,

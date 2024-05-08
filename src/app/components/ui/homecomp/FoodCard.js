@@ -33,7 +33,7 @@ const FoodCard = ({ food }) => {
             <div className='flex flex-col justify-between p-2 md:p-4'>
                 {/* Food name and its Reviews */}
                 <div className='flex items-start justify-between'>
-                    <h3 className='w-full md:w-9/12 text-sm md:text-lg font-semibold'>{food.name}</h3>
+                    <h3 className='w-full md:w-9/12 text-sm md:text-lg font-semibold'><Link href={`/food/${food.restaurant_Name}/${food.name}`}>{food.name}</Link></h3>
                     <Link href='/' className='w-3/12 md:flex gap-1 items-center underline hover:text-primary hidden'><FaStar className='text-primary' />{food.reviewCount}</Link>
                 </div>
                 {/* Restaurant Name and Item Sold */}

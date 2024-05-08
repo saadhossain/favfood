@@ -32,7 +32,15 @@ export const GET = async (request) => {
 export const POST = async (request) => {
     await mongoose.connect(mongoUrl);
     const payload = await request.json();
-    const food = new foodSchema({...payload, createdAt: new Date()});
+    const slug = payload?.name.toLowerCase().replace(/[&/:]+|\s+/g, '-').replace(/--+/g, '-');
+    const food = new foodSchema({...payload, slug, createdAt: new Date()});
     const result = await food.save();
     return NextResponse.json({ status: true, result });
 };
+
+export const DELETE = async()=>{
+    await mongoose.connect(mongoUrl);
+    return;
+    const result = await foodSchema.deleteMany();
+    return NextResponse.json({ status: true, result });
+}
