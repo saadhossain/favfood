@@ -1,7 +1,15 @@
+'use client'
 import { FaMapMarkerAlt } from 'react-icons/fa';
+import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import OrderDetails from '../components/ui/checkout/OrderDetails';
+import { getProductsFromLocalStorage } from '../utils/getProductsFromLocalStorage';
+import { getTotalPrice } from '../utils/getTotalPrice';
 
 const CheckoutPage = () => {
+    // Get products from localstorage and set them to setProductsInLocalStorage state
+    getProductsFromLocalStorage();
+    //Calculate total price of all product in the cart
+    const totalPrice = getTotalPrice();
     return (
         <div className='w-10/12 mx-auto my-10 flex gap-10 justify-between'>
             <div className='w-8/12'>
@@ -36,7 +44,11 @@ const CheckoutPage = () => {
                 </div>
             </div>
             {/* Order Details */}
-            <OrderDetails/>
+            <div className='w-4/12 bg-gray-100 p-4'>
+                {
+                    !totalPrice ? <CartSummeryLoader /> : < OrderDetails totalPrice={totalPrice} />
+                }
+            </div>
         </div>
     );
 };

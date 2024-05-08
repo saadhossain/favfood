@@ -1,4 +1,3 @@
-'use client';
 import Link from 'next/link';
 import { FaCheck } from "react-icons/fa";
 const CartSummery = ({totalPrice}) => {
@@ -10,7 +9,7 @@ const CartSummery = ({totalPrice}) => {
     const taxAmount = (totalPrice * 5/100);
     const grandTotal = totalPrice + taxAmount;
     return (
-        <div className='flex flex-col gap-4 p-4 bg-gray-200 sticky top-10'>
+        <div className='flex flex-col gap-4 p-4 bg-gray-100 sticky top-10'>
             {/* Discount Code */}
             <form onSubmit={handlePromoCode}>
                 <label htmlFor="discountCode">Promo Code</label>
@@ -32,7 +31,7 @@ const CartSummery = ({totalPrice}) => {
             </div>
             {/* Tax Amount */}
             <div className='flex items-center justify-between'>
-                <p>TAX (5%)</p>
+                <p>VAT & GST (5%)</p>
                 <p className='font-semibold'>${taxAmount.toFixed(2)}</p>
             </div>
             <hr className='border-t-2 border-gray-500'/>

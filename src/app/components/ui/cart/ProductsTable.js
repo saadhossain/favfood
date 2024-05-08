@@ -54,7 +54,7 @@ const ProductsTable = ({ productsInCart, setProductsInLocalStorage }) => {
                                     <col />
                                     <col className="w-24" />
                                 </colgroup>
-                                <thead className="bg-gray-400">
+                                <thead className="bg-gray-300">
                                     <tr className="text-center">
                                         {/* Product Remove Button */}
                                         <th className="p-3"></th>

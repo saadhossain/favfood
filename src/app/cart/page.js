@@ -1,30 +1,23 @@
 'use client';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import CartItemsLoader from '../components/spinner/CartItemsLoader';
 import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import CartSummery from '../components/ui/cart/CartSummery';
 import ProductsTable from '../components/ui/cart/ProductsTable';
 import { DataContext } from '../context/DataContext';
+import { getProductsFromLocalStorage } from '../utils/getProductsFromLocalStorage';
 import { getProductsInCart } from '../utils/getProductsInCart';
 import { getTotalPrice } from '../utils/getTotalPrice';
 
 const CartPage = () => {
-    const { loading, setLoading, setProductsInLocalStorage } = useContext(DataContext);
+    const { loading, setProductsInLocalStorage } = useContext(DataContext);
+    // Get products from localstorage and set them to setProductsInLocalStorage state
+    getProductsFromLocalStorage();
 
-    useEffect(() => {
-        setLoading(true);
-        const cart = JSON.parse(localStorage.getItem('favFoodCart'));
-        if (cart) {
-            setProductsInLocalStorage(cart);
-        }
-        setLoading(false);
-    }, []);
-
-    //Get the matched products in the localStorage
+    //Get all products in the cart
     const productsInCart = getProductsInCart();
+    //Calculate total price of all product in the cart
     const totalPrice = getTotalPrice();
-
-    // console.log(totalPrice);
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-10 flex gap-10 justify-between'>
             {/* Product Details */}

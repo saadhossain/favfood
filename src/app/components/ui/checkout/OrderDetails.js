@@ -1,55 +1,30 @@
 import Image from 'next/image';
+import cod from '/public/cod.png';
 import paypal from '/public/credit-card-paypal.png';
-import cod from '/public/cod.png'
 
-const OrderDetails = () => {
+const OrderDetails = ({ totalPrice }) => {
+    //Calculate total price of all product in the cart
+    // const totalPrice = getTotalPrice();
+    //Calculate Tax Amount and Grant total Amount
+    const taxAmount = (totalPrice * 5 / 100);
+    const grandTotal = totalPrice + taxAmount;
     return (
-        <div className='w-4/12 bg-gray-100 p-4 rounded-md'>
-            <div className='flex items-center justify-between font-semibold'>
-                <h5 className='text-lg'>Cart</h5>
-                <p>3 items</p>
-            </div>
-            {/* Product and Price Details */}
-            <div className='my-5'>
-                <h3 className='flex items-center gap-2 text-lg font-semibold border-l-4 border-primary pl-2 text-primary my-3'>Order Details</h3>
-                {/* Single Product Details */}
-                <div className='flex items-center justify-between mb-2'>
-                    <p>
-                        Chicken Pizza (12")
-                        <span className='ml-2 font-semibold text-gray-800'>x2</span>
-                    </p>
-                    <p className='font-semibold'>$150.00</p>
-                </div>
-                {/* Single Product Details */}
-                <div className='flex items-center justify-between mb-2'>
-                    <p>
-                        Chicken Chowmin (3/4)
-                        <span className='ml-2 font-semibold text-gray-800'>x1</span>
-                    </p>
-                    <p className='font-semibold'>$115.00</p>
-                </div>
-                {/* Single Product Details */}
-                <div className='flex items-center justify-between mb-2'>
-                    <p>
-                        Hot Spicy Burger
-                        <span className='ml-2 font-semibold text-gray-800'>x1</span>
-                    </p>
-                    <p className='font-semibold'>$59.00</p>
-                </div>
-            </div>
+        <div>
             {/* Price Calculation */}
-            <h3 className='flex items-center gap-2 text-lg font-semibold border-l-4 border-primary pl-2 text-primary my-3'>Amount to Pay</h3>
-            <div className='flex items-center justify-between font-semibold'>
-                <p>Subtotal</p>
-                <p>$324.00</p>
-            </div>
-            <div className='flex items-center justify-between font-semibold'>
-                <p>VAT & GST</p>
-                <p>$14.58</p>
-            </div>
-            <div className='flex items-center justify-between font-semibold border-t-2 border-gray-500 pt-1 mt-2'>
-                <p>Total</p>
-                <p>$338.58</p>
+            <h3 className='flex items-center gap-2 text-lg font-semibold border-l-4 border-primary pl-2 text-primary my-3'>Order Details</h3>
+            <div className='flex flex-col gap-4'>
+                <div className='flex items-center justify-between'>
+                    <p>Subtotal</p>
+                    <p className='font-semibold'>${totalPrice?.toFixed(2)}</p>
+                </div>
+                <div className='flex items-center justify-between'>
+                    <p>VAT & GST (5%)</p>
+                    <p className='font-semibold'>${taxAmount.toFixed(2)}</p>
+                </div>
+                <div className='flex items-center justify-between border-t-2 border-gray-500 pt-1 mt-2'>
+                    <p>Grand Total</p>
+                    <p className='font-semibold'>${grandTotal.toFixed(2)}</p>
+                </div>
             </div>
             {/* Payment Methods */}
             <h3 className='flex items-center gap-2 text-lg font-semibold border-l-4 border-primary pl-2 text-primary my-3'>Payment Method</h3>
