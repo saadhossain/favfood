@@ -1,17 +1,24 @@
 'use client';
+import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
+import { DataContext } from '@/app/context/DataContext';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import { fetchSingleFoodData } from '@/app/utils/fetchSingleFoodData';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useContext } from 'react';
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
 import { FaCartShopping, FaShop, FaStar } from "react-icons/fa6";
 
 const FoodSinglePage = ({ params }) => {
+  const { loading } = useContext(DataContext);
   const singleFood = fetchSingleFoodData(params.restaurant, params.slug);
   // console.log(singleFood);
   const handleAddToCart = useHandleAddToCart();
+  if (loading) {
+    return <LoadingSpinner />;
+  }
   return (
-    <div className='w-11/12 md:w-10/12 mx-auto my-2 md:my-5 '>
+    <div className={`w-11/12 md:w-10/12 mx-auto my-2 md:my-5 ${!singleFood._id && 'hidden'}`}>
       {/* Product Image and Details */}
       <div className='flex gap-12 text-gray-800'>
         <Image src={singleFood.image} alt={singleFood.name} width={450} height={350} className='rounded-md' />
