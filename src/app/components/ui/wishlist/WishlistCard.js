@@ -38,11 +38,11 @@ const WishlistCard = ({ product }) => {
                 <Image src={product?.image} alt={product?.name} width={60} height={40} className='rounded-md' />
             </Link>
             <Link className='w-full md:w-6/12 ' href={`/food/${product?.restaurant_Name}/${product?.slug}`}>
-                <h4>{product.name}</h4>
+                <h4>{product?.name}</h4>
             </Link>
             {/* Price, Stock and Action Button */}
             <div className='w-full md:w-5/12 flex gap-2 items-center'>
-                <h5 className='w-3/4 md:w-2/12 font-semibold'>${product.price}</h5>
+                <h5 className='w-3/4 md:w-2/12 font-semibold'>${product?.price}</h5>
                 <div className='w-4/12 md:flex gap-1 items-center text-green-600 hidden'>
                     <FaCheckCircle />
                     In Stock
