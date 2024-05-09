@@ -3,6 +3,7 @@ import { DataContext } from '@/app/context/DataContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext } from 'react';
+import toast from 'react-hot-toast';
 
 const ProductsTable = ({ productsInCart, setProductsInLocalStorage }) => {
     const { setCartQuantity } = useContext(DataContext);
@@ -37,6 +38,7 @@ const ProductsTable = ({ productsInCart, setProductsInLocalStorage }) => {
         localStorage.setItem('favFoodCart', JSON.stringify(updatedProducts));
         setProductsInLocalStorage(updatedProducts);
         setCartQuantity(updatedProducts.length);
+        toast.error('Food removed from cart.')
     };
 
     return (

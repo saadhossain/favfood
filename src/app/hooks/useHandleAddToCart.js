@@ -1,6 +1,7 @@
 'use client';
 import { useContext } from 'react';
 import { DataContext } from '../context/DataContext';
+import toast from 'react-hot-toast';
 
 export const useHandleAddToCart = () => {
     const { setCartQuantity } = useContext(DataContext);
@@ -20,6 +21,7 @@ export const useHandleAddToCart = () => {
         // Save the updated cart back to local storage
         localStorage.setItem('favFoodCart', JSON.stringify(productsInCart));
         setCartQuantity(productsInCart.length);
+        toast.success('Food added to Cart.');
     };
     return handleAddToCart;
 };

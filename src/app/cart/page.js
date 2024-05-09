@@ -31,7 +31,7 @@ const CartPage = () => {
                 }
             </div>
             {/* Cart Calculation */}
-            <div className='w-full md:w-3/12'>
+            <div className={`w-full md:w-3/12 ${productsInCart?.length <= 0 && 'hidden'}`}>
                 <h3 className='text-lg mt-3 md:mt-0 md:text-xl font-semibold text-primary border-l-4 border-primary pl-2 mb-5'>Cart Summery</h3>
                 {
                     (loading || !productsInCart) ? <CartSummeryLoader /> : <CartSummery totalPrice={totalPrice} />
