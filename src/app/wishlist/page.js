@@ -5,6 +5,7 @@ import WishlistCard from '../components/ui/wishlist/WishlistCard';
 import { DataContext } from '../context/DataContext';
 import { getProductsFromLocalStorage } from '../utils/getProductsFromLocalStorage';
 import { getProductsInWishlist } from '../utils/getProductsInWishlist';
+import Link from 'next/link';
 
 const Wishlist = () => {
     const { loading, setWishlistInLocalStorage } = useContext(DataContext);
@@ -20,7 +21,7 @@ const Wishlist = () => {
                 {
                     (loading || !productsInWishlist) ? <WishlistItemsloader /> : <div className='rounded-md grid grid-cols-2 md:block gap-2 md:gap-0'>
                         {
-                            productsInWishlist?.map((product) => <WishlistCard key={product?._id} product={product} />)
+                            productsInWishlist.length <=0 ? <h1 className='text-lg font-semibold text-gray-800'>There is not Product in the Wishlist. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : productsInWishlist?.map((product) => <WishlistCard key={product?._id} product={product}/>)
                         }
                     </div>
                 }

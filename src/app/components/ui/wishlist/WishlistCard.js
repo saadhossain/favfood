@@ -2,6 +2,7 @@
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { FaCheckCircle } from "react-icons/fa";
@@ -33,8 +34,12 @@ const WishlistCard = ({ product }) => {
                 onClick={() => handleRemoveProductFromWishlist(product._id)}
                 className='text-red-600 font-semibold text-xl absolute top-3 left-3 bg-gray-100 py-1 px-3 rounded-full md:hidden'
             >X</button>
-            <Image src={product?.image} alt={product.name} width={60} height={40} className='w-full md:w-1/12 rounded-md' />
-            <h4 className='w-full md:w-6/12'>{product.name}</h4>
+            <Link className='w-full md:w-1/12' href={`/food/${product?.restaurant_Name}/${product?.slug}`}>
+                <Image src={product?.image} alt={product.name} width={60} height={40} className='rounded-md' />
+            </Link>
+            <Link className='w-full md:w-6/12 ' href={`/food/${product?.restaurant_Name}/${product?.slug}`}>
+                <h4 className='font-semibold'>{product.name}</h4>
+            </Link>
             {/* Price, Stock and Action Button */}
             <div className='w-full md:w-5/12 flex gap-2 items-center'>
                 <h5 className='w-3/4 md:w-2/12 font-semibold'>${product.price}</h5>
