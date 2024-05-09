@@ -1,17 +1,24 @@
 'use client';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
+import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FaHeart } from 'react-icons/fa';
 import { FaCartShopping, FaShop, FaStar } from "react-icons/fa6";
 import { MdSell } from "react-icons/md";
 
 const FoodCard = ({ food }) => {
     const handleAddToCart = useHandleAddToCart();
+    const handleAddToWishlist = useHandleAddToWishlist();
     return (
         <div className='bg-gray-100 border-gray-100 rounded-md h-56 md:h-[350px] relative'>
             <Link href={`/food/${food.restaurant_Name}/${food.slug}`}>
                 <Image src={food.image} alt={food.name} width={400} height={250} className='rounded-t-md relative h-28 md:h-44' />
             </Link>
+            {/* Wishlist Button */}
+            <FaHeart
+                onClick={() => handleAddToWishlist(food._id)}
+                className='w-5 h-5 text-primary absolute top-1 left-1 cursor-pointer hover:text-secondary' />
             <Link href='/' className='flex gap-1 items-center md:hidden absolute top-1 right-1 bg-gray-100 rounded-md px-2'><FaStar className='text-primary' />{food.reviewCount}</Link>
             <div className='flex flex-col justify-between p-2 md:p-4'>
                 {/* Food name and its Reviews */}
