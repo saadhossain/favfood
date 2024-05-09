@@ -38,7 +38,7 @@ const ProductsTable = ({ productsInCart, setProductsInLocalStorage }) => {
         localStorage.setItem('favFoodCart', JSON.stringify(updatedProducts));
         setProductsInLocalStorage(updatedProducts);
         setCartQuantity(updatedProducts.length);
-        toast.error('Food removed from cart.')
+        toast.error('Food removed from cart.');
     };
 
     return (
@@ -75,10 +75,13 @@ const ProductsTable = ({ productsInCart, setProductsInLocalStorage }) => {
                                                 <button onClick={() => handleRemoveProductFromCart(cartProduct?.product?._id)} className='text-red-600 font-bold'>X</button>
                                             </td>
                                             <td className="p-3">
-                                                <Image src={cartProduct?.product?.image} alt={cartProduct?.product?.name} width={60} height={40} className='rounded-md' />
+                                                <Link href={`/food/${cartProduct?.product?.restaurant_Name}/${cartProduct?.product?.slug}`}>
+                                                    <Image src={cartProduct?.product?.image} alt={cartProduct?.product?.name} width={60} height={40} className='rounded-md' />
+                                                </Link>
+
                                             </td>
                                             <td className="p-3 text-left">
-                                                <p>{cartProduct?.product?.name}</p>
+                                                <Link href={`/food/${cartProduct?.product?.restaurant_Name}/${cartProduct?.product?.slug}`}>{cartProduct?.product?.name}</Link>
                                             </td>
                                             <td className="p-3">
                                                 <p>$ {cartProduct?.product?.price}</p>

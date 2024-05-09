@@ -1,11 +1,10 @@
 'use client';
 import { useContext } from 'react';
+import WishlistItemsloader from '../components/spinner/WishlistItemsloader';
+import WishlistCard from '../components/ui/wishlist/WishlistCard';
 import { DataContext } from '../context/DataContext';
 import { getProductsFromLocalStorage } from '../utils/getProductsFromLocalStorage';
 import { getProductsInWishlist } from '../utils/getProductsInWishlist';
-import LoadingSpinner from '../components/spinner/LoadingSpinner';
-import WishlistCard from '../components/ui/wishlist/WishlistCard';
-import WishlistItemsloader from '../components/spinner/WishlistItemsloader';
 
 const Wishlist = () => {
     const { loading, setWishlistInLocalStorage } = useContext(DataContext);
@@ -19,9 +18,9 @@ const Wishlist = () => {
             <div className='w-full md:w-10/12'>
                 <h2 className='text-xl md:text-2xl font-semibold text-primary border-l-4 border-primary pl-2 mb-5'>Wishlist</h2>
                 {
-                    (loading || !productsInWishlist) ? <WishlistItemsloader/> : <div className='rounded-md grid grid-cols-2 md:block gap-2 md:gap-0'>
+                    (loading || !productsInWishlist) ? <WishlistItemsloader /> : <div className='rounded-md grid grid-cols-2 md:block gap-2 md:gap-0'>
                         {
-                            productsInWishlist?.map((product)=> <WishlistCard key={product?._id} product={product}/>)
+                            productsInWishlist?.map((product) => <WishlistCard key={product?._id} product={product} />)
                         }
                     </div>
                 }
