@@ -2,6 +2,7 @@
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
+import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
 import { fetchSingleFoodData } from '@/app/utils/fetchSingleFoodData';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,6 +15,7 @@ const FoodSinglePage = ({ params }) => {
   const singleFood = fetchSingleFoodData(params.restaurant, params.slug);
   // console.log(singleFood);
   const handleAddToCart = useHandleAddToCart();
+  const handleAddToWishlist = useHandleAddToWishlist();
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -41,7 +43,9 @@ const FoodSinglePage = ({ params }) => {
             <button
               onClick={() => handleAddToCart(singleFood?._id)}
               className='flex gap-2 items-center bg-primary text-white py-2 px-5 rounded-md my-3 hover:bg-secondary duration-300 ease-in-out'><FaCartShopping />Add to Cart</button>
-            <button className='flex gap-2 items-center border-2 border-primary text-primary py-[6px] px-5 rounded-md my-3 hover:bg-primary hover:text-white duration-300 ease-in-out'><FaHeart />Wishlist</button>
+            <button 
+            onClick={()=> handleAddToWishlist(singleFood?._id)}
+            className='flex gap-2 items-center border-2 border-primary text-primary py-[6px] px-5 rounded-md my-3 hover:bg-primary hover:text-white duration-300 ease-in-out'><FaHeart />Wishlist</button>
           </div>
         </div>
       </div>
