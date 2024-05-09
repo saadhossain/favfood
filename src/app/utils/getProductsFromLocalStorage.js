@@ -2,14 +2,14 @@
 import { useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 
-export const getProductsFromLocalStorage = () => {
-    const { setLoading, setProductsInLocalStorage } = useContext(DataContext);
+export const getProductsFromLocalStorage = (localStorageKey, stateToSetProducts) => {
+    const { setLoading } = useContext(DataContext);
     // Get products from localstorage and set them to state
     useEffect(() => {
         setLoading(true);
-        const cart = JSON.parse(localStorage.getItem('favFoodCart'));
-        if (cart) {
-            setProductsInLocalStorage(cart);
+        const products = JSON.parse(localStorage.getItem(localStorageKey));
+        if (products) {
+            stateToSetProducts(products);
         }
         setLoading(false);
     }, []);

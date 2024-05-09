@@ -35,7 +35,7 @@ const DataProvider = ({ children }) => {
     //Set the wishlist product to the state from localStorage
     const [wishlistInLocalStorage, setWishlistInLocalStorage] = useState();
 
-    const allData = { loading, setLoading, tabQuery, setTabQuery, cartQuantity, setCartQuantity, productsInLocalStorage, setProductsInLocalStorage, wishlistQuantity, setWishlistQuantity, wishlistInLocalStorage, setWishlistInLocalStorage };
+    const allData = { loading, setLoading, tabQuery, setTabQuery, cartQuantity, setCartQuantity, productsInLocalStorage, setProductsInLocalStorage, wishlistQuantity, setWishlistQuantity,  wishlistInLocalStorage, setWishlistInLocalStorage};
     return (
         <div>
             <DataContext.Provider value={allData}>

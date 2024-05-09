@@ -12,7 +12,7 @@ import { getTotalPrice } from '../utils/getTotalPrice';
 const CartPage = () => {
     const { loading, setProductsInLocalStorage } = useContext(DataContext);
     // Get products from localstorage and set them to setProductsInLocalStorage state
-    getProductsFromLocalStorage();
+    getProductsFromLocalStorage('favFoodCart', setProductsInLocalStorage);
 
     //Get all products in the cart
     const productsInCart = getProductsInCart();
