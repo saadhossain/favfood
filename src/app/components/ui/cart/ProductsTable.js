@@ -62,8 +62,8 @@ const ProductsTable = ({ productsInCart, setProductsInLocalStorage }) => {
                                         <th className="p-3"></th>
                                         {/* Product Image */}
                                         <th className="p-3"></th>
-                                        <th className="p-3 text-left">Product</th>
-                                        <th className="p-3">Price</th>
+                                        <th className="md:p-3 text-left pr-28">Product</th>
+                                        <th className="md:p-3 px-6">Price</th>
                                         <th className="p-3">Quantity</th>
                                         <th className="p-3">Subtotal</th>
                                     </tr>
@@ -74,12 +74,14 @@ const ProductsTable = ({ productsInCart, setProductsInLocalStorage }) => {
                                             <td className="p-3">
                                                 <button onClick={() => handleRemoveProductFromCart(cartProduct?.product?._id)} className='text-red-600 font-bold'>X</button>
                                             </td>
-                                            <td className="p-3">
+                                            <td className="p-3 hidden md:block">
                                                 <Link href={`/food/${cartProduct?.product?.restaurant_Name}/${cartProduct?.product?.slug}`}>
                                                     <Image src={cartProduct?.product?.image} alt={cartProduct?.product?.name} width={60} height={40} className='rounded-md' />
                                                 </Link>
-
                                             </td>
+                                            <div className='w-16 h-10 mt-2 md:hidden'>
+                                                <Image src={cartProduct?.product?.image} alt={cartProduct?.product?.name} width={60} height={40} className='rounded-md' />
+                                            </div>
                                             <td className="p-3 text-left">
                                                 <Link href={`/food/${cartProduct?.product?.restaurant_Name}/${cartProduct?.product?.slug}`}>{cartProduct?.product?.name}</Link>
                                             </td>

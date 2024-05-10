@@ -34,8 +34,8 @@ const WishlistCard = ({ product }) => {
                 onClick={() => handleRemoveProductFromWishlist(product._id)}
                 className='text-red-600 font-semibold text-xl absolute top-3 left-3 bg-gray-100 py-1 px-3 rounded-full md:hidden'
             >X</button>
-            <Link className='w-full md:w-1/12' href={`/food/${product?.restaurant_Name}/${product?.slug}`}>
-                <Image src={product?.image} alt={product?.name} width={60} height={40} className='w-full md:w-1/12 rounded-md' />
+            <Link className='w-full md:w-16' href={`/food/${product?.restaurant_Name}/${product?.slug}`}>
+                <Image src={product?.image} alt={product?.name} width={60} height={40} className='w-full md:w-16 rounded-md' />
             </Link>
             <Link className='w-full md:w-6/12 ' href={`/food/${product?.restaurant_Name}/${product?.slug}`}>
                 <h4>{product?.name}</h4>
