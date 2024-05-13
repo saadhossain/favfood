@@ -2,16 +2,9 @@
 import { signIn } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import toast from 'react-hot-toast';
 import { FaGoogle } from "react-icons/fa";
 import LoginBg from '/public/login-bg.jpg';
 const LoginPage = () => {
-    //Handle Login Fucntionality
-    const handleLogin = () => {
-        signIn('google');
-        toast.success('You are logged in successfully');
-        window.location.href = '/account';
-    };
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-5 md:my-10 flex justify-center'>
             <Image src={LoginBg} alt='Login BG' className='rounded-l-md hidden md:block' />
@@ -42,7 +35,7 @@ const LoginPage = () => {
                 <div className='w-full my-3'>
                     <button
                         className='w-full flex gap-2 items-center justify-center bg-gray-900 text-white py-3 rounded-md font-semibold'
-                        onClick={handleLogin}
+                        onClick={() => signIn('google')}
                     >
                         <FaGoogle className='w-6 h-6' />Login with Google
                     </button>

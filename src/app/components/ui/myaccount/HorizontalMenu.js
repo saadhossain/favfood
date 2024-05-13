@@ -5,10 +5,10 @@ import toast from 'react-hot-toast';
 import { FaSignOutAlt } from "react-icons/fa";
 
 const HorizontalMenu = () => {
-    const handleSignout = () => {
-        signOut('google');
+    const handleSignout = async() => {
+        signOut({ callbackUrl: "/login" });
         toast.success('You are logged out.');
-        window.location.href = '/login';
+        // window.location.href = '/login';
     };
     return (
         <aside className='w-3/12 min-h-[60vh] bg-gray-100 p-6 rounded-md flex flex-col justify-between'>
