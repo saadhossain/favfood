@@ -8,7 +8,9 @@ import { FaCartShopping } from "react-icons/fa6";
 import FavFood from '/public/favfood-for-web.png';
 import { useContext } from 'react';
 import { DataContext } from '@/app/context/DataContext';
+import { useSession } from 'next-auth/react';
 const HeaderNavigation = () => {
+  const {data: session} = useSession();
   const activePath = usePathname();
   const navStyle = `hover:text-secondary duration-300 ease-in-out}`;
   //Get Cart Quantity from the context api
