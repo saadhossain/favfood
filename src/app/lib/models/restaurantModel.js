@@ -8,4 +8,4 @@ const restaurantModel = new mongoose.Schema({
     restaurant_address: {}
 })
 
-export const userSchema = mongoose.models.restaurants || mongoose.model('restaurants', restaurantModel);
+export const restaurantSchema = mongoose.models.restaurants || mongoose.model('restaurants', restaurantModel);

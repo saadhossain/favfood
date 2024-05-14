@@ -1,6 +1,8 @@
 'use client';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Processing from '../components/spinner/Processing';
@@ -8,6 +10,8 @@ import { uploadImgToImgbb } from '../utils/uploadImgToImgbb';
 import LoginBg from '/public/login-bg.jpg';
 
 const RegisterPage = () => {
+    const { data: session } = useSession();
+    // console.log(session);
     const [processing, setProcessing] = useState(false);
     const handleUserRegistration = async (e) => {
         setProcessing(true);
@@ -31,22 +35,29 @@ const RegisterPage = () => {
             profileImg,
             role: 'customer'
         };
-        //Save user data to database
-        const res = await fetch(`/api/users`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        });
-        const data = await res.json();
-        if (data.status) {
-            form.reset();
+        try {
+            //Save user data to database
+            const res = await fetch(`/api/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+            const data = await res.json();
+            if (data.status) {
+                form.reset();
+                setProcessing(false);
+                toast.success('User Registration Successful.');
+            }
+        } catch (error) {
+            console.log(error.message);
             setProcessing(false);
-            toast.success('User Registration Successful.');
         }
-        toast.error(data.message);
-        setProcessing(false);
+    };
+    //After registration redirect the user to account page
+    if (session) {
+        redirect('/account');
     };
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-5 md:my-10 flex justify-center'>
