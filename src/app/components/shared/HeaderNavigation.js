@@ -12,7 +12,7 @@ import FavFood from '/public/favfood-for-web.png';
 const HeaderNavigation = () => {
   const { data: session, status } = useSession();
   // console.log(status);
-  // console.log(session);
+  console.log(session);
   const activePath = usePathname();
   const navStyle = `hover:text-secondary duration-300 ease-in-out}`;
   //Get Cart Quantity from the context api

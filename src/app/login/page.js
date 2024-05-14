@@ -64,8 +64,9 @@ const LoginPage = () => {
                 </form>
                 <div className='w-full my-3'>
                     <button
-                        className='w-full flex gap-2 items-center justify-center bg-gray-900 text-white py-3 rounded-md font-semibold'
+                        className='w-full flex gap-2 items-center justify-center bg-gray-400 text-white py-3 rounded-md font-semibold'
                         onClick={() => signIn('google')}
+                        disabled
                     >
                         <FaGoogle className='w-6 h-6' />Login with Google
                     </button>
