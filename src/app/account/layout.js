@@ -1,13 +1,6 @@
-'use client'
-import { useSession } from 'next-auth/react';
 import HorizontalMenu from '../components/ui/myaccount/HorizontalMenu';
-import { redirect } from 'next/navigation';
 
 const MyAccountLayout = ({ children }) => {
-    const { data: session } = useSession();
-    if (!session){
-        redirect('/login');
-    };
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-3 md:my-10'>
             <h2 className='text-xl md:text-2xl font-semibold text-primary border-l-4 border-primary pl-2 mb-5'>My Account</h2>

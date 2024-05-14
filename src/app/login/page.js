@@ -30,9 +30,9 @@ const LoginPage = () => {
         }
     };
     //If user logged in then redirect to account page
-    // if (session){
-    //     redirect('/account');
-    // };
+    if (session){
+        redirect('/account');
+    };
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-5 md:my-10 flex justify-center'>
             <Image src={LoginBg} alt='Login BG' className='rounded-l-md hidden md:block' />
