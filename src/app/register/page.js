@@ -1,5 +1,5 @@
 'use client';
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -37,7 +37,7 @@ const RegisterPage = () => {
         };
         try {
             //Save user data to database
-            const res = await fetch(`/api/auth/register`, {
+            const res = await fetch(`/api/users`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -49,6 +49,12 @@ const RegisterPage = () => {
                 form.reset();
                 setProcessing(false);
                 toast.success('User Registration Successful.');
+                signIn('credentials', {
+                    email,
+                    password,
+                    redirect: false
+                });
+                redirect('/account');
             }
         } catch (error) {
             console.log(error.message);

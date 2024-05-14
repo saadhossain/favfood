@@ -13,6 +13,7 @@ const handler = NextAuth({
     },
     pages: {
         signIn: '/login',
+        newUser:'/register',
     },
     providers: [
         GoogleProvider({
