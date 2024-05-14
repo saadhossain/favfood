@@ -23,19 +23,21 @@ const RegisterPage = () => {
         formData.append('image', profileImage);
         const profileImg = await uploadImgToImgbb(formData);
 
-
+        //Arrange User data
+        const userData = {
+            email,
+            fullName,
+            password,
+            profileImg,
+            role: 'customer'
+        };
         //Save user data to database
         const res = await fetch(`/api/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                email,
-                fullName,
-                password,
-                profileImg
-            })
+            body: JSON.stringify(userData)
         });
         const data = await res.json();
         if (data.status) {
@@ -43,6 +45,8 @@ const RegisterPage = () => {
             setProcessing(false);
             toast.success('User Registration Successful.');
         }
+        toast.error(data.message);
+        setProcessing(false);
     };
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-5 md:my-10 flex justify-center'>
@@ -72,7 +76,7 @@ const RegisterPage = () => {
                     </div>
                     <div className="space-y-2">
                         <div>
-                            <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">{processing ? <Processing title={'Processing'}/> : 'Register'}</button>
+                            <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">{processing ? <Processing title={'Processing'} /> : 'Register'}</button>
                         </div>
                         <p className="px-6 text-sm text-center text-gray-400">Already have an account?
                             <Link href="/login" className="text-primary hover:text-secondary ml-2 text-lg font-semibold">Login</Link>.
