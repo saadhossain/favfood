@@ -1,10 +1,16 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
+import { getProductsInCart } from '@/app/utils/getProductsInCart';
+import { saveOrderToDB } from '@/app/utils/saveOrderToDB';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 import { ChangeEvent, useContext } from 'react';
+import toast from 'react-hot-toast';
+import Processing from '../../spinner/Processing';
 import CheckoutForm from './CheckoutForm';
 import cod from '/public/cod.png';
 import stripe from '/public/stripe-payment.png';
@@ -12,7 +18,7 @@ const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
 const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     //Get the necessary states from datacontext
-    const { paymentMethod, setPaymentMethod } = useContext(DataContext) as DataContextType;
+    const { paymentMethod, setPaymentMethod, loading, setLoading } = useContext(DataContext) as DataContextType;
     const taxAmount = (totalPrice * 5 / 100);
     const grandTotal = (totalPrice + taxAmount).toFixed(2);
 
@@ -20,6 +26,34 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     const handlePaymentMethod = (event: ChangeEvent<HTMLInputElement>) => {
         setPaymentMethod(event.target.id);
     };
+    //Get all products in the cart
+    const productsInCart = getProductsInCart();
+    const { data: session } = useSession();
+    //Arrange order details
+    const orderData = {
+        products: productsInCart,
+        orderAmount: grandTotal,
+        userInfo: session?.user,
+        orderDate: new Date(),
+        orderStatus: 'processing',
+    }
+    //Save order details to the database
+    const handleCashOnDelivery = async () => {
+        const oderDataModified = { ...orderData, paymentStatus: 'unpaid' };
+        try {
+            setLoading(true);
+            const data = await saveOrderToDB(oderDataModified);
+            if (data.status) {
+                localStorage.removeItem('favFoodCart');
+                toast.success('Order has been placed successfully.')
+                redirect('/account')
+            }
+            setLoading(false);
+        } catch (error: any) {
+            console.log(error.message);
+            setLoading(false);
+        }
+    }
     return (
         <div>
             {/* Price Calculation */}
@@ -54,7 +88,12 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
             {
                 paymentMethod === 'stripe' && <Elements stripe={stripePromise}>
                     <CheckoutForm
-                        paymentAmount={grandTotal} />
+                        paymentAmount={grandTotal}
+                        session={session}
+                        orderData={orderData}
+                        loading={loading}
+                        setLoading={setLoading}
+                    />
                 </Elements>
             }
 
@@ -69,7 +108,9 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
                 <label htmlFor="cod" className='flex gap-2 items-center font-semibold cursor-pointer'>Cash on Delivery<Image src={cod} alt='cod' width={60} /></label>
             </div>
             {
-                paymentMethod === 'cod' && <button className='w-full bg-primary text-white font-semibold rounded-md py-3 my-5 hover:bg-secondary duration-300 ease-in-out'>Confirm Order</button>
+                paymentMethod === 'cod' && <button
+                    onClick={handleCashOnDelivery}
+                    className='w-full flex items-center justify-center bg-primary text-white font-semibold rounded-md py-3 my-5 hover:bg-secondary duration-300 ease-in-out'>{loading ? <Processing title='Placing Order' /> : 'Confirm Order'}</button>
             }
         </div>
     );

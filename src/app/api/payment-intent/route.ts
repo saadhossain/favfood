@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 
-// export const POST = async (request: NextRequest) => {
-//     const product = request.json();
-//     const paymentAmount = 100 * 100;
-
-//     const paymentIntent = await Stripe.PaymentIntentsResource.create({
-//         currency: "usd",
-//         amount: paymentAmount,
-//         "payment_method_types": [
-//             "card"
-//         ]
-//     });
-//     NextResponse.json({ status: true, clientSecret: paymentIntent.client_secret })
-// }
+export const POST = async (request: NextRequest) => {
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+    const {paymentAmount} = await request.json();
+    // console.log(paymentAmount);
+    const finalAmount = Number((paymentAmount * 100).toFixed(2));
+    const paymentIntent:Stripe.PaymentIntent = await  stripe.paymentIntents.create({
+        currency: "usd",
+        amount: finalAmount,
+        "payment_method_types": [
+            "card"
+        ]
+    });
+    return NextResponse.json({ status: true, clientSecret: paymentIntent.client_secret })
+}

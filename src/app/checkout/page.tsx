@@ -1,12 +1,12 @@
 'use client'
+import { useContext } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import OrderDetails from '../components/ui/checkout/OrderDetails';
-import { getProductsFromLocalStorage } from '../utils/getProductsFromLocalStorage';
-import { getTotalPrice } from '../utils/getTotalPrice';
-import { useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
+import { getProductsFromLocalStorage } from '../utils/getProductsFromLocalStorage';
+import { getTotalPrice } from '../utils/getTotalPrice';
 
 const CheckoutPage = () => {
     const { setProductsInLocalStorage } = useContext(DataContext) as DataContextType;
