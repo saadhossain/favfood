@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images:{
+    images: {
         domains: ['i.ibb.co', 'images.deliveryhero.io', 'lh3.googleusercontent.com'],
     }
 };
