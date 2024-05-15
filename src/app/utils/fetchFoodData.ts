@@ -1,11 +1,10 @@
 'use client';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
 
-export const fetchFoodData = (tabQuery:string) => {
-    const [foods, setFoods] = useState([]);
-    const { setLoading } = useContext(DataContext) as DataContextType;
+export const fetchFoodData = (tabQuery: string) => {
+    const { setLoading, foods, setFoods } = useContext(DataContext) as DataContextType;
     useEffect(() => {
         const getFoodData = async () => {
             setLoading(true);
@@ -15,6 +14,6 @@ export const fetchFoodData = (tabQuery:string) => {
             setLoading(false);
         };
         getFoodData();
-    }, [tabQuery]);
+    }, [setLoading, tabQuery]);
     return foods;
 };

@@ -1,11 +1,10 @@
 'use client';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
 
-export const fetchSingleFoodData = (restaurant:string, slug:string) => {
-    const [singleFood, setSingleFood] = useState([]);
-    const { setLoading } = useContext(DataContext) as DataContextType;
+export const fetchSingleFoodData = (restaurant: string, slug: string) => {
+    const { setLoading, singleFood, setSingleFood } = useContext(DataContext) as DataContextType;
     useEffect(() => {
         const getSingleFoodData = async () => {
             setLoading(true);
