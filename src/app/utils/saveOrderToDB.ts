@@ -1,8 +1,8 @@
-'use client';
+import toast from 'react-hot-toast';
 import { OrderDataType } from '../types/DataTypes';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
-//If Payment is successful, then save the order to database
-export const saveOrderToDB = async (orderData: OrderDataType | any) => {
+export const saveOrderToDB = async (orderData: OrderDataType | any, route: AppRouterInstance) => {
     const res = await fetch(`/api/orders`, {
         method: 'POST',
         headers: {
@@ -11,5 +11,10 @@ export const saveOrderToDB = async (orderData: OrderDataType | any) => {
         body: JSON.stringify(orderData)
     })
     const data = await res.json();
+    if (data.status) {
+        localStorage.removeItem('favFoodCart');
+        toast.success('Order has been placed successfully.');
+        route.push('/account');
+    }
     return data;
 }

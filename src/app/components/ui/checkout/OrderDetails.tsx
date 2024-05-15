@@ -6,10 +6,10 @@ import { saveOrderToDB } from '@/app/utils/saveOrderToDB';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useSession } from 'next-auth/react';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useContext } from 'react';
-import toast from 'react-hot-toast';
 import Processing from '../../spinner/Processing';
 import CheckoutForm from './CheckoutForm';
 import cod from '/public/cod.png';
@@ -29,6 +29,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     //Get all products in the cart
     const productsInCart = getProductsInCart();
     const { data: session } = useSession();
+    const route: AppRouterInstance = useRouter();
     //Arrange order details
     const orderData = {
         products: productsInCart,
@@ -37,18 +38,12 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
         orderDate: new Date(),
         orderStatus: 'processing',
     }
-    const route = useRouter();
     //Save order details to the database
     const handleCashOnDelivery = async () => {
         const oderDataModified = { ...orderData, paymentStatus: 'unpaid' };
         try {
             setLoading(true);
-            const data = await saveOrderToDB(oderDataModified);
-            if (data.status) {
-                localStorage.removeItem('favFoodCart');
-                toast.success('Order has been placed successfully.')
-                route.push('/account');
-            }
+            await saveOrderToDB(oderDataModified, route);
             setLoading(false);
         } catch (error: any) {
             console.log(error.message);
@@ -94,6 +89,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
                         orderData={orderData}
                         loading={loading}
                         setLoading={setLoading}
+                        route={route}
                     />
                 </Elements>
             }

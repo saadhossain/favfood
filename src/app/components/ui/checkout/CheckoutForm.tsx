@@ -2,7 +2,7 @@
 import { OrderDataType, SessionData } from '@/app/types/DataTypes';
 import { saveOrderToDB } from '@/app/utils/saveOrderToDB';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { redirect, useRouter } from 'next/navigation';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Dispatch, FormEvent, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
 import Processing from '../../spinner/Processing';
@@ -12,15 +12,15 @@ interface CheckoutProps {
     session: SessionData | any;
     orderData: OrderDataType | any;
     loading: boolean;
-    setLoading: Dispatch<SetStateAction<boolean>>
+    setLoading: Dispatch<SetStateAction<boolean>>;
+    route: AppRouterInstance;
 }
 
 
-const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading }: CheckoutProps) => {
+const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, route }: CheckoutProps) => {
     // console.log(Number(paymentAmount))
     const stripe = useStripe()
     const elements = useElements();
-    const route = useRouter();
     const handleMakePayment = async (e: FormEvent) => {
         setLoading(true);
         e.preventDefault();
@@ -75,14 +75,9 @@ const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading }
         //Save order details to the database
         try {
             const oderDataModified = { ...orderData, paymentStatus };
-            const dataReturned = await saveOrderToDB(oderDataModified);
-            if (dataReturned.status) {
-                localStorage.removeItem('favFoodCart');
-                toast.success('Order has been placed successfully.');
-                route.push('/account');
-            }
+            await saveOrderToDB(oderDataModified, route);
             setLoading(false);
-        } catch (error:any) {
+        } catch (error: any) {
             console.log(error.message);
             setLoading(false);
         }
