@@ -9,9 +9,9 @@ import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
 
 const CheckoutPage = () => {
-    const { setWishlistInLocalStorage } = useContext(DataContext) as DataContextType;
+    const { setProductsInLocalStorage } = useContext(DataContext) as DataContextType;
     // Get products from localstorage and set them to setProductsInLocalStorage state
-    getProductsFromLocalStorage('favFoodWishlist', setWishlistInLocalStorage);
+    getProductsFromLocalStorage('favFoodCart', setProductsInLocalStorage);
     //Calculate total price of all product in the cart
     const totalPrice = getTotalPrice();
     return (

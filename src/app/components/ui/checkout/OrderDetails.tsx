@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { ChangeEvent, useContext } from 'react';
 import CheckoutForm from './CheckoutForm';
 import cod from '/public/cod.png';
-import paypal from '/public/credit-card-paypal.png';
+import stripe from '/public/stripe-payment.png';
 const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
 const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
@@ -49,7 +49,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
                     onChange={handlePaymentMethod}
                 />
                 <label htmlFor="stripe"
-                    className='flex gap-2 items-center font-semibold cursor-pointer'>Stripe<Image src={paypal} alt='stripe' width={150} /></label>
+                    className='flex gap-2 items-center font-semibold cursor-pointer'>Stripe<Image src={stripe} alt='stripe' width={150} /></label>
             </div>
             {
                 paymentMethod === 'stripe' && <Elements stripe={stripePromise}>
