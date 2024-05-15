@@ -2,7 +2,7 @@
 import { OrderDataType, SessionData } from '@/app/types/DataTypes';
 import { saveOrderToDB } from '@/app/utils/saveOrderToDB';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { Dispatch, FormEvent, SetStateAction } from 'react';
 import toast from 'react-hot-toast';
 import Processing from '../../spinner/Processing';
@@ -20,7 +20,7 @@ const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading }
     // console.log(Number(paymentAmount))
     const stripe = useStripe()
     const elements = useElements();
-
+    const route = useRouter();
     const handleMakePayment = async (e: FormEvent) => {
         setLoading(true);
         e.preventDefault();
@@ -78,8 +78,8 @@ const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading }
             const dataReturned = await saveOrderToDB(oderDataModified);
             if (dataReturned.status) {
                 localStorage.removeItem('favFoodCart');
-                toast.success('Order has been placed successfully.')
-                redirect('/account')
+                toast.success('Order has been placed successfully.');
+                route.push('/account');
             }
             setLoading(false);
         } catch (error:any) {

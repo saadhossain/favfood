@@ -7,7 +7,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, useContext } from 'react';
 import toast from 'react-hot-toast';
 import Processing from '../../spinner/Processing';
@@ -37,6 +37,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
         orderDate: new Date(),
         orderStatus: 'processing',
     }
+    const route = useRouter();
     //Save order details to the database
     const handleCashOnDelivery = async () => {
         const oderDataModified = { ...orderData, paymentStatus: 'unpaid' };
@@ -46,7 +47,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
             if (data.status) {
                 localStorage.removeItem('favFoodCart');
                 toast.success('Order has been placed successfully.')
-                redirect('/account')
+                route.push('/account');
             }
             setLoading(false);
         } catch (error: any) {
