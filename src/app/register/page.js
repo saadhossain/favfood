@@ -1,6 +1,8 @@
 'use client';
+import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Processing from '../components/spinner/Processing';
@@ -8,6 +10,8 @@ import { uploadImgToImgbb } from '../utils/uploadImgToImgbb';
 import LoginBg from '/public/login-bg.jpg';
 
 const RegisterPage = () => {
+    const { data: session } = useSession();
+    // console.log(session);
     const [processing, setProcessing] = useState(false);
     const handleUserRegistration = async (e) => {
         setProcessing(true);
@@ -23,26 +27,43 @@ const RegisterPage = () => {
         formData.append('image', profileImage);
         const profileImg = await uploadImgToImgbb(formData);
 
-
-        //Save user data to database
-        const res = await fetch(`/api/users`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email,
-                fullName,
-                password,
-                profileImg
-            })
-        });
-        const data = await res.json();
-        if (data.status) {
-            form.reset();
+        //Arrange User data
+        const userData = {
+            email,
+            fullName,
+            password,
+            profileImg,
+            role: 'customer'
+        };
+        try {
+            //Save user data to database
+            const res = await fetch(`/api/users`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+            const data = await res.json();
+            if (data.status) {
+                form.reset();
+                setProcessing(false);
+                toast.success('User Registration Successful.');
+                signIn('credentials', {
+                    email,
+                    password,
+                    redirect: false
+                });
+                redirect('/account');
+            }
+        } catch (error) {
+            console.log(error.message);
             setProcessing(false);
-            toast.success('User Registration Successful.');
         }
+    };
+    //After registration redirect the user to account page
+    if (session) {
+        redirect('/account');
     };
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-5 md:my-10 flex justify-center'>
@@ -72,7 +93,7 @@ const RegisterPage = () => {
                     </div>
                     <div className="space-y-2">
                         <div>
-                            <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">{processing ? <Processing title={'Processing'}/> : 'Register'}</button>
+                            <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">{processing ? <Processing title={'Processing'} /> : 'Register'}</button>
                         </div>
                         <p className="px-6 text-sm text-center text-gray-400">Already have an account?
                             <Link href="/login" className="text-primary hover:text-secondary ml-2 text-lg font-semibold">Login</Link>.

@@ -5,6 +5,7 @@ const usersModel = new mongoose.Schema({
     fullName:String,
     password:String,
     profileImg:String,
+    role: String,
 })
 
 export const userSchema = mongoose.models.users || mongoose.model('users', usersModel);
