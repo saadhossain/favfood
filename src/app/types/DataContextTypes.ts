@@ -18,4 +18,6 @@ export interface DataContextType {
     setWishlistQuantity: Dispatch<SetStateAction<number>>;
     wishlistInLocalStorage: any;
     setWishlistInLocalStorage: any;
+    paymentMethod: string;
+    setPaymentMethod: Dispatch<SetStateAction<string>>;
 }
