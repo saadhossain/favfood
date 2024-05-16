@@ -18,7 +18,7 @@ const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
 const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     //Get the necessary states from datacontext
-    const { paymentMethod, setPaymentMethod, loading, setLoading } = useContext(DataContext) as DataContextType;
+    const { paymentMethod, setPaymentMethod, loading, setLoading, setIsOrderConfirm } = useContext(DataContext) as DataContextType;
     const taxAmount = (totalPrice * 5 / 100);
     const grandTotal = (totalPrice + taxAmount).toFixed(2);
 
@@ -30,6 +30,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     const productsInCart = getProductsInCart();
     const { data: session } = useSession();
     const route: AppRouterInstance = useRouter();
+
     //Arrange order details
     const orderData = {
         products: productsInCart,
@@ -38,12 +39,14 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
         orderDate: new Date(),
         orderStatus: 'processing',
     }
+    // console.log(orderData)
     //Save order details to the database
     const handleCashOnDelivery = async () => {
         const oderDataModified = { ...orderData, paymentStatus: 'unpaid' };
         try {
             setLoading(true);
             await saveOrderToDB(oderDataModified, route);
+            setIsOrderConfirm(true);
             setLoading(false);
         } catch (error: any) {
             console.log(error.message);
@@ -90,6 +93,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
                         loading={loading}
                         setLoading={setLoading}
                         route={route}
+                        setIsOrderConfirm={setIsOrderConfirm}
                     />
                 </Elements>
             }

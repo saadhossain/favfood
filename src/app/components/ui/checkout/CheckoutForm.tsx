@@ -14,10 +14,11 @@ interface CheckoutProps {
     loading: boolean;
     setLoading: Dispatch<SetStateAction<boolean>>;
     route: AppRouterInstance;
+    setIsOrderConfirm: Dispatch<SetStateAction<boolean>>;
 }
 
 
-const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, route }: CheckoutProps) => {
+const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, route, setIsOrderConfirm }: CheckoutProps) => {
     // console.log(Number(paymentAmount))
     const stripe = useStripe()
     const elements = useElements();
@@ -76,6 +77,7 @@ const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, 
         try {
             const oderDataModified = { ...orderData, paymentStatus };
             await saveOrderToDB(oderDataModified, route);
+            setIsOrderConfirm(true);
             setLoading(false);
         } catch (error: any) {
             console.log(error.message);

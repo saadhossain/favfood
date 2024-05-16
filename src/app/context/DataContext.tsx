@@ -25,10 +25,7 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
         }
     }, []);
     //Set the product to the state from localStorage
-    const [cartProducts, setCartProducts] = useState();
-
-
-    //WishList
+    const [cartProducts, setCartProducts] = useState([]);
     //Set wishlist Quantity from localStorage
     const [wishlistQuantity, setWishlistQuantity] = useState(0);
     //Get the initial wishlist quantity from the localStorage
@@ -45,7 +42,17 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //Get the payment method
     const [paymentMethod, setPaymentMethod] = useState('');
 
-    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod };
+    //Set the order confirmation state
+    const [isOrderConfirm, setIsOrderConfirm] = useState(false);
+    //Update the cart products and cart count based on order confirmation
+    useEffect(() => {
+        if (isOrderConfirm) {
+            setCartProducts([]);
+            setCartQuantity(0);
+        }
+    }, [isOrderConfirm]);
+
+    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm };
     return (
         <div>
             <DataContext.Provider value={allData}>
