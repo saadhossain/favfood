@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { OrderDataType } from './DataTypes';
 
 export interface DataContextType {
     loading: boolean;
@@ -20,5 +21,7 @@ export interface DataContextType {
     paymentMethod: string;
     setPaymentMethod: Dispatch<SetStateAction<string>>;
     isOrderConfirm: boolean;
-    setIsOrderConfirm: Dispatch<SetStateAction<boolean>>
+    setIsOrderConfirm: Dispatch<SetStateAction<boolean>>;
+    userOrders: OrderDataType | any;
+    setUserOrders: Dispatch<SetStateAction<OrderDataType | any>>
 }

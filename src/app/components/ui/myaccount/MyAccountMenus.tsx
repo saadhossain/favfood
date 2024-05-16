@@ -21,7 +21,7 @@ const MyAccountMenus = () => {
     );
 
     return (
-        <aside className='w-3/12 min-h-[62vh] bg-gray-100 p-4 rounded-md flex flex-col justify-between'>
+        <aside className='min-h-[62vh] bg-gray-100 p-4 rounded-md flex flex-col justify-between sticky top-10'>
             <nav>
                 <ul className='flex flex-col gap-1'>
                     <li className={getLinkClasses('/account')}>

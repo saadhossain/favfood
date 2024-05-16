@@ -1,6 +1,7 @@
 'use client';
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { DataContextType } from '../types/DataContextTypes';
+import { OrderDataType } from '../types/DataTypes';
 
 export const DataContext = createContext<DataContextType | null>(null);
 const DataProvider = ({ children }: { children: ReactNode }) => {
@@ -52,7 +53,9 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [isOrderConfirm]);
 
-    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm };
+    const [userOrders, setUserOrders] = useState<OrderDataType | any>();
+
+    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders };
     return (
         <div>
             <DataContext.Provider value={allData}>
