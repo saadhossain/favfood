@@ -1,17 +1,17 @@
 'use client'
+import { useContext } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import OrderDetails from '../components/ui/checkout/OrderDetails';
-import { getProductsFromLocalStorage } from '../utils/getProductsFromLocalStorage';
-import { getTotalPrice } from '../utils/getTotalPrice';
-import { useContext } from 'react';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
+import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';
+import { getTotalPrice } from '../utils/getTotalPrice';
 
 const CheckoutPage = () => {
-    const { setWishlistInLocalStorage } = useContext(DataContext) as DataContextType;
+    const { setCartProducts } = useContext(DataContext) as DataContextType;
     // Get products from localstorage and set them to setProductsInLocalStorage state
-    getProductsFromLocalStorage('favFoodWishlist', setWishlistInLocalStorage);
+    getDataFromLocalStorage('favFoodCart', setCartProducts);
     //Calculate total price of all product in the cart
     const totalPrice = getTotalPrice();
     return (

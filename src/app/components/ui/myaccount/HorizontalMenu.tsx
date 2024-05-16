@@ -1,15 +1,16 @@
 'use client';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FaSignOutAlt } from "react-icons/fa";
 
 const HorizontalMenu = () => {
+    const route = useRouter();
     const handleSignout = async () => {
         signOut();
         toast.success('You are logged out.');
-        redirect('/login');
+        route.push('/');
     };
     return (
         <aside className='w-3/12 min-h-[60vh] bg-gray-100 p-6 rounded-md flex flex-col justify-between'>

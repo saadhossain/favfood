@@ -11,7 +11,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 
 const WishlistCard = ({ product }: {product: FoodData}) => {
-    const { setWishlistInLocalStorage, setWishlistQuantity } = useContext(DataContext) as DataContextType;
+    const { setWishlistProducts, setWishlistQuantity } = useContext(DataContext) as DataContextType;
     const handleAddToCart = useHandleAddToCart();
 
     const handleRemoveProductFromWishlist = (id:string) => {
@@ -20,7 +20,7 @@ const WishlistCard = ({ product }: {product: FoodData}) => {
         const updatedProducts = productsInWishlist.filter((item:CartDataType) => item.productId !== id);
         // Update local storage with the updated products
         localStorage.setItem('favFoodWishlist', JSON.stringify(updatedProducts));
-        setWishlistInLocalStorage(updatedProducts);
+        setWishlistProducts(updatedProducts);
         setWishlistQuantity(updatedProducts.length);
         toast.error('Food removed from Wishlist.');
     };

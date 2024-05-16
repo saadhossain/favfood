@@ -4,15 +4,15 @@ import { useContext } from 'react';
 import WishlistItemsloader from '../components/spinner/WishlistItemsloader';
 import WishlistCard from '../components/ui/wishlist/WishlistCard';
 import { DataContext } from '../context/DataContext';
-import { getProductsFromLocalStorage } from '../utils/getProductsFromLocalStorage';
-import { getProductsInWishlist } from '../utils/getProductsInWishlist';
 import { DataContextType } from '../types/DataContextTypes';
 import { FoodData } from '../types/DataTypes';
+import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';
+import { getProductsInWishlist } from '../utils/getProductsInWishlist';
 
 const Wishlist = () => {
-    const { loading, setWishlistInLocalStorage } = useContext(DataContext) as DataContextType;
+    const { loading, setWishlistProducts } = useContext(DataContext) as DataContextType;
     // Get products from localstorage and set them to setWishlistInLocalStorage state
-    getProductsFromLocalStorage('favFoodWishlist', setWishlistInLocalStorage);
+    getDataFromLocalStorage('favFoodWishlist', setWishlistProducts);
     //Get all wishlist products in the cart
     const productsInWishlist = getProductsInWishlist();
     return (

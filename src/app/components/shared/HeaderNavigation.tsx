@@ -12,8 +12,6 @@ import { FaCartShopping } from "react-icons/fa6";
 import FavFood from '/public/favfood-for-web.png';
 const HeaderNavigation = () => {
   const { data: session, status } = useSession() as any;
-  // console.log(status);
-  console.log(session);
   const activePath = usePathname();
   const navStyle = `hover:text-secondary duration-300 ease-in-out}`;
   //Get Cart Quantity from the context api

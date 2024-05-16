@@ -43,3 +43,14 @@ export interface CartDataType {
 export interface WishlistData {
     productId: string;
 }
+export interface OrderDataType {
+    products: [
+        product: FoodData,
+        quantity: number,
+    ],
+    orderAmount: string,
+    userInfo: any,
+    orderDate: string,
+    orderStatus: string,
+    paymentStatus?: string
+}
