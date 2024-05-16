@@ -6,7 +6,6 @@ import { saveOrderToDB } from '@/app/utils/saveOrderToDB';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useSession } from 'next-auth/react';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useContext } from 'react';
@@ -29,13 +28,16 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     //Get all products in the cart
     const productsInCart = getProductsInCart();
     const { data: session } = useSession();
-    const route: AppRouterInstance = useRouter();
+    const route = useRouter();
 
     //Arrange order details
     const orderData = {
         products: productsInCart,
         orderAmount: grandTotal,
-        userInfo: session?.user,
+        userInfo: {
+            _id:session?.user?._id,
+            fullName: session?.user?.fullName
+        },
         orderDate: new Date(),
         orderStatus: 'processing',
     }

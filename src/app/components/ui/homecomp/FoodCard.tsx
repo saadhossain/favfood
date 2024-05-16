@@ -40,7 +40,7 @@ const FoodCard = ({ food }: {food:FoodData}) => {
                     {/* Cart button for pc */}
                     <button
                         onClick={() => handleAddToCart(food._id)}
-                        className='hidden md:flex gap-1 items-center justify-center py-2 px-5 rounded-md bg-primary text-white hover:bg-secondary duration-200 ease-in-out absolute right-7'><FaCartShopping />Order</button>
+                        className='hidden md:flex gap-1 items-center justify-center p-2 rounded-md bg-primary text-white hover:bg-secondary duration-200 ease-in-out absolute right-7'><FaCartShopping />Get</button>
                     {/* Cart button for mobile */}
                     <button
                         onClick={() => handleAddToCart(food._id)}
