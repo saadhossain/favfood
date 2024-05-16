@@ -13,6 +13,7 @@ import Processing from '../../spinner/Processing';
 import CheckoutForm from './CheckoutForm';
 import cod from '/public/cod.png';
 import stripe from '/public/stripe-payment.png';
+import SubHeading from '../../shared/headings/SubHeading';
 const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
 const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
@@ -58,7 +59,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     return (
         <div>
             {/* Price Calculation */}
-            <h3 className='flex items-center gap-2 text-lg font-semibold border-l-4 border-primary pl-2 text-primary my-3'>Order Details</h3>
+            <SubHeading heading={'Order Details'}/>
             <div className='flex flex-col gap-4'>
                 <div className='flex items-center justify-between'>
                     <p>Subtotal</p>
@@ -74,7 +75,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
                 </div>
             </div>
             {/* Payment Methods */}
-            <h3 className='flex items-center gap-2 text-lg font-semibold border-l-4 border-primary pl-2 text-primary my-3'>Payment Method</h3>
+            <SubHeading heading={'Payment Method'}/>
             {/* Paypal Payment Method */}
             <div className='flex items-center gap-2'>
                 <input

@@ -8,8 +8,10 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { MdFiberNew } from "react-icons/md";
 import DisplayFoodData from './DisplayFoodData';
 const HorizontalTab = () => {
-    const tabStyle = 'hover:text-primary border-b-4 hover:border-primary pb-2 duration-200 ease-in-out flex items-center gap-1 cursor-pointer min-w-36';
+    //Get the necessary states from the context
     const { tabQuery, setTabQuery, loading } = useContext(DataContext) as DataContextType;
+
+    const tabStyle = 'hover:text-primary border-b-4 hover:border-primary pb-2 duration-200 ease-in-out flex items-center gap-1 cursor-pointer min-w-36';
     return (
         <div className='mt-3 md:mt-12 min-h-[350px] relative'>
             <ul className='flex gap-2 items-center justify-between overflow-x-auto'>
