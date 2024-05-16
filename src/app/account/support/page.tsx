@@ -1,8 +1,11 @@
+import SubHeading from '@/app/components/shared/headings/SubHeading'
 import React from 'react'
 
 const Support = () => {
   return (
-    <div>Support</div>
+    <div>
+      <SubHeading heading={'Support'}/>
+    </div>
   )
 }
 

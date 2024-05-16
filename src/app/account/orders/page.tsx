@@ -1,8 +1,11 @@
+import SubHeading from '@/app/components/shared/headings/SubHeading'
 import React from 'react'
 
 const Orders = () => {
   return (
-    <div>Orders</div>
+    <div>
+      <SubHeading heading={'Orders'}/>
+    </div>
   )
 }
 

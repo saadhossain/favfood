@@ -1,8 +1,11 @@
+import SubHeading from '@/app/components/shared/headings/SubHeading'
 import React from 'react'
 
 const AddressBook = () => {
   return (
-    <div>Address-Book</div>
+    <div>
+      <SubHeading heading={'Address Book'}/>
+    </div>
   )
 }
 

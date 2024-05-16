@@ -1,8 +1,11 @@
+import SubHeading from '@/app/components/shared/headings/SubHeading'
 import React from 'react'
 
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <div>
+      <SubHeading heading={'Profile'}/>
+    </div>
   )
 }
 
