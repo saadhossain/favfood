@@ -5,13 +5,13 @@ import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import OrderDetails from '../components/ui/checkout/OrderDetails';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
-import { getProductsFromLocalStorage } from '../utils/getProductsFromLocalStorage';
+import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';
 import { getTotalPrice } from '../utils/getTotalPrice';
 
 const CheckoutPage = () => {
-    const { setProductsInLocalStorage } = useContext(DataContext) as DataContextType;
+    const { setCartProducts } = useContext(DataContext) as DataContextType;
     // Get products from localstorage and set them to setProductsInLocalStorage state
-    getProductsFromLocalStorage('favFoodCart', setProductsInLocalStorage);
+    getDataFromLocalStorage('favFoodCart', setCartProducts);
     //Calculate total price of all product in the cart
     const totalPrice = getTotalPrice();
     return (

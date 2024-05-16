@@ -25,7 +25,7 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
         }
     }, []);
     //Set the product to the state from localStorage
-    const [productsInLocalStorage, setProductsInLocalStorage] = useState();
+    const [cartProducts, setCartProducts] = useState();
 
 
     //WishList
@@ -40,12 +40,12 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
         }
     }, []);
     //Set the wishlist product to the state from localStorage
-    const [wishlistInLocalStorage, setWishlistInLocalStorage] = useState();
+    const [wishlistProducts, setWishlistProducts] = useState();
 
     //Get the payment method
     const [paymentMethod, setPaymentMethod] = useState('');
 
-    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, productsInLocalStorage, setProductsInLocalStorage, wishlistQuantity, setWishlistQuantity, wishlistInLocalStorage, setWishlistInLocalStorage, paymentMethod, setPaymentMethod };
+    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod };
     return (
         <div>
             <DataContext.Provider value={allData}>

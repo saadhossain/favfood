@@ -5,15 +5,15 @@ import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import CartSummery from '../components/ui/cart/CartSummery';
 import ProductsTable from '../components/ui/cart/ProductsTable';
 import { DataContext } from '../context/DataContext';
-import { getProductsFromLocalStorage } from '../utils/getProductsFromLocalStorage';
+import { DataContextType } from '../types/DataContextTypes';
+import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';
 import { getProductsInCart } from '../utils/getProductsInCart';
 import { getTotalPrice } from '../utils/getTotalPrice';
-import { DataContextType } from '../types/DataContextTypes';
 
 const CartPage = () => {
-    const { loading, setProductsInLocalStorage } = useContext(DataContext) as DataContextType;
+    const { loading, setCartProducts } = useContext(DataContext) as DataContextType;
     // Get products from localstorage and set them to setProductsInLocalStorage state
-    getProductsFromLocalStorage('favFoodCart', setProductsInLocalStorage);
+    getDataFromLocalStorage('favFoodCart', setCartProducts);
 
     //Get all products in the cart
     const productsInCart = getProductsInCart();
@@ -27,7 +27,7 @@ const CartPage = () => {
                 {
                     (loading || !productsInCart) ? <CartItemsLoader /> : <ProductsTable
                         productsInCart={productsInCart}
-                        setProductsInLocalStorage={setProductsInLocalStorage}
+                        setCartProducts={setCartProducts}
                     />
                 }
             </div>

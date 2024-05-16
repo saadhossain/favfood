@@ -12,12 +12,12 @@ export interface DataContextType {
     setTabQuery: Dispatch<SetStateAction<string>>;
     cartQuantity: number; 
     setCartQuantity: Dispatch<SetStateAction<number>>;
-    productsInLocalStorage: any;
-    setProductsInLocalStorage: any;
+    cartProducts:any;
+    setCartProducts:any;
     wishlistQuantity: number;
     setWishlistQuantity: Dispatch<SetStateAction<number>>;
-    wishlistInLocalStorage: any;
-    setWishlistInLocalStorage: any;
+    wishlistProducts: any;
+    setWishlistProducts:any;
     paymentMethod: string;
     setPaymentMethod: Dispatch<SetStateAction<string>>;
 }

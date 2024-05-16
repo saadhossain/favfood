@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useContext } from 'react';
 import toast from 'react-hot-toast';
 
-const ProductsTable = ({ productsInCart, setProductsInLocalStorage }: {productsInCart:any, setProductsInLocalStorage:any}) => {
+const ProductsTable = ({ productsInCart, setCartProducts }: {productsInCart:any, setCartProducts:any}) => {
     const { setCartQuantity } = useContext(DataContext) as DataContextType;
     const handleDecrementQuantity = (id:string) => {
         // Update local storage and state
@@ -27,7 +27,7 @@ const ProductsTable = ({ productsInCart, setProductsInLocalStorage }: {productsI
             if (productInLocalStorage[existingProduct].quantity + change > 0) {
                 productInLocalStorage[existingProduct].quantity += change;
                 localStorage.setItem('favFoodCart', JSON.stringify(productInLocalStorage));
-                setProductsInLocalStorage(productInLocalStorage);
+                setCartProducts(productInLocalStorage);
             }
         }
     };
@@ -38,7 +38,7 @@ const ProductsTable = ({ productsInCart, setProductsInLocalStorage }: {productsI
         const updatedProducts = productsInLocalStorage.filter((item:CartDataType) => item.productId !== id);
         // Update local storage with the updated products
         localStorage.setItem('favFoodCart', JSON.stringify(updatedProducts));
-        setProductsInLocalStorage(updatedProducts);
+        setCartProducts(updatedProducts);
         setCartQuantity(updatedProducts.length);
         toast.error('Food removed from cart.');
     };
