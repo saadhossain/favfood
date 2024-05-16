@@ -15,7 +15,6 @@ const Wishlist = () => {
     getDataFromLocalStorage('favFoodWishlist', setWishlistProducts);
     //Get all wishlist products in the cart
     const productsInWishlist = getProductsInWishlist();
-    console.log(productsInWishlist);
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-3 md:my-10 md:flex gap-10 justify-between'>
             {/* Wishlist Items */}
