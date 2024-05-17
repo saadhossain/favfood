@@ -21,7 +21,7 @@ interface paramsTypes {
 const FoodSinglePage = ({ params }: { params: paramsTypes }) => {
   const { loading } = useContext(DataContext) as DataContextType;
   const singleFood: FoodData = fetchSingleFoodData(params.restaurant, params.slug);
-  // console.log(singleFood);
+  console.log(singleFood);
   const handleAddToCart = useHandleAddToCart();
   const handleAddToWishlist = useHandleAddToWishlist();
   if (loading) {
