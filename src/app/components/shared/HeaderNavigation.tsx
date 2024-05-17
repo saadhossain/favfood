@@ -8,7 +8,6 @@ import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
 import { FaHeart, FaSearch } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
-import HeaderSearch from '../common/HeaderSearch';
 import FavFood from '/public/favfood-for-web.png';
 const HeaderNavigation = () => {
   const { data: session, status } = useSession() as any;
@@ -23,14 +22,14 @@ const HeaderNavigation = () => {
         {/* Disable old version of search field... */}
         {/* <HeaderSearch /> */}
         {/* buttons and login register */}
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-1 md:gap-2'>
           <FaSearch
-          className='w-6 h-6 text-gray-700 hover:text-secondary cursor-pointer duration-300'
-          onClick={() => setIsSearchModalOpen(!isSearchModalOpen)}
+            className='w-6 h-6 text-gray-700 hover:text-secondary cursor-pointer duration-300'
+            onClick={() => setIsSearchModalOpen(!isSearchModalOpen)}
           />
           <Link href='/wishlist' className={`${navStyle} ${activePath === '/favourite' ? 'text-secondary' : 'text-gray-700'}`}><FaHeart className='w-6 h-6' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${wishlistQuantity <= 0 && 'hidden'}`}>{wishlistQuantity}</span></Link>
           <Link href='/cart' className={`${navStyle} ${activePath === '/cart' ? 'text-secondary' : 'text-gray-700'}`}><FaCartShopping className='w-6 h-6 relative' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${cartQuantity <= 0 && 'hidden'}`}>{cartQuantity}</span></Link>
-          <div className='ml-3'>
+          <>
             {
               status === "authenticated" ?
                 <Link href='/account'>
@@ -38,7 +37,7 @@ const HeaderNavigation = () => {
                 </Link>
                 : <Link href='/login' className='bg-primary text-white py-2 px-8 rounded-3xl hover:bg-secondary duration-200 ease-in'>Login</Link>
             }
-          </div>
+          </>
         </div>
       </div>
     </header>
