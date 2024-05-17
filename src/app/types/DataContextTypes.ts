@@ -25,5 +25,7 @@ export interface DataContextType {
     searchedFoods: any;
     setSearchedFoods: Dispatch<SetStateAction<any>>;
     searchText: FoodData[] | any;
-    setSearchText: Dispatch<SetStateAction<FoodData[] | any>>
+    setSearchText: Dispatch<SetStateAction<FoodData[] | any>>;
+    isSearchModalOpen: boolean;
+    setIsSearchModalOpen: Dispatch<SetStateAction<boolean>>;
 }

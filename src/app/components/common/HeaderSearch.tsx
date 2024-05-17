@@ -6,7 +6,7 @@ import { FormEvent, useContext, useEffect } from 'react';
 import { FaSearch } from "react-icons/fa";
 
 const HeaderSearch = () => {
-    const { loading, setLoading, setSearchedFoods, searchText, setSearchText } = useContext(DataContext) as DataContextType;
+    const { setLoading, setSearchedFoods, searchText, setSearchText } = useContext(DataContext) as DataContextType;
     const route = useRouter();
     const handleSearch = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -43,13 +43,7 @@ const HeaderSearch = () => {
                 className='border-2 border-gray-200 px-4 flex gap-3 items-center w-full h-10 rounded-3xl'
             >
                 <input type="text" name="searchtext" className='bg-transparent focus:outline-none w-full text-gray-500' placeholder='What would you like to eat?' />
-                <button type='submit'>
-                    {
-                        loading
-                            ? <div className="w-5 h-5 border-2 border-dashed border-gray-400 rounded-full animate-spin"></div>
-                            : <FaSearch className='text-gray-400 h-6 w-6' />
-                    }
-                </button>
+                <button type='submit'><FaSearch className='text-gray-400 h-6 w-6' /></button>
             </form>
         </div>
     );

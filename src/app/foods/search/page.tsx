@@ -8,11 +8,10 @@ import { useContext } from 'react'
 
 const FoodSearch = () => {
     const { searchedFoods, searchText } = useContext(DataContext) as DataContextType;
-    console.log(searchedFoods);
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-2 md:my-5'>
             {
-                (searchedFoods && searchedFoods.length > 0) ? <SubHeading heading={`Search Result for "${searchText}"`} /> : <SubHeading heading={`No Foods Found. Please make a search...`} />
+                (searchedFoods && searchedFoods.length > 0) ? <SubHeading heading={`Search Result for "${searchText}"`} /> : <SubHeading heading={`No Foods Found for the keyword "${searchText}". Please make a search...`} />
             }
             {/* Display Search foods */}
             <div className='grid grid-cols-2 md:grid-cols-3 gap-5'>

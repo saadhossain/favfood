@@ -13,7 +13,12 @@ export const GET = async (request: NextRequest) => {
         const searchWords = searchQuery?.split(' ').filter(word => word);
         const filter = {
             $or: searchWords?.map(word => ({
-                name: { $regex: word, $options: 'i' }
+                $or: [
+                    { name: { $regex: word, $options: 'i' } },
+                    { description: { $regex: word, $options: 'i' } },
+                    { restaurant_Name: { $regex: word, $options: 'i' } },
+                    { category: { $regex: word, $options: 'i' } }
+                ]
             }))
         };
         // Query the database with the filter
