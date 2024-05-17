@@ -17,9 +17,9 @@ const SearchedFoodCard = ({ food }: { food: FoodData }) => {
                 <Link href={`/foods/${food.restaurant_Name}/${food.slug}`}>
                     <h5 className='text-md font-semibold hover:text-secondary'>{food.name}</h5>
                 </Link>
-                <p className='flex gap-2 items-center font-semibold text-gray-600'><FaShop />{food.restaurant_Name}</p>
+                <Link href={`/restaurants/${food.restaurant_Name}`} className='flex gap-2 items-center font-semibold text-gray-600 hover:text-secondary'><FaShop />{food.restaurant_Name}</Link>
                 <div className='flex items-center justify-between'>
-                    <p>${food.price}</p>
+                    <p className='font-semibold text-primary'>${food.price}</p>
                     <>
                         {/* Cart button for pc */}
                         <button
