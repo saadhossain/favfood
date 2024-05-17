@@ -1,14 +1,14 @@
 'use client';
 import Link from 'next/link';
 import { useContext } from 'react';
-import WishlistItemsloader from '../components/spinner/WishlistItemsloader';
+import Heading from '../components/shared/headings/Heading';
+import TableSkeletonLoader from '../components/spinner/TableSkeletonLoader';
 import WishlistCard from '../components/ui/wishlist/WishlistCard';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
 import { FoodData } from '../types/DataTypes';
 import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';
 import { getProductsInWishlist } from '../utils/getProductsInWishlist';
-import Heading from '../components/shared/headings/Heading';
 
 const Wishlist = () => {
     const { loading, setWishlistProducts } = useContext(DataContext) as DataContextType;
@@ -20,9 +20,9 @@ const Wishlist = () => {
         <div className='w-11/12 md:w-10/12 mx-auto my-3 md:my-10 md:flex gap-10 justify-between'>
             {/* Wishlist Items */}
             <div className='w-full md:w-10/12'>
-                <Heading heading={'Wishlist'}/>
+                <Heading heading={'Wishlist'} />
                 {
-                    (loading || !productsInWishlist) ? <WishlistItemsloader /> : <div>
+                    (loading || !productsInWishlist) ? <TableSkeletonLoader /> : <div>
                         {
                             productsInWishlist.length <= 0 ? <h1 className='w-full text-lg font-semibold text-gray-800'>There is not Product in the Wishlist. <Link href='/' className='text-primary'>Go to Shop</Link></h1> :
                                 <div className='rounded-md grid grid-cols-2 md:block gap-2 md:gap-0'>

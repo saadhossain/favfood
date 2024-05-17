@@ -1,5 +1,5 @@
 
-const CartItemsLoader = () => {
+const TableSkeletonLoader = () => {
     return (
         <div className='mx-0 md:mx-5'>
             {Array.from({ length: 6 }).map((_, index) => (
@@ -26,4 +26,4 @@ const CartItemsLoader = () => {
     );
 };
 
-export default CartItemsLoader;
+export default TableSkeletonLoader;

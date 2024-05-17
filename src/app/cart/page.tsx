@@ -1,6 +1,5 @@
 'use client';
 import { useContext } from 'react';
-import CartItemsLoader from '../components/spinner/CartItemsLoader';
 import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import CartSummery from '../components/ui/cart/CartSummery';
 import ProductsTable from '../components/ui/cart/ProductsTable';
@@ -11,6 +10,7 @@ import { getProductsInCart } from '../utils/getProductsInCart';
 import { getTotalPrice } from '../utils/getTotalPrice';
 import Heading from '../components/shared/headings/Heading';
 import SubHeading from '../components/shared/headings/SubHeading';
+import TableSkeletonLoader from '../components/spinner/TableSkeletonLoader';
 
 const CartPage = () => {
     const { loading, setCartProducts } = useContext(DataContext) as DataContextType;
@@ -27,7 +27,7 @@ const CartPage = () => {
             <div className='w-full md:w-9/12'>
                 <Heading heading={'Shopping Cart'}/>
                 {
-                    (loading || !productsInCart) ? <CartItemsLoader /> : <ProductsTable
+                    (loading || !productsInCart) ? <TableSkeletonLoader /> : <ProductsTable
                         productsInCart={productsInCart}
                         setCartProducts={setCartProducts}
                     />
