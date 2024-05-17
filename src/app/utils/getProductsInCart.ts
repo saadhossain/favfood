@@ -6,7 +6,7 @@ import { DataContextType } from '../types/DataContextTypes';
 import { CartDataType, FoodData } from '../types/DataTypes';
 //Get the matched products in the localStorage
 export const getProductsInCart = ()=>{
-    const foods = fetchFoodData('all-food');
+    const foods = fetchFoodData('all-food', 1);
     const {cartProducts} = useContext(DataContext) as DataContextType;
     // console.log(foods);
     return cartProducts?.map((item:CartDataType) => {

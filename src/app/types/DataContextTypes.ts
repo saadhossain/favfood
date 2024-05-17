@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { OrderDataType } from './DataTypes';
+import { FoodData } from './DataTypes';
 
 export interface DataContextType {
     loading: boolean;
@@ -22,6 +22,10 @@ export interface DataContextType {
     setPaymentMethod: Dispatch<SetStateAction<string>>;
     isOrderConfirm: boolean;
     setIsOrderConfirm: Dispatch<SetStateAction<boolean>>;
-    userOrders: OrderDataType | any;
-    setUserOrders: Dispatch<SetStateAction<OrderDataType | any>>
+    searchedFoods: any;
+    setSearchedFoods: Dispatch<SetStateAction<any>>;
+    searchText: FoodData[] | any;
+    setSearchText: Dispatch<SetStateAction<FoodData[] | any>>;
+    isSearchModalOpen: boolean;
+    setIsSearchModalOpen: Dispatch<SetStateAction<boolean>>;
 }
