@@ -16,7 +16,7 @@ const HeaderNavigation = () => {
   //Get Cart Quantity from the context api
   const { cartQuantity, wishlistQuantity, isSearchModalOpen, setIsSearchModalOpen } = useContext(DataContext) as DataContextType;
   return (
-    <header className='w-full bg-gray-100'>
+    <header className='w-full bg-gray-100 sticky top-0 z-50'>
       <div className='w-11/12 md:w-10/12 mx-auto flex justify-between items-center'>
         <Link href='/'><Image src={FavFood} alt='Favfood' width={60} height={60} /></Link>
         {/* Disable old version of search field... */}
