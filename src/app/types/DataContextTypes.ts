@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { FoodData } from './DataTypes';
 
 export interface DataContextType {
     loading: boolean;
@@ -20,5 +21,9 @@ export interface DataContextType {
     paymentMethod: string;
     setPaymentMethod: Dispatch<SetStateAction<string>>;
     isOrderConfirm: boolean;
-    setIsOrderConfirm: Dispatch<SetStateAction<boolean>>
+    setIsOrderConfirm: Dispatch<SetStateAction<boolean>>;
+    searchedFoods: any;
+    setSearchedFoods: Dispatch<SetStateAction<any>>;
+    searchText: FoodData[] | any;
+    setSearchText: Dispatch<SetStateAction<FoodData[] | any>>
 }

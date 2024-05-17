@@ -1,5 +1,4 @@
 'use client';
-import HeaderSearch from '@/app/components/ui/HeaderSearch';
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { useSession } from 'next-auth/react';
@@ -10,6 +9,7 @@ import { useContext } from 'react';
 import { FaHeart } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import FavFood from '/public/favfood-for-web.png';
+import HeaderSearch from '../common/HeaderSearch';
 const HeaderNavigation = () => {
   const { data: session, status } = useSession() as any;
   const activePath = usePathname();

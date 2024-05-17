@@ -52,7 +52,13 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [isOrderConfirm]);
 
-    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm };
+    //Set the searched product to the state
+    const [searchedFoods, setSearchedFoods] = useState([]);
+
+    //Set the search text
+    const [searchText, setSearchText] = useState('');
+
+    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, searchedFoods, setSearchedFoods, searchText, setSearchText };
     return (
         <div>
             <DataContext.Provider value={allData}>
