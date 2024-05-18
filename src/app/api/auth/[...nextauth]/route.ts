@@ -27,17 +27,32 @@ const handler = NextAuth({
                 password: {}
             },
             async authorize(credentials, req) {
-                //Connect MongoDB database;
-                await mongoose.connect(mongoUrl);
-                //Find the user from the Database
-                const user = await userSchema.findOne({ email: credentials?.email });
-                //Compare the password to verify
-                const isPasswordValid = await compare(credentials?.password as any, user.password);
-                //If the password is valid then return the user
-                if (isPasswordValid) {
-                    return user;
-                } else {
-                    return null;
+                try {
+                    if (!credentials?.email || !credentials.password) {
+                        throw new Error('Credentials not found');
+                    }
+                    // Connect MongoDB database
+                    await mongoose.connect(mongoUrl);
+                    // Find the user from the Database
+                    const user = await userSchema.findOne({ email: credentials?.email });
+                    if (!user) {
+                        throw new Error('You are not registered. Please Signup')
+                    }
+
+                    // Compare the password to verify
+                    const isPasswordValid = await compare(credentials?.password as any, user.password);
+                    //If the password isn't valid then return the error
+                    if (!isPasswordValid) {
+                        throw new Error('Wrong email or password entered.')
+                    }
+                    //If password valid the return the user data.
+                    if (isPasswordValid) {
+                        return user;
+                    } else {
+                        return null;
+                    }
+                } catch (error) {
+                    throw error;
                 }
             }
         })

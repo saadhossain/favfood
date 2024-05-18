@@ -2,35 +2,53 @@
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { redirect, useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import toast from 'react-hot-toast';
 import { FaGoogle } from "react-icons/fa";
 import Processing from '../components/spinner/Processing';
 import LoginBg from '/public/login-bg.jpg';
-import { redirect } from 'next/navigation';
+
+interface LoginDataProps {
+    error: string | null;
+    ok: boolean;
+    status: number;
+    url: string
+}
 const LoginPage = () => {
-    const {data: session} = useSession();
-    // console.log(session);
+    const { data: session } = useSession();
+    const route = useRouter();
     const [processing, setProcessing] = useState(false);
-    const handleLogin = async (e:FormEvent<HTMLFormElement>) => {
+    //Get and set the login error to the state
+    const [error, setError] = useState('');
+    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         setProcessing(true);
         e.preventDefault();
         const form = e.target as HTMLFormElement;
-        const email:string = form.email.value;
-        const password:string = form.password.value;
+        const email: string = form.email.value;
+        const password: string = form.password.value;
         // console.log(email, password);
         try {
-            signIn('credentials', {
+            const login: LoginDataProps | any = await signIn('credentials', {
                 email: email,
                 password: password,
-                redirect: false
+                redirect: false,
             });
-        } catch (error:any) {
+            if (login?.ok) {
+                toast.success('You are logged in.');
+                route.push('/account');
+            } else {
+                setError(login?.error);
+                setProcessing(false);
+            }
+            console.log(login);
+        } catch (error: any) {
             setProcessing(false);
             throw new Error(error.message);
         }
     };
-    //If user logged in then redirect to account page
-    if (session){
+    // If user logged in then redirect to account page
+    if (session) {
         redirect('/account');
     };
     return (
@@ -42,29 +60,24 @@ const LoginPage = () => {
                 </div>
                 <form
                     onSubmit={(e) => handleLogin(e)}
-                    className="space-y-12">
-                    <div className="space-y-4">
-                        <div>
-                            <label htmlFor="email" className="block mb-2 text-sm">Email address</label>
-                            <input type="email" name="email" id="email" placeholder="johndoe@gmail.com" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
-                        </div>
-                        <div>
-                            <div className="flex justify-between mb-2">
-                                <label htmlFor="password" className="text-sm">Password</label>
-                                <Link href="/login" className="text-md  hover:text-primary">Forgot password?</Link>
-                            </div>
-                            <input type="password" name="password" id="password" placeholder="***********" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
-                        </div>
-                    </div>
+                    className="space-y-6">
                     <div className="space-y-2">
-                        <div>
-                            <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">{processing ? <Processing title={'Processing'} /> : 'Login'}</button>
+                        <label htmlFor="email" className="block mb-1 text-sm">Email address</label>
+                        <input type="email" name="email" id="email" placeholder="johndoe@gmail.com" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
+                        <div className="flex justify-between mb-2">
+                            <label htmlFor="password" className="text-sm">Password</label>
+                            <Link href="/login" className="text-md  hover:text-primary">Forgot password?</Link>
                         </div>
+                        <input type="password" name="password" id="password" placeholder="***********" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
                     </div>
+                    {
+                        error && <p className='text-md text-red-600'>{error}</p>
+                    }
+                    <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">{processing ? <Processing title={'Processing'} /> : 'Login'}</button>
                 </form>
                 <div className='w-full my-3'>
                     <button
-                        className='w-full flex gap-2 items-center justify-center bg-gray-400 text-white py-3 rounded-md font-semibold'
+                        className='w-full flex gap-2 items-center justify-center bg-gray-400 text-white py-3 rounded-md font-semibold mt-5'
                         onClick={() => signIn('google')}
                         disabled
                     >
