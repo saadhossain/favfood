@@ -1,27 +1,27 @@
 'use client';
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
-import { CartDataType, FoodData } from '@/app/types/DataTypes';
+import { CartDataType } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext } from 'react';
 import toast from 'react-hot-toast';
 
-const ProductsTable = ({ productsInCart, setCartProducts }: {productsInCart:any, setCartProducts:any}) => {
+const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: any, setCartProducts: any }) => {
     const { setCartQuantity } = useContext(DataContext) as DataContextType;
-    const handleDecrementQuantity = (id:string) => {
+    const handleDecrementQuantity = (id: string) => {
         // Update local storage and state
         updateLocalStorage(id, -1);
     };
 
-    const handleIncrementQuantity = (id:string) => {
+    const handleIncrementQuantity = (id: string) => {
         // Update local storage and state
         updateLocalStorage(id, 1);
     };
 
-    const updateLocalStorage = (id:string, change:number) => {
+    const updateLocalStorage = (id: string, change: number) => {
         let productInLocalStorage = JSON.parse(localStorage.getItem('favFoodCart') as string);
-        const existingProduct = productInLocalStorage.findIndex((item:CartDataType) => item.productId === id);
+        const existingProduct = productInLocalStorage.findIndex((item: CartDataType) => item.productId === id);
 
         if (existingProduct >= 0) {
             if (productInLocalStorage[existingProduct].quantity + change > 0) {
@@ -32,12 +32,17 @@ const ProductsTable = ({ productsInCart, setCartProducts }: {productsInCart:any,
         }
     };
 
-    const handleRemoveProductFromCart = (id:string) => {
+    const handleRemoveProductFromCart = (id: string) => {
         // console.log(id);
         let productsInLocalStorage = JSON.parse(localStorage.getItem('favFoodCart') as string);
-        const updatedProducts = productsInLocalStorage.filter((item:CartDataType) => item.productId !== id);
+        const updatedProducts = productsInLocalStorage.filter((item: CartDataType) => item.productId !== id);
         // Update local storage with the updated products
         localStorage.setItem('favFoodCart', JSON.stringify(updatedProducts));
+        
+        // //If there is no product in the favFoodCart then completely remove the array
+        // if (updatedProducts.length <= 0) {
+        //     localStorage.removeItem('favFoodCart');
+        // }
         setCartProducts(updatedProducts);
         setCartQuantity(updatedProducts.length);
         toast.error('Food removed from cart.');
@@ -72,7 +77,7 @@ const ProductsTable = ({ productsInCart, setCartProducts }: {productsInCart:any,
                                 </thead>
                                 <tbody>
                                     {
-                                        productsInCart?.map((cartProduct:any) => <tr key={cartProduct?.product?._id} className="text-center border-b border-opacity-20 border-gray-500 bg-gray-100">
+                                        productsInCart?.map((cartProduct: any) => <tr key={cartProduct?.product?._id} className="text-center border-b border-opacity-20 border-gray-500 bg-gray-100">
                                             <td className="p-3">
                                                 <button onClick={() => handleRemoveProductFromCart(cartProduct?.product?._id)} className='text-red-600 font-bold'>X</button>
                                             </td>
