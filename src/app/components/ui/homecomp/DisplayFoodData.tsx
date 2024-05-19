@@ -1,12 +1,12 @@
 import FoodCard from '@/app/components/ui/homecomp/FoodCard';
 import { FoodData } from '@/app/types/DataTypes';
-import { fetchFoodData } from '@/app/utils/fetchFoodData';
+import { fetchFoodDataByQuery } from '@/app/utils/fetchFoodDataByQuery';
 import { useState } from 'react';
 import ProductLoader from '../../spinner/ProductLoader';
 const DisplayFoodData = ({ tabQuery, loading }: { tabQuery: string, loading: boolean }) => {
     const [page, setPage] = useState(1);
     //Get the foods data...
-    const foods = fetchFoodData(tabQuery, page);
+    const foods = fetchFoodDataByQuery(tabQuery, page);
     // console.log(foods);
     if (loading) {
         return <ProductLoader />;
@@ -19,7 +19,7 @@ const DisplayFoodData = ({ tabQuery, loading }: { tabQuery: string, loading: boo
                 }
             </div>
             <button
-                className={`bg-primary text-white hover:bg-secondary py-2 px-5 rounded-md ${foods.length <=0 && 'hidden'}`}
+                className={`bg-primary text-white hover:bg-secondary py-2 px-5 rounded-md ${foods.length <= 0 && 'hidden'}`}
                 onClick={() => setPage(prevPage => prevPage + 1)}
             >
                 Load More
