@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import { useContext } from 'react';
 import Heading from '../components/shared/headings/Heading';
 import TableSkeletonLoader from '../components/spinner/TableSkeletonLoader';
@@ -9,6 +8,7 @@ import { DataContextType } from '../types/DataContextTypes';
 import { FoodData } from '../types/DataTypes';
 import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';
 import { getProductsInWishlist } from '../utils/getProductsInWishlist';
+import Link from 'next/link';
 
 const Wishlist = () => {
     const { loading, setWishlistProducts } = useContext(DataContext) as DataContextType;
@@ -22,16 +22,15 @@ const Wishlist = () => {
             <div className='w-full md:w-10/12'>
                 <Heading heading={'Wishlist'} />
                 {
-                    (loading || !productsInWishlist) ? <TableSkeletonLoader /> : <div>
-                        {
-                            productsInWishlist.length <= 0 ? <h1 className='w-full text-lg font-semibold text-gray-800'>There is not Product in the Wishlist. <Link href='/' className='text-primary'>Go to Shop</Link></h1> :
-                                <div className='rounded-md grid grid-cols-2 md:block gap-2 md:gap-0'>
-                                    {
-                                        productsInWishlist?.map((product: FoodData) => <WishlistCard key={product?._id} product={product} />)
-                                    }
-                                </div>
-                        }
-                    </div>
+                    (loading || !productsInWishlist) ? <TableSkeletonLoader /> :
+                        <div className='rounded-md grid grid-cols-2 md:block gap-2 md:gap-0'>
+                            {
+                                productsInWishlist?.map((product: FoodData) => <WishlistCard key={product?._id} product={product} />)
+                            }
+                        </div>
+                }
+                {
+                    (productsInWishlist?.length <= 0 && !loading) && <h1 className='w-full text-lg font-semibold text-gray-800'>There is not Product in the Wishlist. <Link href='/' className='text-primary'>Go to Shop</Link></h1>
                 }
             </div>
         </div>
