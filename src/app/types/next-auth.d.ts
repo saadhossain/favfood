@@ -8,6 +8,8 @@ declare module 'next-auth' {
         password?: string;
         profileImg?: string;
         role?: string;
+        phone?: string;
+        isActive?: boolean;
     }
     interface Session {
         user: {
@@ -17,6 +19,8 @@ declare module 'next-auth' {
             password?: string | any;
             image?: string | any;
             role?: string | any;
+            phone?: string | any;
+            isActive?: boolean | any;
         }
     } DefaultSession['user']
 }

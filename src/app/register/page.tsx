@@ -33,7 +33,9 @@ const RegisterPage = () => {
             fullName,
             password,
             profileImg,
-            role: 'customer'
+            role: 'customer',
+            phone:'',
+            isActive:true
         };
         try {
             //Save user data to database

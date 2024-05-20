@@ -51,6 +51,8 @@ const handler = NextAuth({
                 token.password = user.password;
                 token.image = user.profileImg;
                 token.role = user.role;
+                token.phone = user.phone;
+                token.isActive = user.isActive;
             }
             return token;
         },
@@ -62,6 +64,8 @@ const handler = NextAuth({
                 session.user.password = token.password;
                 session.user.image = token.image;
                 session.user.role = token.role;
+                session.user.phone = token.phone;
+                session.user.isActive = token.isActive
             }
             return session;
         }
