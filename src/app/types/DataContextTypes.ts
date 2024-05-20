@@ -28,4 +28,6 @@ export interface DataContextType {
     setSearchText: Dispatch<SetStateAction<FoodData[] | any>>;
     isSearchModalOpen: boolean;
     setIsSearchModalOpen: Dispatch<SetStateAction<boolean>>;
+    showPassword: boolean;
+    setShowPassword: Dispatch<SetStateAction<boolean>>;
 }

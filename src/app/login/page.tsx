@@ -2,21 +2,24 @@
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
-import { FaGoogle } from "react-icons/fa";
-import Processing from '../components/spinner/Processing';
-import LoginBg from '/public/login-bg.jpg';
 import { redirect } from 'next/navigation';
+import { FormEvent, useContext, useState } from 'react';
+import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
+import Processing from '../components/spinner/Processing';
+import { DataContext } from '../context/DataContext';
+import { DataContextType } from '../types/DataContextTypes';
+import LoginBg from '/public/login-bg.jpg';
 const LoginPage = () => {
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     // console.log(session);
     const [processing, setProcessing] = useState(false);
-    const handleLogin = async (e:FormEvent<HTMLFormElement>) => {
+    const { showPassword, setShowPassword } = useContext(DataContext) as DataContextType;
+    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         setProcessing(true);
         e.preventDefault();
         const form = e.target as HTMLFormElement;
-        const email:string = form.email.value;
-        const password:string = form.password.value;
+        const email: string = form.email.value;
+        const password: string = form.password.value;
         // console.log(email, password);
         try {
             signIn('credentials', {
@@ -24,13 +27,13 @@ const LoginPage = () => {
                 password: password,
                 redirect: false
             });
-        } catch (error:any) {
+        } catch (error: any) {
             setProcessing(false);
             throw new Error(error.message);
         }
     };
     //If user logged in then redirect to account page
-    if (session){
+    if (session) {
         redirect('/account');
     };
     return (
@@ -48,12 +51,21 @@ const LoginPage = () => {
                             <label htmlFor="email" className="block mb-2 text-sm">Email address</label>
                             <input type="email" name="email" id="email" placeholder="johndoe@gmail.com" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
                         </div>
-                        <div>
+                        <div className='relative'>
                             <div className="flex justify-between mb-2">
                                 <label htmlFor="password" className="text-sm">Password</label>
                                 <Link href="/login" className="text-md  hover:text-primary">Forgot password?</Link>
                             </div>
-                            <input type="password" name="password" id="password" placeholder="***********" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
+                            <input type={`${showPassword ? 'password' : 'text'}`} name="password" id="password" placeholder="***********" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
+                            {/* Eye button for hide and show password */}
+                            <div
+                            onClick={() => setShowPassword(!showPassword)}
+                            className='cursor-pointer absolute top-11 right-2'
+                            >
+                                {
+                                    showPassword ? <FaEye /> : <FaEyeSlash />
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="space-y-2">
