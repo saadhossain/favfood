@@ -2,25 +2,18 @@
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
-import toast from 'react-hot-toast';
-import { FaGoogle } from "react-icons/fa";
+import { redirect } from 'next/navigation';
+import { FormEvent, useContext, useState } from 'react';
+import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import Processing from '../components/spinner/Processing';
+import { DataContext } from '../context/DataContext';
+import { DataContextType } from '../types/DataContextTypes';
 import LoginBg from '/public/login-bg.jpg';
-
-interface LoginDataProps {
-    error: string | null;
-    ok: boolean;
-    status: number;
-    url: string
-}
 const LoginPage = () => {
     const { data: session } = useSession();
-    const route = useRouter();
+    // console.log(session);
     const [processing, setProcessing] = useState(false);
-    //Get and set the login error to the state
-    const [error, setError] = useState('');
+    const { showPassword, setShowPassword } = useContext(DataContext) as DataContextType;
     const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         setProcessing(true);
         e.preventDefault();
@@ -29,25 +22,17 @@ const LoginPage = () => {
         const password: string = form.password.value;
         // console.log(email, password);
         try {
-            const login: LoginDataProps | any = await signIn('credentials', {
+            signIn('credentials', {
                 email: email,
                 password: password,
-                redirect: false,
+                redirect: false
             });
-            if (login?.ok) {
-                toast.success('You are logged in.');
-                route.push('/account');
-            } else {
-                setError(login?.error);
-                setProcessing(false);
-            }
-            console.log(login);
         } catch (error: any) {
             setProcessing(false);
             throw new Error(error.message);
         }
     };
-    // If user logged in then redirect to account page
+    //If user logged in then redirect to account page
     if (session) {
         redirect('/account');
     };
@@ -60,24 +45,38 @@ const LoginPage = () => {
                 </div>
                 <form
                     onSubmit={(e) => handleLogin(e)}
-                    className="space-y-6">
-                    <div className="space-y-2">
-                        <label htmlFor="email" className="block mb-1 text-sm">Email address</label>
-                        <input type="email" name="email" id="email" placeholder="johndoe@gmail.com" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
-                        <div className="flex justify-between mb-2">
-                            <label htmlFor="password" className="text-sm">Password</label>
-                            <Link href="/login" className="text-md  hover:text-primary">Forgot password?</Link>
+                    className="space-y-12">
+                    <div className="space-y-4">
+                        <div>
+                            <label htmlFor="email" className="block mb-2 text-sm">Email address</label>
+                            <input type="email" name="email" id="email" placeholder="johndoe@gmail.com" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
                         </div>
-                        <input type="password" name="password" id="password" placeholder="***********" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
+                        <div className='relative'>
+                            <div className="flex justify-between mb-2">
+                                <label htmlFor="password" className="text-sm">Password</label>
+                                <Link href="/login" className="text-md  hover:text-primary">Forgot password?</Link>
+                            </div>
+                            <input type={`${showPassword ? 'password' : 'text'}`} name="password" id="password" placeholder="***********" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
+                            {/* Eye button for hide and show password */}
+                            <div
+                            onClick={() => setShowPassword(!showPassword)}
+                            className='cursor-pointer absolute top-11 right-2'
+                            >
+                                {
+                                    showPassword ? <FaEye /> : <FaEyeSlash />
+                                }
+                            </div>
+                        </div>
                     </div>
-                    {
-                        error && <p className='text-md text-red-600'>{error}</p>
-                    }
-                    <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">{processing ? <Processing title={'Processing'} /> : 'Login'}</button>
+                    <div className="space-y-2">
+                        <div>
+                            <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">{processing ? <Processing title={'Processing'} /> : 'Login'}</button>
+                        </div>
+                    </div>
                 </form>
                 <div className='w-full my-3'>
                     <button
-                        className='w-full flex gap-2 items-center justify-center bg-gray-400 text-white py-3 rounded-md font-semibold mt-5'
+                        className='w-full flex gap-2 items-center justify-center bg-gray-400 text-white py-3 rounded-md font-semibold'
                         onClick={() => signIn('google')}
                         disabled
                     >

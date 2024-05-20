@@ -3,23 +3,27 @@ import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 import Processing from '../components/spinner/Processing';
 import { uploadImgToImgbb } from '../utils/uploadImgToImgbb';
 import LoginBg from '/public/login-bg.jpg';
+import { DataContext } from '../context/DataContext';
+import { DataContextType } from '../types/DataContextTypes';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const RegisterPage = () => {
+    const {showPassword, setShowPassword} = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
     // console.log(session);
     const [processing, setProcessing] = useState(false);
-    const handleUserRegistration = async (e:FormEvent<HTMLFormElement>) => {
+    const handleUserRegistration = async (e: FormEvent<HTMLFormElement>) => {
         setProcessing(true);
         e.preventDefault();
         const form = e.target as HTMLFormElement;
-        const email:string = form.email.value;
-        const fullName:string = form.fullname.value;
-        const password:string = form.password.value;
+        const email: string = form.email.value;
+        const fullName: string = form.fullname.value;
+        const password: string = form.password.value;
 
         //Handle profile image and upload to Imgbb
         const profileImage = form.profileImage.files[0];
@@ -56,7 +60,7 @@ const RegisterPage = () => {
                 });
                 redirect('/account');
             }
-        } catch (error:any) {
+        } catch (error: any) {
             console.log(error.message);
             setProcessing(false);
         }
@@ -82,9 +86,18 @@ const RegisterPage = () => {
                             <label htmlFor="fullname" className="block mb-2 text-sm">Full Name</label>
                             <input type="text" name="fullname" id="fullname" placeholder="Leroy Jenkins" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
                         </div>
-                        <div>
+                        <div className='relative'>
                             <label htmlFor="password" className="text-sm">Password</label>
-                            <input type="password" name="password" id="password" placeholder="***************" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+                            <input type={`${showPassword ? 'password':'text'}`} name="password" id="password" placeholder="***************" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+                            {/* Eye button for hide and show password */}
+                            <div
+                                onClick={() => setShowPassword(!showPassword)}
+                                className='cursor-pointer absolute top-9 right-2'
+                            >
+                                {
+                                    showPassword ? <FaEye /> : <FaEyeSlash />
+                                }
+                            </div>
                         </div>
                         <div>
                             <label htmlFor="profileImage" className="text-sm">Select Profile Image</label>
