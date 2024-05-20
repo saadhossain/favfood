@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
 
-export const fetchFoodData = () => {
+export const fetchFoodDataByQuery = (tabQuery: string, page: number) => {
     const { setLoading, foods, setFoods } = useContext(DataContext) as DataContextType;
 
     //Fetch the data from the api...
@@ -11,12 +11,16 @@ export const fetchFoodData = () => {
         const getFoodData = async () => {
             setLoading(true);
             try {
-                const res = await fetch('/api/foods', { cache: 'no-store' });
+                const res = await fetch(`/api/foods?tabQuery=${tabQuery}&page=${page}&limit=12`, { cache: 'no-store' });
                 if (!res.ok) {
                     throw new Error('Failed to fetch data');
                 }
                 const { result } = await res.json();
-                setFoods(result);
+                if (page === 1) {
+                    setFoods(result);
+                } else {
+                    setFoods((prevFoods: any) => [...prevFoods, ...result]);
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -25,7 +29,7 @@ export const fetchFoodData = () => {
         };
         getFoodData();
 
-    }, [setLoading]);
+    }, [setLoading,tabQuery, page]);
 
     return foods;
 };

@@ -22,7 +22,7 @@ const HeaderNavigation = () => {
         {/* Disable old version of search field... */}
         {/* <HeaderSearch /> */}
         {/* buttons and login register */}
-        <div className='flex items-center gap-1 md:gap-2'>
+        <div className='flex items-center gap-4'>
           <FaSearch
             className='w-6 h-6 text-gray-700 hover:text-secondary cursor-pointer duration-300'
             onClick={() => setIsSearchModalOpen(!isSearchModalOpen)}
@@ -35,7 +35,7 @@ const HeaderNavigation = () => {
                 <Link href='/account'>
                   <Image src={session.user.image} alt={session.user.name} width={40} height={40} className='rounded-full' />
                 </Link>
-                : <Link href='/login' className='bg-primary text-white py-2 px-8 rounded-3xl hover:bg-secondary duration-200 ease-in'>Login</Link>
+                : <Link href='/login' className='bg-primary text-white py-2 px-4 md:px-8 rounded-3xl hover:bg-secondary duration-200 ease-in'>Login</Link>
             }
           </>
         </div>
