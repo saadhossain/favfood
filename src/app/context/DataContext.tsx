@@ -1,6 +1,7 @@
 'use client';
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { DataContextType } from '../types/DataContextTypes';
+import { OrderDataType } from '../types/DataTypes';
 
 export const DataContext = createContext<DataContextType | null>(null);
 const DataProvider = ({ children }: { children: ReactNode }) => {
@@ -51,6 +52,8 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
             setCartQuantity(0);
         }
     }, [isOrderConfirm]);
+
+    const [userOrders, setUserOrders] = useState<OrderDataType | any>();
 
     //Set the searched product to the state
     const [searchedFoods, setSearchedFoods] = useState([]);

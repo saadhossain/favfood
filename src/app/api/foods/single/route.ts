@@ -10,6 +10,9 @@ export const GET = async (request: NextRequest) => {
     const restaurantName = searchParams.get('restaurant');
     const productSlug = searchParams.get('slug');
     //Find the right product by filtering with restaurant and slug
-    const result = await foodSchema.find({ restaurant_Name: restaurantName, slug: productSlug });
+    const result = await foodSchema.find({
+        restaurant_Name: { $regex: restaurantName, $options: 'i' } ,
+        slug: productSlug
+    });
     return NextResponse.json({ status: true, result });
 };

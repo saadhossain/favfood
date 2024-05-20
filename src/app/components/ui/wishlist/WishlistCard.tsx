@@ -10,16 +10,21 @@ import toast from 'react-hot-toast';
 import { FaCheckCircle } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 
-const WishlistCard = ({ product }: {product: FoodData}) => {
+const WishlistCard = ({ product }: { product: FoodData }) => {
     const { setWishlistProducts, setWishlistQuantity } = useContext(DataContext) as DataContextType;
     const handleAddToCart = useHandleAddToCart();
 
-    const handleRemoveProductFromWishlist = (id:string) => {
+    const handleRemoveProductFromWishlist = (id: string) => {
         // console.log(id);
         let productsInWishlist = JSON.parse(localStorage.getItem('favFoodWishlist') as string);
-        const updatedProducts = productsInWishlist.filter((item:CartDataType) => item.productId !== id);
+        const updatedProducts = productsInWishlist.filter((item: CartDataType) => item.productId !== id);
         // Update local storage with the updated products
         localStorage.setItem('favFoodWishlist', JSON.stringify(updatedProducts));
+
+        //If there is no product in the favFoodWishlist then completely remove the array
+        // if (updatedProducts.length <= 0) {
+        //     localStorage.removeItem('favFoodWishlist');
+        // }
         setWishlistProducts(updatedProducts);
         setWishlistQuantity(updatedProducts.length);
         toast.error('Food removed from Wishlist.');
@@ -36,10 +41,10 @@ const WishlistCard = ({ product }: {product: FoodData}) => {
                 onClick={() => handleRemoveProductFromWishlist(product._id)}
                 className='text-red-600 font-semibold text-xl absolute top-3 left-3 bg-gray-100 py-1 px-3 rounded-full md:hidden'
             >X</button>
-            <Link className='w-full md:w-16' href={`/food/${product?.restaurant_Name}/${product?.slug}`}>
+            <Link className='w-full md:w-16' href={`/food/${product?.restaurant_Name.toLowerCase()}/${product?.slug}`}>
                 <Image src={product?.image} alt={product?.name} width={60} height={40} className='w-full md:w-16 rounded-md' />
             </Link>
-            <Link className='w-full md:w-6/12 ' href={`/food/${product?.restaurant_Name}/${product?.slug}`}>
+            <Link className='w-full md:w-6/12 ' href={`/food/${product?.restaurant_Name.toLowerCase()}/${product?.slug}`}>
                 <h4>{product?.name}</h4>
             </Link>
             {/* Price, Stock and Action Button */}

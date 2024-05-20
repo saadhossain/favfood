@@ -4,12 +4,11 @@ import mongoose from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (request: NextRequest) => {
+    await mongoose.connect(mongoUrl);
+    const url = new URL(request.url);
+    const searchParams = new URLSearchParams(url.searchParams);
+    const searchQuery = searchParams.get('query');
     try {
-        await mongoose.connect(mongoUrl);
-        const url = new URL(request.url);
-        const searchParams = new URLSearchParams(url.searchParams);
-        const searchQuery = searchParams.get('query');
-
         const searchWords = searchQuery?.split(' ').filter(word => word);
         const filter = {
             $or: searchWords?.map(word => ({
