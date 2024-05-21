@@ -11,7 +11,7 @@ export const GET = async () => {
     return NextResponse.json(users);
 };
 //route for saving users in database
-export const POST = async (request:NextRequest) => {
+export const POST = async (request: NextRequest) => {
     await mongoose.connect(mongoUrl);
     const payload = await request.json();
     //Find the users in the database, if exists don't overwrite
@@ -24,3 +24,21 @@ export const POST = async (request:NextRequest) => {
     const result = await user.save();
     return NextResponse.json({ status: true, result });
 };
+
+//Edit User details
+export const PATCH = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get('userId');
+    const payload = await request.json();
+    await mongoose.connect(mongoUrl);
+
+    //Check if the payload contains password, if yes, then make it hashpassword
+    let hashPassword;
+    if(payload.password){
+       const makehash = await bcrypt.hash(payload.password, 10);
+       hashPassword = makehash;
+    }
+    //Update the user
+    const result = await userSchema.updateOne({ _id: userId }, { $set: { ...payload, password: hashPassword } });
+    return NextResponse.json({ status: true, result });
+}

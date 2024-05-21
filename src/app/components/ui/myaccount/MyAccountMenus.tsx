@@ -14,7 +14,7 @@ const MyAccountMenus = () => {
         route.push('/');
     };
     const currentPath = usePathname();
-    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(true);
 
     const getLinkClasses = (path:string) => (
         `hover:bg-primary hover:text-white py-1 px-2 ${currentPath === path && 'bg-primary text-white'}`
@@ -44,7 +44,7 @@ const MyAccountMenus = () => {
                         </button>
                         <ul
                             id="settings-submenu"
-                            className={`${isSettingsOpen ? 'block' : 'hidden'} ml-3`}
+                            className={`${isSettingsOpen ? 'block' : 'hidden'} pl-3 mt-1`}
                         >
                             <li className={getLinkClasses('/account/settings/profile')}>
                                 <Link href='/account/settings/profile'>My Profile</Link>
