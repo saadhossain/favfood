@@ -6,7 +6,7 @@ import { FormEvent, useContext, useEffect, useRef } from 'react'
 import { FaSearch } from 'react-icons/fa'
 
 const SearchModal = () => {
-    const { setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen } = useContext(DataContext) as DataContextType;
+    const { setSearchedFoods, searchText, setSearchText, isModalOpen, setIsModalOpen } = useContext(DataContext) as DataContextType;
     const route = useRouter();
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -17,7 +17,7 @@ const SearchModal = () => {
         const searchtext = form.searchtext.value;
         setSearchText(searchtext);
         form.reset();
-        setIsSearchModalOpen(false);
+        setIsModalOpen(false);
         route.push('/foods/search');
     };
     //fetch the searched food from the api based on the searchText
@@ -40,17 +40,17 @@ const SearchModal = () => {
 
     //Make search input field active by default when modal is opened.
     useEffect(() => {
-        if (isSearchModalOpen && inputRef.current) {
+        if (isModalOpen && inputRef.current) {
             inputRef.current.focus();
         }
-    }, [isSearchModalOpen]);
+    }, [isModalOpen]);
     return (
         <>
             {
-                isSearchModalOpen && <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-40`}>
+                isModalOpen && <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-40`}>
                     <div className='w-11/12 md:w-2/4 h-48 flex items-center bg-gray-700 text-white px-5 rounded-md relative'>
                         <button
-                            onClick={() => setIsSearchModalOpen(false)}
+                            onClick={() => setIsModalOpen(false)}
                             className='font-bold text-xl absolute top-1 right-2 bg-gray-900 bg-opacity-60 py-1 px-3 rounded-full'>X</button>
                         <form
                             onSubmit={handleSearch}
