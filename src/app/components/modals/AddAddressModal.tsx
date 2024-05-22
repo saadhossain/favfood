@@ -1,9 +1,9 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
-import { UserData } from '@/app/types/DataTypes';
 import { updateUserProfile } from '@/app/utils/updateUserProfile';
-import { Dispatch, FormEvent, SetStateAction, useContext, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import Processing from '../spinner/Processing';
 
@@ -11,18 +11,25 @@ interface CountryPros {
     _id: string;
     name: string;
 }
-interface AddAddressProps {
-    openModal: boolean;
-    setOpenModal: Dispatch<SetStateAction<boolean>>;
-    countries: CountryPros[];
-    userInfo: UserData | any;
-}
 
-const AddAddressModal = ({ openModal, setOpenModal, countries, userInfo }: AddAddressProps) => {
-    const { loading, setLoading } = useContext(DataContext) as DataContextType;
+const AddAddressModal = () => {
+    const { loading, setLoading, openAddressBoxModal, setOpenAddressBoxModal } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
+    //Get the logged in user from the session
+    const { data: session } = useSession();
+    //Get the countries from the database
+    const [countries, setCountries] = useState([]);
+    useEffect(() => {
+        const getCountries = async () => {
+            const res = await fetch('/api/countries');
+            const data = await res.json();
+            setCountries(data);
+        }
+        getCountries();
+    }, [openAddressBoxModal]);
+    //Set the selected country to the state
     const [selectedCountry, setSelectedCountry] = useState('Bangladesh');
-
+    //Handle the selected country
     const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCountry(e.target.value);
     };
@@ -41,21 +48,21 @@ const AddAddressModal = ({ openModal, setOpenModal, countries, userInfo }: AddAd
             zipCode,
             country: selectedCountry
         };
-        const data = await updateUserProfile(userInfo._id, { address });
+        const data = await updateUserProfile(session?.user._id, { address });
         if (data.acknowledged) {
             toast.success('New Address added successfully');
             form.reset();
             setLoading(false);
-            setOpenModal(false);
+            setOpenAddressBoxModal(false);
         }
     }
     return (
         <>
             {
-                openModal && <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-40`}>
+                openAddressBoxModal && <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-40`}>
                     <div className='w-11/12 md:w-2/5  flex items-center bg-gray-700 text-white p-5 rounded-md relative'>
                         <button
-                            onClick={() => setOpenModal(false)}
+                            onClick={() => setOpenAddressBoxModal(false)}
                             className='font-bold text-xl absolute top-1 right-2 bg-gray-900 bg-opacity-60 py-1 px-3 rounded-full'>X</button>
                         <form
                             onSubmit={(e) => handleAddAddress(e)} className="w-full space-y-6">

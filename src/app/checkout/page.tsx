@@ -1,16 +1,19 @@
 'use client'
+import { useSession } from 'next-auth/react';
 import { useContext } from 'react';
-import { FaMapMarkerAlt } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPlus } from 'react-icons/fa';
+import Heading from '../components/shared/headings/Heading';
 import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import OrderDetails from '../components/ui/checkout/OrderDetails';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
+import { SessionData } from '../types/DataTypes';
 import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';
 import { getTotalPrice } from '../utils/getTotalPrice';
-import Heading from '../components/shared/headings/Heading';
 
 const CheckoutPage = () => {
-    const { setCartProducts } = useContext(DataContext) as DataContextType;
+    const { data: session } = useSession<SessionData | any>();
+    const { setCartProducts, setOpenAddressBoxModal } = useContext(DataContext) as DataContextType;
     // Get products from localstorage and set them to setProductsInLocalStorage state
     getDataFromLocalStorage('favFoodCart', setCartProducts);
     //Calculate total price of all product in the cart
@@ -18,25 +21,30 @@ const CheckoutPage = () => {
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-3 md:my-10 md:flex gap-10 justify-between'>
             <div className='w-full md:w-8/12'>
-                <Heading heading={'Secure Checkout'}/>
+                <Heading heading={'Secure Checkout'} />
                 {/* Delivery Address */}
                 <h3 className='flex items-center gap-2 text-lg md:text-xl font-semibold'><FaMapMarkerAlt className='text-primary' />Delivery Address</h3>
                 {/* Address Boxes */}
                 <div className='w-full md:flex items-center gap-4 mt-2 md:mt-5'>
                     {/* Default Address */}
-                    <div className='w-full md:w-2/4 bg-primary text-white rounded-md p-4'>
+                    <div className='w-full md:w-2/4 bg-primary text-white font-semibold rounded-md p-4'>
                         <FaMapMarkerAlt className='w-5 h-5 mb-2' />
-                        <p>
-                            Apt: 23, House: 18, Block-B,<br />
-                            Lane-5, Section-10, Dhaka.
-                        </p>
+                        <p>Street: {session?.user?.address?.streetAddress}</p>
+                        <div className='flex items-center gap-5'>
+                            <p>City: {session?.user?.address?.city}</p>
+                            <p>State: {session?.user?.address?.state}</p>
+                        </div>
+                        <div className='flex items-center gap-5'>
+                            <p>ZIP: {session?.user?.address?.zipCode}</p>
+                            <p>Country: {session?.user?.address?.country}</p>
+                        </div>
                     </div>
-                    {/* Inactive Address */}
-                    <div className='w-full md:w-2/4 text-gray-800 border-2 border-dashed border-gray-800 rounded-md p-4 mt-2 md:mt-0'>
-                        <FaMapMarkerAlt className='w-5 h-5 mb-2' />
-                        <p>
-                            Apt: 83, House: 31, Block-F,<br />
-                            Lane-8, Section-13, Dhaka.
+                    {/* Add New Address Box */}
+                    <div
+                        onClick={() => setOpenAddressBoxModal(true)}
+                        className='w-full md:w-2/4 flex flex-col justify-center text-gray-800 border-2 border-dashed border-gray-800 rounded-md p-4 mt-2 md:mt-0 cursor-pointer h-36'>
+                        <p className='flex items-center justify-center gap-2 text-lg'>
+                            <FaPlus /> Add New Address
                         </p>
                     </div>
                 </div>
