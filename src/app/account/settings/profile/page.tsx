@@ -7,6 +7,7 @@ import { DataContextType } from '@/app/types/DataContextTypes';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { FormEvent, useContext, useState } from 'react';
+import toast from 'react-hot-toast';
 import { FaEdit } from "react-icons/fa";
 
 const Profile = () => {
@@ -33,9 +34,11 @@ const Profile = () => {
       body: JSON.stringify(userInfo)
     });
     const data = await res.json();
-    console.log(data);
+    if (data.result.acknowledged) {
+      toast.success('Profile updated successfully');
+      setLoading(false);
+    }
   }
-  console.log(session?.user);
   return (
     <div>
       <SubHeading heading={'Profile'} />
