@@ -50,7 +50,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
         const oderDataModified = { ...orderData, paymentStatus: 'unpaid' };
         try {
             setLoading(true);
-            if (!orderData.deliveryAddress) {
+            if (!session?.user?.address?.city) {
                 toast.error('Please add the delivery address to confirm order');
                 return;
             }

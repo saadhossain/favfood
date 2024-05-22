@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useContext } from 'react';
 import { FaMapMarkerAlt, FaPlus } from 'react-icons/fa';
 import Heading from '../components/shared/headings/Heading';
+import SubHeading from '../components/shared/headings/SubHeading';
 import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import OrderDetails from '../components/ui/checkout/OrderDetails';
 import { DataContext } from '../context/DataContext';
@@ -27,18 +28,20 @@ const CheckoutPage = () => {
                 {/* Address Boxes */}
                 <div className='w-full md:flex items-center gap-4 mt-2 md:mt-5'>
                     {/* Default Address */}
-                    <div className='w-full md:w-2/4 bg-primary text-white font-semibold rounded-md p-4'>
-                        <FaMapMarkerAlt className='w-5 h-5 mb-2' />
-                        <p>Street: {session?.user?.address?.streetAddress}</p>
-                        <div className='flex items-center gap-5'>
-                            <p>City: {session?.user?.address?.city}</p>
-                            <p>State: {session?.user?.address?.state}</p>
+                    {
+                        !session?.user?.address?.city ? <SubHeading heading={'No Address Found! Please Add One...'} /> : <div className='w-full md:w-2/4 bg-primary text-white font-semibold rounded-md p-4'>
+                            <FaMapMarkerAlt className='w-5 h-5 mb-2' />
+                            <p>Street: {session?.user?.address?.streetAddress}</p>
+                            <div className='flex items-center gap-5'>
+                                <p>City: {session?.user?.address?.city}</p>
+                                <p>State: {session?.user?.address?.state}</p>
+                            </div>
+                            <div className='flex items-center gap-5'>
+                                <p>ZIP: {session?.user?.address?.zipCode}</p>
+                                <p>Country: {session?.user?.address?.country}</p>
+                            </div>
                         </div>
-                        <div className='flex items-center gap-5'>
-                            <p>ZIP: {session?.user?.address?.zipCode}</p>
-                            <p>Country: {session?.user?.address?.country}</p>
-                        </div>
-                    </div>
+                    }
                     {/* Add New Address Box */}
                     <div
                         onClick={() => setOpenAddressBoxModal(true)}

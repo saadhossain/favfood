@@ -15,7 +15,7 @@ const AddressBook = () => {
       <SubHeading heading={'Address Book'} />
       {
         !session ? <LoadingSpinner /> : <div className='w-full md:flex flex-col items-center gap-4 mt-5 md:mt-10'>
-          {session?.user.address ? <div className='w-full md:w-2/4 bg-gray-200 text-gray-700 font-semibold rounded-md p-4'>
+          {session?.user.address?.city ? <div className='w-full md:w-2/4 bg-gray-200 text-gray-700 font-semibold rounded-md p-4'>
             <FaMapMarkerAlt className='w-5 h-5 mb-2 text-primary' />
             <p>Street: {session?.user.address.streetAddress}</p>
             <div className='flex items-center gap-5'>
@@ -28,7 +28,7 @@ const AddressBook = () => {
             </div>
           </div>
             : <>
-              <SubHeading heading={'No Address Found! Please Add...'} />
+              <SubHeading heading={'No Address Found! Please Add One...'} />
               {/* Add New Address */}
               <div
                 onClick={() => setOpenAddressBoxModal(true)}
