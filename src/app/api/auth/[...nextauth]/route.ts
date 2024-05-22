@@ -66,17 +66,25 @@ const handler = NextAuth({
                 token.password = user.password;
                 token.image = user.profileImg;
                 token.role = user.role;
+                token.isActive = user.isActive;
+                token.phone = user.phone
             }
             return token;
         },
         async session({ session, token }) {
-            if (token) {
-                session.user._id = token._id;
-                session.user.email = token.email;
-                session.user.fullName = token.fullName;
-                session.user.password = token.password;
-                session.user.image = token.image;
-                session.user.role = token.role;
+            await mongoose.connect(mongoUrl);
+            const user = await userSchema.findOne({ _id: token._id });
+            if (user) {
+                session.user = {
+                    _id: user._id?.toString(),
+                    email: user.email,
+                    fullName: user.fullName,
+                    password: user.password,
+                    image: user.profileImg,
+                    role: user.role,
+                    phone: user.phone,
+                    isActive: user.isActive,
+                };
             }
             return session;
         }
