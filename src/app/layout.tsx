@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
 import { Fira_Code } from "next/font/google";
 import { ReactNode } from 'react';
-import "./globals.css";
+import { Toaster } from 'react-hot-toast';
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import SearchModal from './components/modals/SearchModal';
+import Footer from './components/shared/Footer';
+import HeaderNavigation from './components/shared/HeaderNavigation';
 import AuthProvider from './context/AuthProvider';
 import DataProvider from './context/DataContext';
-import HeaderNavigation from './components/shared/HeaderNavigation';
-import Footer from './components/shared/Footer';
-import { Toaster } from 'react-hot-toast';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import "./globals.css";
 
 const inter = Fira_Code({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
               {children}
             </div>
             <Footer />
+            <SearchModal />
           </DataProvider>
           <Toaster />
         </body>

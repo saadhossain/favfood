@@ -37,9 +37,9 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType | any }) => {
                                             {/* Product Image and product name */}
                                             <th className="md:p-3 flex flex-col gap-2">
                                                 {
-                                                    order.products.map(({product}:any)=> <div className='flex items-center gap-2'>
-                                                        <Image src={product.image} alt={product.name} width={80} height={60} className='rounded-md'/>
-                                                        <p>{product.name.length > 20 ? product.name.slice(0,24)+'...':product.name }</p>
+                                                    order.products.map(({ product }: any) => <div key={product._id} className='flex items-center gap-2'>
+                                                        <Image src={product.image} alt={product.name} width={80} height={60} className='rounded-md' />
+                                                        <p>{product.name.length > 20 ? product.name.slice(0, 24) + '...' : product.name}</p>
                                                     </div>)
                                                 }
                                             </th>
