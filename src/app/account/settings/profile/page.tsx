@@ -2,18 +2,40 @@
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import Processing from '@/app/components/spinner/Processing';
+import { DataContext } from '@/app/context/DataContext';
+import { DataContextType } from '@/app/types/DataContextTypes';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { FaEdit } from "react-icons/fa";
 
 const Profile = () => {
+  const { loading, setLoading } = useContext(DataContext) as DataContextType;
   const { data: session } = useSession();
   const [isEditable, setIsEditable] = useState(false);
+  const [userInfo, setUserInfo] = useState(session?.user);
 
-  const handleEditProfile = (e: FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserInfo({
+      ...userInfo,
+      [name]: value,
+    });
+  };
+  const handleEditProfile = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+    const res = await fetch(`/api/users?userId=${session?.user._id}`, {
+      method: 'PATCH',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(userInfo)
+    });
+    const data = await res.json();
+    console.log(data);
   }
+  console.log(session?.user);
   return (
     <div>
       <SubHeading heading={'Profile'} />
@@ -30,16 +52,31 @@ const Profile = () => {
               <FaEdit onClick={() => setIsEditable(!isEditable)} className='cursor-pointer w-5 h-5 hover:text-primary' />
             </div>
             <div className=' mb-3'>
-              <label htmlFor="name" className="block text-sm font-semibold">Full Name</label>
-              <input type="text" name="name" id="name" value={session?.user.fullName} className={`w-full px-3 py-2 rounded-md ${isEditable ? 'bg-gray-300' : 'bg-gray-400'} text-gray-900 focus:outline-none`} disabled={!isEditable} />
+              <label htmlFor="fullName" className="block text-sm font-semibold">Full Name</label>
+              <input type="text" name="fullName" id="fullName"
+                defaultValue={session?.user.fullName}
+                className={`w-full px-3 py-2 rounded-md ${isEditable ? 'bg-gray-300' : 'bg-gray-400'} text-gray-900 focus:outline-none`}
+                disabled={!isEditable}
+                onChange={handleInputChange}
+              />
             </div>
             <div className='mb-3'>
               <label htmlFor="email" className="block text-sm font-semibold">Email Address</label>
-              <input type="email" name="email" id="email" value={session?.user.email} className={`w-full px-3 py-2 rounded-md ${isEditable ? 'bg-gray-300' : 'bg-gray-400'} text-gray-900 focus:outline-none`} disabled={!isEditable} />
+              <input type="email" name="email" id="email"
+                value={session?.user.email && session?.user.email}
+                className='w-full px-3 py-2 rounded-md bg-gray-400 text-gray-900'
+                disabled
+                title='Email is not Editable'
+              />
             </div>
             <div className='mb-3'>
               <label htmlFor="phone" className="block text-sm font-semibold">Phone</label>
-              <input type="tel" name="phone" id="phone" value={session?.user?.phone && session?.user?.phone} className={`w-full px-3 py-2 rounded-md ${isEditable ? 'bg-gray-300' : 'bg-gray-400'} text-gray-900 focus:outline-none`} disabled={!isEditable} />
+              <input type="tel" name="phone" id="phone"
+                defaultValue={session?.user?.phone && session?.user?.phone}
+                className={`w-full px-3 py-2 rounded-md ${isEditable ? 'bg-gray-300' : 'bg-gray-400'} text-gray-900 focus:outline-none`}
+                disabled={!isEditable}
+                onChange={handleInputChange}
+              />
             </div>
             <div className='w-full flex items-center justify-between mb-3 font-semibold border-b-2 border-gray-200 pb-2'>
               <p>Role</p>
@@ -47,13 +84,12 @@ const Profile = () => {
             </div>
             <div className='w-full flex items-center justify-between mb-3 font-semibold'>
               <p>Status</p>
-              <p className='text-red-600'>{session?.user?.isActive ? 'Verified' : 'Unverified'}</p>
+              <p className={`${session?.user.isActive ? 'text-green-600' : 'text-red-600'}`}>{session?.user?.isActive ? 'Verified' : 'Unverified'}</p>
             </div>
             <button type="submit"
               disabled={!isEditable}
               className={`w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md ${isEditable ? 'bg-primary' : 'bg-gray-400'} text-white`}>
-              {/* {processing ? <Processing title={'Processing'} /> : 'Login'} */}
-              Edit Profile
+              {loading ? <Processing title={'Processing'} /> : 'Edit Profile'}
             </button>
           </form>
         </div>

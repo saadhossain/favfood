@@ -51,21 +51,23 @@ const handler = NextAuth({
                 token.password = user.password;
                 token.image = user.profileImg;
                 token.role = user.role;
-                token.phone = user.phone;
                 token.isActive = user.isActive;
+                token.phone = user.phone
             }
             return token;
         },
         async session({ session, token }) {
             if (token) {
-                session.user._id = token._id;
-                session.user.email = token.email;
-                session.user.fullName = token.fullName;
-                session.user.password = token.password;
-                session.user.image = token.image;
-                session.user.role = token.role;
-                session.user.phone = token.phone;
-                session.user.isActive = token.isActive
+                session.user = {
+                    _id: token._id,
+                    email: token.email,
+                    fullName: token.fullName,
+                    password: token.password,
+                    image: token.image,
+                    role: token.role,
+                    isActive: token.isActive,
+                    phone: token.phone
+                };
             }
             return session;
         }
