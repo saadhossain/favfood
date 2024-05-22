@@ -30,6 +30,7 @@ export const PATCH = async (request: NextRequest) => {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
     const payload = await request.json();
+    console.log(payload);
     //Connect to database
     await mongoose.connect(mongoUrl);
     //Check if the payload contains password, if yes, then make it hashpassword
@@ -38,7 +39,7 @@ export const PATCH = async (request: NextRequest) => {
        const makehash = await bcrypt.hash(payload.password, 10);
        hashPassword = makehash;
     }
-    
+    console.log(hashPassword);
     //Update the user
     const result = await userSchema.updateOne({ _id: userId }, { $set: { ...payload, password: hashPassword } });
     return NextResponse.json({ status: true, result });

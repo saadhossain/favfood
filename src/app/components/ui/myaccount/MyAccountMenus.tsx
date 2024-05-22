@@ -9,7 +9,7 @@ import { FaMinus, FaPlus, FaSignOutAlt } from "react-icons/fa";
 const MyAccountMenus = () => {
     const route = useRouter();
     const handleSignout = async () => {
-        signOut();
+        await signOut();
         toast.success('You are logged out.');
         route.push('/');
     };

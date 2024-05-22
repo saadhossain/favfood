@@ -4,6 +4,7 @@ import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
+import { updateUserProfile } from '@/app/utils/updateUserProfile';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { FormEvent, useContext, useState } from 'react';
@@ -26,15 +27,9 @@ const Profile = () => {
   const handleEditProfile = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    const res = await fetch(`/api/users?userId=${session?.user._id}`, {
-      method: 'PATCH',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(userInfo)
-    });
-    const data = await res.json();
-    if (data.result.acknowledged) {
+    //Call the updateUserProfile function
+    const data = await updateUserProfile(session?.user._id, userInfo)
+    if (data.acknowledged) {
       toast.success('Profile updated successfully');
       setLoading(false);
     }
