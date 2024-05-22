@@ -3,24 +3,29 @@ import AddAddressModal from '@/app/components/modals/AddAddressModal';
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import { useSession } from 'next-auth/react';
-import { FormEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
 const AddressBook = () => {
   const { data: session } = useSession();
   const [openModal, setOpenModal] = useState(false);
+  const [countries, setCountries] = useState([]);
+  useEffect(() => {
+    const getCountries = async () => {
+      const res = await fetch('/api/countries');
+      const data = await res.json();
+      setCountries(data);
+    }
+    getCountries();
+  }, [openModal]);
 
-  const handlePasswordChange = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-  }
   return (
     <div>
       <SubHeading heading={'Address Book'} />
       {
-        !session ? <LoadingSpinner /> : <div className='w-full md:flex items-center gap-4 mt-2 md:mt-5'>
+        !session ? <LoadingSpinner /> : <div className='w-full md:flex flex-col items-center gap-4 mt-5 md:mt-10'>
           {/* Default Address */}
-          <SubHeading heading={'No Address Found!'}/>
+          <SubHeading heading={'No Address Found! Please Add...'} />
           {/* Add New Address */}
           <div
             onClick={() => setOpenModal(!openModal)}
@@ -31,7 +36,12 @@ const AddressBook = () => {
           </div>
         </div>
       }
-      <AddAddressModal openModal={openModal} setOpenModal={setOpenModal} />
+      <AddAddressModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        countries={countries}
+        userInfo={session?.user}
+      />
     </div>
   )
 }

@@ -14,7 +14,7 @@ const HeaderNavigation = () => {
   const activePath = usePathname();
   const navStyle = `hover:text-secondary duration-300 ease-in-out}`;
   //Get Cart Quantity from the context api
-  const { cartQuantity, wishlistQuantity, isModalOpen, setIsModalOpen } = useContext(DataContext) as DataContextType;
+  const { cartQuantity, wishlistQuantity, isSearchModalOpen, setIsSearchModalOpen } = useContext(DataContext) as DataContextType;
   return (
     <header className='w-full bg-gray-100 sticky top-0 z-50'>
       <div className='w-11/12 md:w-10/12 mx-auto flex justify-between items-center'>
@@ -25,7 +25,7 @@ const HeaderNavigation = () => {
         <div className='flex items-center gap-4'>
           <FaSearch
             className='w-6 h-6 text-gray-700 hover:text-secondary cursor-pointer duration-300'
-            onClick={() => setIsModalOpen(!isModalOpen)}
+            onClick={() => setIsSearchModalOpen(!isSearchModalOpen)}
           />
           <Link href='/wishlist' className={`${navStyle} ${activePath === '/favourite' ? 'text-secondary' : 'text-gray-700'}`}><FaHeart className='w-6 h-6' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${wishlistQuantity <= 0 && 'hidden'}`}>{wishlistQuantity}</span></Link>
           <Link href='/cart' className={`${navStyle} ${activePath === '/cart' ? 'text-secondary' : 'text-gray-700'}`}><FaCartShopping className='w-6 h-6 relative' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${cartQuantity <= 0 && 'hidden'}`}>{cartQuantity}</span></Link>
