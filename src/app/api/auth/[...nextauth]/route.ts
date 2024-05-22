@@ -68,6 +68,7 @@ const handler = NextAuth({
                 token.role = user.role;
                 token.isActive = user.isActive;
                 token.phone = user.phone
+                token.address = user.address
             }
             return token;
         },
@@ -84,6 +85,7 @@ const handler = NextAuth({
                     role: user.role,
                     phone: user.phone,
                     isActive: user.isActive,
+                    address: user.address
                 };
             }
             return session;

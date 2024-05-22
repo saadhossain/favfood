@@ -40,6 +40,7 @@ const RegisterPage = () => {
             role: 'customer',
             isActive:true,
             phone:'',
+            address:null
         };
         try {
             //Save user data to database
