@@ -52,6 +52,9 @@ const LoginPage = () => {
             if (callBackEndpoint) {
                 redirect(`${callBackEndpoint}`);
             } else {
+                if (session?.user.role === 'admin') {
+                    redirect('/admin/dashboard');
+                }
                 redirect('/account');
             }
         }
