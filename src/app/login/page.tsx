@@ -2,33 +2,25 @@
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { FormEvent, useContext, useEffect, useState } from 'react';
+import { redirect, useSearchParams } from 'next/navigation';
+import { FormEvent, Suspense, useContext, useEffect } from 'react';
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import Processing from '../components/spinner/Processing';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
 import LoginBg from '/public/login-bg.jpg';
-
+import LoadingSpinner from '../components/spinner/LoadingSpinner';
 const LoginPage = () => {
     const { data: session } = useSession();
-
-    //Get the callbackEndpoint from the url
-    const currentPath = window.location.href;
-
-    let callBackEndpoint = null;
-    if (currentPath.includes('callbackUrl')) {
-        const encodedCallbackUrl = currentPath.split('callbackUrl=')[1];
-        callBackEndpoint = decodeURIComponent(encodedCallbackUrl.split('3000')[1]);
-    }
-
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl');
+    const redirectEndpoint = callbackUrl?.split('3000')[1];
     // State for processing status
-    const [processing, setProcessing] = useState(false);
-    const { showPassword, setShowPassword } = useContext(DataContext) as DataContextType;
+    const { showPassword, setShowPassword, loading, setLoading } = useContext(DataContext) as DataContextType;
 
     // Handle login form submission
     const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
-        setProcessing(true);
+        setLoading(true);
         e.preventDefault();
         const form = e.target as HTMLFormElement;
         const email: string = form.email.value;
@@ -40,17 +32,17 @@ const LoginPage = () => {
                 password,
                 redirect: false,
             });
-            setProcessing(false);
+            setLoading(false);
         } catch (error: any) {
-            setProcessing(false);
+            setLoading(false);
             throw new Error(error.message);
         }
     };
     // Use useEffect to handle redirection based on session and callbackUrl
     useEffect(() => {
         if (session) {
-            if (callBackEndpoint) {
-                redirect(`${callBackEndpoint}`);
+            if (redirectEndpoint) {
+                redirect(`${redirectEndpoint}`);
             } else {
                 if (session?.user.role === 'admin') {
                     redirect('/admin/dashboard');
@@ -58,7 +50,7 @@ const LoginPage = () => {
                 redirect('/account');
             }
         }
-    }, [session, callBackEndpoint]);
+    }, [session, redirectEndpoint]);
 
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-5 md:my-10 flex justify-center'>
@@ -87,7 +79,7 @@ const LoginPage = () => {
                     <div className="space-y-2">
                         <div>
                             <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">
-                                {processing ? <Processing title={'Processing'} /> : 'Login'}
+                                {loading ? <Processing title={'Processing'} /> : 'Login'}
                             </button>
                         </div>
                     </div>
@@ -105,4 +97,12 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+// export default LoginPage;
+
+const LoginPageWrapper = () => (
+    <Suspense fallback={<LoadingSpinner/>}>
+      <LoginPage />
+    </Suspense>
+  );
+  
+  export default LoginPageWrapper;
