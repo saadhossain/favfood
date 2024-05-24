@@ -20,6 +20,8 @@ export interface UserData {
     password: string;
     profileImg: string;
     role: string;
+    phone?: string;
+    isActive?: boolean;
 }
 
 
@@ -32,6 +34,8 @@ export interface SessionData {
         image: string;
         password: string;
         role: string;
+        phone?: string;
+        isActive?: boolean;
     }
 }
 
@@ -44,7 +48,7 @@ export interface WishlistData {
     productId: string;
 }
 export interface OrderDataType {
-    _id?:string;
+    _id?: string;
     products: [
         product: FoodData,
         quantity: number,

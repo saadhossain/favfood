@@ -9,11 +9,12 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useContext } from 'react';
+import toast from 'react-hot-toast';
+import SubHeading from '../../shared/headings/SubHeading';
 import Processing from '../../spinner/Processing';
 import CheckoutForm from './CheckoutForm';
 import cod from '/public/cod.png';
 import stripe from '/public/stripe-payment.png';
-import SubHeading from '../../shared/headings/SubHeading';
 const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
 const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
@@ -36,11 +37,12 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
         products: productsInCart,
         orderAmount: grandTotal,
         userInfo: {
-            _id:session?.user?._id,
+            _id: session?.user?._id,
             fullName: session?.user?.fullName
         },
         orderDate: new Date(),
         orderStatus: 'processing',
+        deliveryAddress: session?.user?.address
     }
     // console.log(orderData)
     //Save order details to the database
@@ -48,6 +50,10 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
         const oderDataModified = { ...orderData, paymentStatus: 'unpaid' };
         try {
             setLoading(true);
+            if (!session?.user?.address?.city) {
+                toast.error('Please add the delivery address to confirm order');
+                return;
+            }
             await saveOrderToDB(oderDataModified, route);
             setIsOrderConfirm(true);
             setLoading(false);
@@ -59,7 +65,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     return (
         <div>
             {/* Price Calculation */}
-            <SubHeading heading={'Order Details'}/>
+            <SubHeading heading={'Order Details'} />
             <div className='flex flex-col gap-4'>
                 <div className='flex items-center justify-between'>
                     <p>Subtotal</p>
@@ -75,7 +81,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
                 </div>
             </div>
             {/* Payment Methods */}
-            <SubHeading heading={'Payment Method'}/>
+            <SubHeading heading={'Payment Method'} />
             {/* Paypal Payment Method */}
             <div className='flex items-center gap-2'>
                 <input

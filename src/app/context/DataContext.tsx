@@ -63,11 +63,13 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
 
     //Declare the state for open and close the search modal
     const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+    //Declare the state for open and close the address box modal
+    const [openAddressBoxModal, setOpenAddressBoxModal] = useState(false);
 
     //state for show and hide the password field
     const [showPassword, setShowPassword] = useState(true);
 
-    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, showPassword, setShowPassword };
+    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword };
     return (
         <div>
             <DataContext.Provider value={allData}>
