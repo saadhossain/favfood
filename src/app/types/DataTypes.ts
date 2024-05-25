@@ -61,6 +61,7 @@ export interface OrderDataType {
 }
 
 export interface RestaurantData {
+    _id: string;
     name: string,
     foodCategory: string[],
     minOrderAmount: string,

@@ -25,7 +25,7 @@ const SingleRestaurantLayout: React.FC<LayoutProps> = ({ children, params }) => 
                     className={`border-b-4 ${!activePath.includes('reviews') ? 'border-primary': 'border-gray-200'} hover:border-primary pb-2 px-5`}
                 >Foods</Link>
                 <Link
-                    href={`/restaurants/${params.restaurantName}/reviews`}
+                    href={`/restaurants/${params.restaurantName}/reviews/${singleRestaurant._id}`}
                     className={`border-b-4 ${activePath.includes('reviews') ? 'border-primary': 'border-gray-200'} hover:border-primary pb-2 px-5`}
                 >Reviews</Link>
             </div>
