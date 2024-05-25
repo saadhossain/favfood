@@ -1,5 +1,6 @@
 'use client'
 
+import Heading from '@/app/components/shared/headings/Heading'
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner'
 import SearchedFoodCard from '@/app/components/ui/searchPage/SearchedFoodCard'
 import { DataContext } from '@/app/context/DataContext'
@@ -42,7 +43,8 @@ const SingleCategoryFoods = ({ params }: Props) => {
     }
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-5'>
-            {/* Display Search foods */}
+            <Heading heading={`Foods for ${categoryName.toUpperCase()}`}/>
+            {/* Display Category foods */}
             <div className='grid grid-cols-2 md:grid-cols-3 gap-5'>
                 {categoryFoods?.map((food: FoodData) => <SearchedFoodCard
                     key={food._id}
