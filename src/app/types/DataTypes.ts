@@ -77,3 +77,18 @@ export interface RestaurantData {
         }
     ]
 }
+
+export interface ReviewData {
+    _id:string,
+    title: string,
+    description: string,
+    rating: number,
+    foodId: string,
+    foodSlug: string,
+    restaurantId: string,
+    restaurantName: string,
+    userId: string,
+    userName: string,
+    userProfileImage: string,
+    addedOn: string,
+}
