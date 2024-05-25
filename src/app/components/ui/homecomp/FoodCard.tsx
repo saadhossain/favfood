@@ -20,14 +20,14 @@ const FoodCard = ({ food }: { food: FoodData }) => {
             <FaHeart
                 onClick={() => handleAddToWishlist(food._id)}
                 className='w-5 h-5 text-primary absolute top-1 left-1 cursor-pointer hover:text-secondary' />
-            <Link href='/' className='flex gap-1 items-center md:hidden absolute top-1 right-1 bg-gray-100 rounded-md px-2'><FaStar className='text-primary' />{food.reviewCount}</Link>
+            <Link href={`/foods/reviews/${food._id}`} className='flex gap-1 items-center md:hidden absolute top-1 right-1 bg-gray-100 rounded-md px-2'><FaStar className='text-primary' />{food.reviewCount}</Link>
             <div className='flex flex-col justify-between p-2 md:p-4'>
                 {/* Food name and its Reviews */}
                 <div className='flex items-start justify-between'>
                     <Link href={`/foods/${food.restaurant_Name.toLowerCase()}/${food.slug}`}>
                         <h3 className='w-full md:w-9/12 text-sm md:text-[15px] font-semibold'>{food.name}</h3>
                     </Link>
-                    <Link href='/' className='w-3/12 md:flex gap-1 items-center underline hover:text-primary hidden'><FaStar className='text-primary' />{food.reviewCount}</Link>
+                    <Link href={`/foods/reviews/${food.slug}/${food._id}`} className='w-3/12 md:flex gap-1 items-center underline hover:text-primary hidden'><FaStar className='text-primary' />{food.reviewCount}</Link>
                 </div>
                 {/* Restaurant Name and Item Sold */}
                 <div className='flex items-start justify-between mt-1 md:mt-2'>
