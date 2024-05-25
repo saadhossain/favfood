@@ -59,3 +59,21 @@ export interface OrderDataType {
     orderStatus: string,
     paymentStatus?: string
 }
+
+export interface RestaurantData {
+    name: string,
+    foodCategory: string[],
+    minOrderAmount: string,
+    location: string,
+    deliveryCharge: string,
+    profileImage: string,
+    offers: [
+        {
+            description: string,
+            discount: string,
+            minOrderAmount: string,
+            name: string,
+            validity: string
+        }
+    ]
+}

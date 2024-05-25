@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 
 const restaurantModel = new mongoose.Schema({
-    email:String,
-    restaurant_name:String,
-    password:String,
-    profileImg:String,
-    restaurant_address: {}
+    name: String,
+    foodCategory: [],
+    minOrderAmount: String,
+    location: String,
+    deliveryCharge: String,
+    profileImage: String,
+    offers: []
 })
 
-export const restaurantSchema = mongoose.models.restaurants || mongoose.model('restaurants', restaurantModel);
+export const restaurantSchema = mongoose.models.restaurants|| mongoose.model('restaurants', restaurantModel);
