@@ -9,13 +9,13 @@ import { fetchFoodData } from '@/app/utils/fetchFoodData';
 import { useContext } from 'react';
 interface Props {
   params: {
-    name: string
+    restaurantName: string
   }
 }
 
 const page = ({ params }: Props) => {
   const { loading } = useContext(DataContext) as DataContextType;
-  const restaurantName = params.name;
+  const restaurantName = params.restaurantName;
   const foods = fetchFoodData();
   const restaurantFoods = foods.filter((food: FoodData) => food.restaurant_Name.toLocaleLowerCase() === restaurantName);
   // console.log(restaurantFoods);
