@@ -2,9 +2,10 @@
 import { OrderDataType } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FaShop } from 'react-icons/fa6';
+import { MdOutlineRateReview } from "react-icons/md";
 import { TbProgressCheck } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
-import { MdOutlineRateReview } from "react-icons/md";
 
 const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
     return (
@@ -44,11 +45,21 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                                         <Link href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}>
                                                             <Image src={product.image} alt={product.name} width={80} height={60} className='rounded-md' />
                                                         </Link>
+                                                        {/* Name, Shop Name and Quantity */}
                                                         <div>
                                                             <Link href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}>
                                                                 {product.name.length > 20 ? product.name.slice(0, 24) + '...' : product.name}
                                                             </Link>
-                                                            <p className='text-left'>X {product.quantity}</p>
+                                                            <div className='flex gap-3'>
+                                                                <Link
+                                                                    href={`/restaurants/${product.restaurantName.toLowerCase()}`}
+                                                                    className='flex gap-1 items-center font-normal hover:text-primary'
+                                                                >
+                                                                    <FaShop />
+                                                                    {product.restaurantName}
+                                                                </Link>
+                                                                <p className='text-left font-normal'>Qty: <span className='font-semibold'>{product.quantity}</span></p>
+                                                            </div>
                                                         </div>
                                                     </div>)
                                                 }
@@ -61,7 +72,7 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                                 <div className='flex gap-1 items-center justify-center'>
                                                     <TiDelete className='w-8 h-8 cursor-pointer text-red-500' title='Cancel' />
                                                     <TbProgressCheck className='w-6 h-6 cursor-pointer text-green-600' title='Track Package' />
-                                                    <MdOutlineRateReview className='w-6 h-6 cursor-pointer' title='Write a Review'/>
+                                                    <MdOutlineRateReview className='w-6 h-6 cursor-pointer' title='Write a Review' />
                                                 </div>
                                             </th>
                                         </tr>)
