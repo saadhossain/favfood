@@ -16,6 +16,6 @@ export const fetchUserOrders = (session: any) => {
             setLoading(false);
         };
         getUserOrders();
-    }, [session]);
+    }, [setLoading, session]);
     return userOrders;
 };

@@ -31,20 +31,29 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     const productsInCart = getProductsInCart();
     const { data: session } = useSession();
     const route = useRouter();
-
-    //Arrange order details
+    //Arrange Product Informations
+    const productData = productsInCart.map((item: any) => ({
+        _id: item.product._id,
+        name: item.product.name,
+        slug: item.product.slug,
+        restaurantName: item.product.restaurant_Name,
+        price: item.product.price,
+        image: item.product.image,
+        quantity: item.quantity
+    }));
+    //Arrange order data to save to database
     const orderData = {
-        products: productsInCart,
+        products: productData,
         orderAmount: grandTotal,
         userInfo: {
             _id: session?.user?._id,
             fullName: session?.user?.fullName
         },
-        orderDate: new Date(),
+        paymentMethod: paymentMethod,
         orderStatus: 'processing',
-        deliveryAddress: session?.user?.address
+        deliveryAddress: session?.user?.address,
+        orderDate: new Date(),
     }
-    // console.log(orderData)
     //Save order details to the database
     const handleCashOnDelivery = async () => {
         const oderDataModified = { ...orderData, paymentStatus: 'unpaid' };

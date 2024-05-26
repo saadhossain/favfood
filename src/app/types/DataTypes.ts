@@ -50,46 +50,27 @@ export interface WishlistData {
 export interface OrderDataType {
     _id?: string;
     products: [
-        product: FoodData,
-        quantity: number,
+        {
+            id: string,
+            name: string,
+            slug: string,
+            restaurantName: string,
+            price: number,
+            image: string,
+            quantity: number
+        }
     ],
     orderAmount: string,
-    userInfo: any,
-    orderDate: string,
+    userInfo: { _id: string, fullName: string },
+    paymentMethod: string,
     orderStatus: string,
-    paymentStatus?: string
-}
-
-export interface RestaurantData {
-    _id: string;
-    name: string,
-    foodCategory: string[],
-    minOrderAmount: string,
-    location: string,
-    deliveryCharge: string,
-    profileImage: string,
-    offers: [
-        {
-            description: string,
-            discount: string,
-            minOrderAmount: string,
-            name: string,
-            validity: string
-        }
-    ]
-}
-
-export interface ReviewData {
-    _id:string,
-    title: string,
-    description: string,
-    rating: number,
-    foodId: string,
-    foodSlug: string,
-    restaurantId: string,
-    restaurantName: string,
-    userId: string,
-    userName: string,
-    userProfileImage: string,
-    addedOn: string,
+    deliveryAddress: {
+        streetAddress: string,
+        city: string,
+        state: string,
+        zipCode: String,
+        country: string
+    },
+    orderDate: string,
+    paymentStatus: string
 }

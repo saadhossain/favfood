@@ -14,7 +14,7 @@ export const saveOrderToDB = async (orderData: OrderDataType | any, route: AppRo
     if (data.status) {
         localStorage.removeItem('favFoodCart');
         toast.success('Order has been placed successfully.');
-        route.push('/account');
+        route.push('/account/orders');
     }
     return data;
 }
