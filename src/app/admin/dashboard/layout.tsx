@@ -24,7 +24,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             {
                 (session && session?.user?.role === 'admin') &&
                 <div className='flex gap-10'>
-                    <div className='w-1/5'>
+                    <div className='w-1/5 hidden md:block'>
                         <Heading heading={'Dashboard'} />
                         <AdminMenus />
                     </div>

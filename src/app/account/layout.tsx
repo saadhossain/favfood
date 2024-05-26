@@ -5,7 +5,7 @@ import MyAccountMenus from '../components/ui/myaccount/MyAccountMenus';
 const MyAccountLayout = ({ children }: { children: ReactNode }) => {
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-3 md:my-10 flex gap-10'>
-            <div className='w-1/5'>
+            <div className='w-1/5 hidden md:block'>
                 <Heading heading={'My Account'} />
                 <MyAccountMenus />
             </div>
