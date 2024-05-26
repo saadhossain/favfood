@@ -2,12 +2,32 @@
 import { OrderDataType } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
+import { FaRegCreditCard } from "react-icons/fa";
 import { FaShop } from 'react-icons/fa6';
+import { HiCursorArrowRipple } from "react-icons/hi2";
 import { MdOutlineRateReview } from "react-icons/md";
 import { TbProgressCheck } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
+    const handleCancelOrder = async (orderId: string | undefined, orderStatus: string) => {
+        const isConfirmed = window.confirm('Do you agree to Cancel this order?');
+        if (orderStatus !== 'processing') {
+            toast.error('You can not cancel this order.');
+            return;
+        }
+        if (isConfirmed && orderStatus === 'processing') {
+            const res = await fetch(`/api/orders/user?orderId=${orderId}`, {
+                method: 'DELETE'
+            });
+            const { result } = await res.json();
+            console.log(result);
+            if (result.acknowledged) {
+                toast.success('Order Deleted Successfully.');
+            }
+        }
+    }
     return (
         <div className='w-full'>
             {
@@ -47,13 +67,16 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                                         </Link>
                                                         {/* Name, Shop Name and Quantity */}
                                                         <div>
-                                                            <Link href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}>
+                                                            <Link
+                                                                href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}
+                                                                className='hover:text-secondary duration-300 ease-in-out'
+                                                            >
                                                                 {product.name.length > 20 ? product.name.slice(0, 24) + '...' : product.name}
                                                             </Link>
                                                             <div className='flex gap-3'>
                                                                 <Link
                                                                     href={`/restaurants/${product.restaurantName.toLowerCase()}`}
-                                                                    className='flex gap-1 items-center font-normal hover:text-primary'
+                                                                    className='flex gap-1 items-center font-normal hover:text-secondary duration-300 ease-in-out'
                                                                 >
                                                                     <FaShop />
                                                                     {product.restaurantName}
@@ -70,7 +93,16 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                             {/* Product Action Buttons */}
                                             <th className="p-3">
                                                 <div className='flex gap-1 items-center justify-center'>
-                                                    <TiDelete className='w-8 h-8 cursor-pointer text-red-500' title='Cancel' />
+                                                    <button
+                                                        className='flex relative'
+                                                        title='Pay Now'
+                                                    >
+                                                        <FaRegCreditCard className='w-6 h-6' />
+                                                        <HiCursorArrowRipple className='text-primary absolute -bottom-1 left-4' />
+                                                    </button>
+                                                    <TiDelete
+                                                        onClick={() => handleCancelOrder(order._id, order.orderStatus)}
+                                                        className='w-8 h-8 cursor-pointer text-red-500' title='Cancel' />
                                                     <TbProgressCheck className='w-6 h-6 cursor-pointer text-green-600' title='Track Package' />
                                                     <MdOutlineRateReview className='w-6 h-6 cursor-pointer' title='Write a Review' />
                                                 </div>
