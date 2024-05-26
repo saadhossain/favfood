@@ -7,7 +7,6 @@ export const GET = async (request: NextRequest) => {
     const url = new URL(request.url);
     const searchParams = new URLSearchParams(url.searchParams);
     const queryParams = searchParams.get('userId');
-    // console.log(queryParams);
 
     //Connect MongoDB Database
     await mongoose.connect(mongoUrl);

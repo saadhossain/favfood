@@ -15,7 +15,6 @@ const WishlistCard = ({ product }: { product: FoodData }) => {
     const handleAddToCart = useHandleAddToCart();
 
     const handleRemoveProductFromWishlist = (id: string) => {
-        // console.log(id);
         let productsInWishlist = JSON.parse(localStorage.getItem('favFoodWishlist') as string);
         const updatedProducts = productsInWishlist.filter((item: CartDataType) => item.productId !== id);
         // Update local storage with the updated products

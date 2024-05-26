@@ -19,7 +19,6 @@ interface CheckoutProps {
 
 
 const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, route, setIsOrderConfirm }: CheckoutProps) => {
-    // console.log(Number(paymentAmount))
     const stripe = useStripe()
     const elements = useElements();
     const handleMakePayment = async (e: FormEvent) => {
@@ -32,9 +31,7 @@ const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, 
             body: JSON.stringify({ paymentAmount }),
         })
         const data = await res.json();
-        // console.log(data);
         const clientSecret = data.clientSecret;
-        // console.log(clientSecret);
         if (!stripe || !elements) {
             return toast.error("Stripe or Elements couldn't found!")
         }

@@ -16,7 +16,6 @@ const RegisterPage = () => {
     const { showPassword, setShowPassword, loading, setLoading } = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
     const [error, setError] = useState('');
-    // console.log(session);
     const handleUserRegistration = async (e: FormEvent<HTMLFormElement>) => {
         setLoading(true);
         e.preventDefault();

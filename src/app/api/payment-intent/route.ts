@@ -4,7 +4,6 @@ import Stripe from 'stripe';
 export const POST = async (request: NextRequest) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
     const {paymentAmount} = await request.json();
-    // console.log(paymentAmount);
     const finalAmount = Number((paymentAmount * 100).toFixed(2));
     const paymentIntent:Stripe.PaymentIntent = await  stripe.paymentIntents.create({
         currency: "usd",
