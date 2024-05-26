@@ -73,7 +73,7 @@ const MyAccountMenus = () => {
                 onClick={handleSignout}
                 className='flex items-center mt-3 gap-2 font-semibold text-lg cursor-pointer hover:text-primary'>
                 <FaSignOutAlt className='w-6 h-6' />
-                <h4>Signout</h4>
+                <h4>Logout</h4>
             </div>
         </aside>
     );

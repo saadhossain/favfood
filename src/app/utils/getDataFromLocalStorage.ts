@@ -9,7 +9,6 @@ export const getDataFromLocalStorage = (localStorageKey: string, stateToSetData:
     useEffect(() => {
         setLoading(true);
         const data = JSON.parse(localStorage.getItem(localStorageKey) as string);
-        console.log(data)
         if (data) {
             stateToSetData(data);
         }

@@ -7,7 +7,6 @@ const DisplayFoodData = ({ tabQuery, loading }: { tabQuery: string, loading: boo
     const [page, setPage] = useState(1);
     //Get the foods data...
     const foods = fetchFoodDataByQuery(tabQuery, page);
-    // console.log(foods);
     if (loading) {
         return <ProductLoader />;
     }

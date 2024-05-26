@@ -8,7 +8,6 @@ import { fetchFoodData } from './fetchFoodData';
 export const getProductsInCart = () => {
     const foods = fetchFoodData();
     const { cartProducts } = useContext(DataContext) as DataContextType;
-    // console.log(foods);
     return cartProducts?.map((item: CartDataType) => {
         const foundProduct = foods.find((food: FoodData) => food._id === item.productId);
         return {

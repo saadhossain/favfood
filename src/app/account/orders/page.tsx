@@ -11,7 +11,6 @@ const Orders = () => {
   const { loading } = useContext(DataContext) as DataContextType;
   const { data: session } = useSession();
   const userOrders = fetchUserOrders(session);
-  // console.log(userOrders)
   return (
     <div>
       <SubHeading heading={'Orders'} />

@@ -8,7 +8,6 @@ import { fetchFoodData } from './fetchFoodData';
 export const getProductsInWishlist = () => {
     const foods = fetchFoodData();
     const { wishlistProducts } = useContext(DataContext) as DataContextType;
-    // console.log(foods);
     return wishlistProducts?.map((item: CartDataType) => {
         const foundProduct = foods.find((food: FoodData) => food._id === item.productId);
         return foundProduct;

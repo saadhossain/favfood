@@ -50,12 +50,27 @@ export interface WishlistData {
 export interface OrderDataType {
     _id?: string;
     products: [
-        product: FoodData,
-        quantity: number,
+        {
+            id: string,
+            name: string,
+            slug: string,
+            restaurantName: string,
+            price: number,
+            image: string,
+            quantity: number
+        }
     ],
     orderAmount: string,
-    userInfo: any,
-    orderDate: string,
+    userInfo: { _id: string, fullName: string },
+    paymentMethod: string,
     orderStatus: string,
-    paymentStatus?: string
+    deliveryAddress: {
+        streetAddress: string,
+        city: string,
+        state: string,
+        zipCode: String,
+        country: string
+    },
+    orderDate: string,
+    paymentStatus: string
 }

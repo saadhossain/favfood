@@ -33,7 +33,6 @@ const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: an
     };
 
     const handleRemoveProductFromCart = (id: string) => {
-        // console.log(id);
         let productsInLocalStorage = JSON.parse(localStorage.getItem('favFoodCart') as string);
         const updatedProducts = productsInLocalStorage.filter((item: CartDataType) => item.productId !== id);
         // Update local storage with the updated products

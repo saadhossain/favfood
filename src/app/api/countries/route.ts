@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server';
 
 export const GET = async () => {
     await mongoose.connect(mongoUrl);
-    const users = await countriesSchema.find();
-    // console.log(users);
-    return NextResponse.json(users);
+    const countries = await countriesSchema.find();
+    return NextResponse.json(countries);
 };
