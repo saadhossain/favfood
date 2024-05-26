@@ -3,14 +3,13 @@ import mongoose from 'mongoose';
 const ordersModel = new mongoose.Schema({
     products: [
         {
-            product: {
-                _id: String,
-                name: String,
-                slug: String,
-                price: Number,
-                image: String
-            },
-            quantity: Number,
+            _id: String,
+            name: String,
+            slug: String,
+            restaurantName: String,
+            price: Number,
+            image: String,
+            quantity: Number
         }
     ],
     orderAmount: String,

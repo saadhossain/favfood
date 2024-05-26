@@ -5,7 +5,7 @@ export const config = {
         "/account/:path*",
         "/admin/dashboard/:path*",
         "/checkout",
-        "/api/orders/:path*",
+        // "/api/orders/:path*",
         "/api/users/:path*",
         "/api/payment-intent",
     ]

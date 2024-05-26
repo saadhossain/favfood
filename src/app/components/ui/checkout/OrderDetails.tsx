@@ -33,16 +33,14 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     const route = useRouter();
     //Arrange Product Informations
     const productData = productsInCart.map((item: any) => ({
-        product: {
-            _id: item.product._id,
-            name: item.product.name,
-            slug: item.product.slug,
-            price: item.product.price,
-            image: item.product.image
-        },
+        _id: item.product._id,
+        name: item.product.name,
+        slug: item.product.slug,
+        restaurantName: item.product.restaurant_Name,
+        price: item.product.price,
+        image: item.product.image,
         quantity: item.quantity
     }));
-
     //Arrange order data to save to database
     const orderData = {
         products: productData,
