@@ -28,7 +28,7 @@ const MobileMenus = ({ isExpand, setIsExpand }: Props) => {
     );
 
     return (
-        <nav className={`w-full min-h-[62vh] bg-gray-100 p-4 rounded-md flex flex-col justify-between absolute top-14 right-0 ${!isExpand && 'hidden'}`}>
+        <nav className={`w-full min-h-[62vh] bg-gray-200 p-4 rounded-md flex flex-col justify-between absolute top-14 right-0 ${!isExpand && 'hidden'}`}>
             <ul className='flex flex-col gap-1'>
                 {
                     session?.user.role === 'admin'

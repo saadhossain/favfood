@@ -40,7 +40,7 @@ const Password = () => {
         !session ? <LoadingSpinner /> : <div className='flex gap-5 items-center justify-center'>
           <form
             onSubmit={handlePasswordChange}
-            className="w-3/5">
+            className="w-full md:w-3/5">
             <div className='mb-3'>
               <label htmlFor="oldPass" className="block text-sm font-semibold">Old Password</label>
               <input type="text" name="oldPass" id="oldPass"
