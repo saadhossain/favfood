@@ -38,14 +38,14 @@ const Profile = () => {
     <div>
       <SubHeading heading={'Profile'} />
       {
-        !session ? <LoadingSpinner /> : <div className='flex gap-5 items-center'>
-          <div className='w-2/5 flex flex-col items-center justify-center'>
-            <Image src={session?.user.image} alt={session?.user.fullName} width={100} height={100} className='rounded-full' />
+        !session ? <LoadingSpinner /> : <div className='md:flex gap-5 items-center'>
+          <div className='w-full md:w-2/5 flex flex-col items-center justify-center'>
+            <Image src={session?.user.image} alt={session?.user.fullName} width={160} height={160} className='rounded-3xl w-40 h-40' />
             <h4 className='text-lg font-semibold'>{session?.user.fullName}</h4>
           </div>
           <form
             onSubmit={handleEditProfile}
-            className="w-3/5">
+            className="w-full md:w-3/5">
             <div className='flex justify-end'>
               <FaEdit onClick={() => setIsEditable(!isEditable)} className='cursor-pointer w-5 h-5 hover:text-primary' />
             </div>
