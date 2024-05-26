@@ -1,12 +1,12 @@
 import SubHeading from '@/app/components/shared/headings/SubHeading'
 import React from 'react'
 
-const Dashboard = () => {
+const AllOrders = () => {
   return (
     <div>
-      <SubHeading heading={'Dashboard'}/>
+        <SubHeading heading={'All Orders'}/>
     </div>
   )
 }
 
-export default Dashboard
+export default AllOrders

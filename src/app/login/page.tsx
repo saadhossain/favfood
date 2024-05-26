@@ -46,8 +46,9 @@ const LoginPage = () => {
             } else {
                 if (session?.user.role === 'admin') {
                     redirect('/admin/dashboard');
+                }else{
+                    redirect('/account');
                 }
-                redirect('/account');
             }
         }
     }, [session, redirectEndpoint]);
