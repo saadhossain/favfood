@@ -47,8 +47,8 @@ const UsersTable = ({ users }: Props) => {
                                 <thead className="bg-gray-300">
                                     <tr className="text-center">
                                         {/* Product Remove Button */}
-                                        <th className="md:p-3 text-left">Image, Name & Email</th>
-                                        <th className="md:p-3 px-6">Phone</th>
+                                        <th className="p-3 text-left">Image, Name & Email</th>
+                                        <th className="md:p-3 px-24">Phone</th>
                                         <th className="p-3">Status</th>
                                         <th className="p-3">Role</th>
                                         <th className="p-3">Actions</th>
@@ -60,7 +60,7 @@ const UsersTable = ({ users }: Props) => {
                                             key={user._id}
                                             className="text-center border-b-2 border-gray-200">
                                             {/* Product Image and product name */}
-                                            <th className="md:p-3 px-6 flex gap-2 items-center">
+                                            <th className="md:p-3 p-2 flex gap-2 items-center">
                                                 <Image src={user.profileImg} alt={user.fullName} width={60} height={60} className='rounded-md max-h-16' />
                                                 <div className='text-left'>
                                                     <p>{user.fullName}</p>

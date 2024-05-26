@@ -48,7 +48,7 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                 <thead className="bg-gray-300">
                                     <tr className="text-center">
                                         {/* Product Remove Button */}
-                                        <th className="md:p-3 text-left">Product</th>
+                                        <th className="p-3 text-left">Product</th>
                                         <th className="md:p-3 px-6">Total</th>
                                         <th className="p-3">Payment</th>
                                         <th className="p-3">Status</th>
@@ -64,21 +64,24 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                             <th className="md:p-3 flex flex-col gap-2">
                                                 {
                                                     order?.products?.map((product: any) => <div key={product?._id} className='flex gap-2 items-center'>
-                                                        <Link href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}>
+                                                        <Link
+                                                            href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}
+                                                            className='w-20 py-2 md:py-0'
+                                                        >
                                                             <Image src={product.image} alt={product.name} width={80} height={60} className='rounded-md' />
                                                         </Link>
                                                         {/* Name, Shop Name and Quantity */}
                                                         <div>
                                                             <Link
                                                                 href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}
-                                                                className='hover:text-secondary duration-300 ease-in-out'
+                                                                className='hover:text-secondary duration-300 ease-in-out hidden md:block'
                                                             >
                                                                 {product.name.length > 20 ? product.name.slice(0, 24) + '...' : product.name}
                                                             </Link>
-                                                            <div className='flex gap-3'>
+                                                            <div className='flex flex-col md:flex-row gap-2 md:gap-3'>
                                                                 <Link
                                                                     href={`/restaurants/${product.restaurantName.toLowerCase()}`}
-                                                                    className='flex gap-1 items-center font-normal hover:text-secondary duration-300 ease-in-out'
+                                                                    className='flex gap-1 items-center hover:text-secondary duration-300 ease-in-out'
                                                                 >
                                                                     <FaShop />
                                                                     {product.restaurantName}
