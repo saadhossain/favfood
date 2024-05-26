@@ -20,7 +20,7 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
             return;
         }
         if (isConfirmed && orderStatus === 'processing') {
-            const res = await fetch(`/api/orders/user?orderId=${orderId}`, {
+            const res = await fetch(`/api/orders?orderId=${orderId}`, {
                 method: 'DELETE'
             });
             const { result } = await res.json();
@@ -63,7 +63,7 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                             {/* Product Image and product name */}
                                             <th className="md:p-3 flex flex-col gap-2">
                                                 {
-                                                    order.products.map((product: any) => <div key={product?._id} className='flex gap-2 items-center'>
+                                                    order?.products?.map((product: any) => <div key={product?._id} className='flex gap-2 items-center'>
                                                         <Link href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}>
                                                             <Image src={product.image} alt={product.name} width={80} height={60} className='rounded-md' />
                                                         </Link>
