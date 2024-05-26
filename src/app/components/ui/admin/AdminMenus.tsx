@@ -19,7 +19,7 @@ const AdminMenus = () => {
     );
 
     return (
-        <aside className='min-h-[62vh] bg-gray-100 p-4 rounded-md flex flex-col justify-between'>
+        <aside className='min-h-[62vh] bg-gray-100 p-4 rounded-md flex flex-col justify-between sticky top-20'>
             <nav>
                 <ul className='flex flex-col gap-1'>
                     <li className={getLinkClasses('/admin/dashboard')}>
