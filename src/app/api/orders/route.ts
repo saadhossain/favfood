@@ -5,8 +5,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async () => {
     await mongoose.connect(mongoUrl);
-    const orders = await orderSchema.find();
-    return NextResponse.json({ status: true, orders });
+    const result = await orderSchema.find();
+    return NextResponse.json({ status: true, result });
 }
 
 export const POST = async (request: NextRequest) => {

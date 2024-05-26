@@ -1,5 +1,6 @@
 'use client';
 import { OrderDataType } from '@/app/types/DataTypes';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -7,10 +8,11 @@ import { FaRegCreditCard } from "react-icons/fa";
 import { FaShop } from 'react-icons/fa6';
 import { HiCursorArrowRipple } from "react-icons/hi2";
 import { MdOutlineRateReview } from "react-icons/md";
-import { TbProgressCheck } from "react-icons/tb";
+import { TbProgressCheck, TbShoppingBagEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
+    const { data: session } = useSession();
     const handleCancelOrder = async (orderId: string | undefined, orderStatus: string) => {
         const isConfirmed = window.confirm('Do you agree to Cancel this order?');
         if (orderStatus !== 'processing') {
@@ -93,18 +95,28 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                             {/* Product Action Buttons */}
                                             <th className="p-3">
                                                 <div className='flex gap-1 items-center justify-center'>
-                                                    <button
-                                                        className='flex relative'
-                                                        title='Pay Now'
-                                                    >
-                                                        <FaRegCreditCard className='w-6 h-6' />
-                                                        <HiCursorArrowRipple className='text-primary absolute -bottom-1 left-4' />
-                                                    </button>
                                                     <TiDelete
                                                         onClick={() => handleCancelOrder(order._id, order.orderStatus)}
                                                         className='w-8 h-8 cursor-pointer text-red-500' title='Cancel' />
-                                                    <TbProgressCheck className='w-6 h-6 cursor-pointer text-green-600' title='Track Package' />
-                                                    <MdOutlineRateReview className='w-6 h-6 cursor-pointer' title='Write a Review' />
+                                                    {
+                                                        session?.user.role === 'admin' ? <div className='flex gap-1 items-center justify-center'>
+                                                            <TbShoppingBagEdit
+                                                                className='w-6 h-6 text-green-600 cursor-pointer'
+                                                                title='Modify Order'
+                                                            />
+                                                        </div> :
+                                                            <div className='flex gap-1 items-center justify-center'>
+                                                                <button
+                                                                    className='flex relative'
+                                                                    title='Pay Now'
+                                                                >
+                                                                    <FaRegCreditCard className='w-6 h-6' />
+                                                                    <HiCursorArrowRipple className='text-primary absolute -bottom-1 left-4' />
+                                                                </button>
+                                                                <TbProgressCheck className='w-6 h-6 cursor-pointer text-green-600' title='Track Package' />
+                                                                <MdOutlineRateReview className='w-6 h-6 cursor-pointer' title='Write a Review' />
+                                                            </div>
+                                                    }
                                                 </div>
                                             </th>
                                         </tr>)
