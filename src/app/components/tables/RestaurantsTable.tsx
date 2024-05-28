@@ -57,7 +57,7 @@ const RestaurantsTable = ({ restaurants }: Props) => {
                                     <tr className="text-center">
                                         {/* Product Remove Button */}
                                         <th className="p-3 text-left">Name & Logo</th>
-                                        <th className="md:p-3 px-24">Min Order</th>
+                                        <th className="md:p-3">Min Order</th>
                                         <th className="p-3">Status</th>
                                         <th className="p-3">Category</th>
                                         <th className="p-3">Actions</th>
@@ -70,12 +70,14 @@ const RestaurantsTable = ({ restaurants }: Props) => {
                                             className="text-center border-b-2 border-gray-200">
                                             {/* Product Image and product name */}
                                             <th className="md:p-3 p-2">
-                                                <div className='flex gap-2 items-center'>
+                                                <div className='md:flex gap-2 items-center min-w-32 md:min-w-0 text-left'>
                                                     <Image src={restaurant.profileImage} alt={restaurant.name} width={60} height={60} className='rounded-md max-h-16' />
-                                                    <p>{restaurant.name}</p>
+                                                    <p className='capitalize mt-1 md:mt-0'>{restaurant.name}</p>
                                                 </div>
                                             </th>
-                                            <th className="md:p-3 p-2">{restaurant.minOrderAmount}</th>
+                                            <th className="md:p-3 p-2">
+                                                <p className='w-20'>{restaurant.minOrderAmount}</p>
+                                            </th>
                                             <th className="md:p-3 p-2">
                                                 <div className='flex items-center gap-1'>
                                                     <p>{restaurant.isActive ? 'Active' : 'Inactive'}</p>
@@ -89,10 +91,12 @@ const RestaurantsTable = ({ restaurants }: Props) => {
                                                     </div>
                                                 </div>
                                             </th>
-                                            <th className="md:p-3 p-2 grid grid-cols-3 font-normal">
-                                                {
-                                                    restaurant?.foodCategory?.map((category: string) => <p>{category}</p>)
-                                                }
+                                            <th className="md:p-3 p-2">
+                                                <div className='grid grid-cols-2 md:grid-cols-3 font-normal min-w-40 md:min-w-0'>
+                                                    {
+                                                        restaurant?.foodCategory?.map((category: string) => <p>{category}</p>)
+                                                    }
+                                                </div>
                                             </th>
                                             {/* Restaurant Action Buttons */}
                                             <th className="p-3">

@@ -20,7 +20,7 @@ const Reviews = () => {
 
   return (
     <div>
-      <div className='flex items-center justify-between'>
+      <div className='flex gap-5 items-center justify-between'>
         <SubHeading heading={'Reviews'} />
         <DashboardSearch />
       </div>
