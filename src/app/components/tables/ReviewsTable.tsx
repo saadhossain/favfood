@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link';
+import { FormEvent } from 'react';
 import toast from 'react-hot-toast';
 import { TbEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
