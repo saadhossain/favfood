@@ -6,8 +6,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async () => {
     await mongoose.connect(mongoUrl);
-    const users = await userSchema.find();
-    return NextResponse.json(users);
+    const result = await userSchema.find();
+    return NextResponse.json({ status: true, result });
 };
 //route for saving users in database
 export const POST = async (request: NextRequest) => {
@@ -33,11 +33,19 @@ export const PATCH = async (request: NextRequest) => {
     await mongoose.connect(mongoUrl);
     //Check if the payload contains password, if yes, then make it hashpassword
     let hashPassword;
-    if(payload.password){
-       const makehash = await bcrypt.hash(payload.password, 10);
-       hashPassword = makehash;
+    if (payload.password) {
+        const makehash = await bcrypt.hash(payload.password, 10);
+        hashPassword = makehash;
     }
     //Update the user
     const result = await userSchema.updateOne({ _id: userId }, { $set: { ...payload, password: hashPassword } });
+    return NextResponse.json({ status: true, result });
+}
+
+export const DELETE = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get('userId');
+    await mongoose.connect(mongoUrl);
+    const result = await userSchema.deleteOne({ _id: userId });
     return NextResponse.json({ status: true, result });
 }

@@ -6,11 +6,11 @@ const Support = () => {
     <div>
       <SubHeading heading={'Support'} />
       {/* //Main Page */}
-      <section className="py-6 text-gray-900">
-        <div className="flex gap-10 items-center">
-          <div className="w-2/4 py-6 md:py-0 md:px-6">
-            <h1 className="text-3xl font-bold">Get in touch</h1>
-            <p className="pt-2 pb-4">Start a conversation</p>
+      <section className="py-2 md:py-6 text-gray-900">
+        <div className="md:flex gap-10 items-center">
+          <div className="w-full md:w-2/4 py-2 md:py-0 md:px-6">
+            <h1 className="text-3xl font-bold -mt-6 md:mt-0">Get in touch</h1>
+            <p className="pt-2 pb-4 font-semibold">Start a conversation</p>
             <div className="space-y-4">
               <p className="flex items-start gap-2">
                 <FaMapMarkerAlt />
@@ -28,7 +28,7 @@ const Support = () => {
           </div>
           {/* //Form */}
           <form
-            className="w-2/4">
+            className="w-full md:w-2/4">
             <div className=' mb-3'>
               <label htmlFor="name" className="block text-sm font-semibold">Full Name</label>
               <input type="text" name="name" id="name" placeholder="John Doe" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />

@@ -1,5 +1,6 @@
 'use client';
 import { OrderDataType } from '@/app/types/DataTypes';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -7,10 +8,11 @@ import { FaRegCreditCard } from "react-icons/fa";
 import { FaShop } from 'react-icons/fa6';
 import { HiCursorArrowRipple } from "react-icons/hi2";
 import { MdOutlineRateReview } from "react-icons/md";
-import { TbProgressCheck } from "react-icons/tb";
+import { TbProgressCheck, TbShoppingBagEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
+    const { data: session } = useSession();
     const handleCancelOrder = async (orderId: string | undefined, orderStatus: string) => {
         const isConfirmed = window.confirm('Do you agree to Cancel this order?');
         if (orderStatus !== 'processing') {
@@ -18,7 +20,7 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
             return;
         }
         if (isConfirmed && orderStatus === 'processing') {
-            const res = await fetch(`/api/orders/user?orderId=${orderId}`, {
+            const res = await fetch(`/api/orders?orderId=${orderId}`, {
                 method: 'DELETE'
             });
             const { result } = await res.json();
@@ -46,7 +48,7 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                 <thead className="bg-gray-300">
                                     <tr className="text-center">
                                         {/* Product Remove Button */}
-                                        <th className="md:p-3 text-left">Product</th>
+                                        <th className="p-3 text-left">Product</th>
                                         <th className="md:p-3 px-6">Total</th>
                                         <th className="p-3">Payment</th>
                                         <th className="p-3">Status</th>
@@ -61,22 +63,25 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                             {/* Product Image and product name */}
                                             <th className="md:p-3 flex flex-col gap-2">
                                                 {
-                                                    order.products.map((product: any) => <div key={product?._id} className='flex gap-2 items-center'>
-                                                        <Link href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}>
+                                                    order?.products?.map((product: any) => <div key={product?._id} className='flex gap-2 items-center'>
+                                                        <Link
+                                                            href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}
+                                                            className='w-20 py-2 md:py-0'
+                                                        >
                                                             <Image src={product.image} alt={product.name} width={80} height={60} className='rounded-md' />
                                                         </Link>
                                                         {/* Name, Shop Name and Quantity */}
                                                         <div>
                                                             <Link
                                                                 href={`/foods/${product.restaurantName.toLowerCase()}/${product.slug}`}
-                                                                className='hover:text-secondary duration-300 ease-in-out'
+                                                                className='hover:text-secondary duration-300 ease-in-out hidden md:block'
                                                             >
                                                                 {product.name.length > 20 ? product.name.slice(0, 24) + '...' : product.name}
                                                             </Link>
-                                                            <div className='flex gap-3'>
+                                                            <div className='flex flex-col md:flex-row gap-2 md:gap-3'>
                                                                 <Link
                                                                     href={`/restaurants/${product.restaurantName.toLowerCase()}`}
-                                                                    className='flex gap-1 items-center font-normal hover:text-secondary duration-300 ease-in-out'
+                                                                    className='flex gap-1 items-center hover:text-secondary duration-300 ease-in-out'
                                                                 >
                                                                     <FaShop />
                                                                     {product.restaurantName}
@@ -93,18 +98,28 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                             {/* Product Action Buttons */}
                                             <th className="p-3">
                                                 <div className='flex gap-1 items-center justify-center'>
-                                                    <button
-                                                        className='flex relative'
-                                                        title='Pay Now'
-                                                    >
-                                                        <FaRegCreditCard className='w-6 h-6' />
-                                                        <HiCursorArrowRipple className='text-primary absolute -bottom-1 left-4' />
-                                                    </button>
                                                     <TiDelete
                                                         onClick={() => handleCancelOrder(order._id, order.orderStatus)}
                                                         className='w-8 h-8 cursor-pointer text-red-500' title='Cancel' />
-                                                    <TbProgressCheck className='w-6 h-6 cursor-pointer text-green-600' title='Track Package' />
-                                                    <MdOutlineRateReview className='w-6 h-6 cursor-pointer' title='Write a Review' />
+                                                    {
+                                                        session?.user.role === 'admin' ? <div className='flex gap-1 items-center justify-center'>
+                                                            <TbShoppingBagEdit
+                                                                className='w-6 h-6 text-green-600 cursor-pointer'
+                                                                title='Modify Order'
+                                                            />
+                                                        </div> :
+                                                            <div className='flex gap-1 items-center justify-center'>
+                                                                <button
+                                                                    className='flex relative'
+                                                                    title='Pay Now'
+                                                                >
+                                                                    <FaRegCreditCard className='w-6 h-6' />
+                                                                    <HiCursorArrowRipple className='text-primary absolute -bottom-1 left-4' />
+                                                                </button>
+                                                                <TbProgressCheck className='w-6 h-6 cursor-pointer text-green-600' title='Track Package' />
+                                                                <MdOutlineRateReview className='w-6 h-6 cursor-pointer' title='Write a Review' />
+                                                            </div>
+                                                    }
                                                 </div>
                                             </th>
                                         </tr>)
