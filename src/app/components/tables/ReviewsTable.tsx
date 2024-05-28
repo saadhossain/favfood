@@ -1,6 +1,5 @@
 'use client'
 import Link from 'next/link';
-import { FormEvent } from 'react';
 import toast from 'react-hot-toast';
 import { TbEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
@@ -56,8 +55,8 @@ const ReviewsTable = ({ reviews }: Props) => {
                                             key={review._id}
                                             className="text-center border-b-2 border-gray-200">
                                             {/* Product Image and product name */}
-                                            <th className="md:p-3 p-2 text-left">
-                                                {review.description.length > 100 ? review.description.slice(0, 100) + '...' : review.description}
+                                            <th className="md:p-3 p-2 text-left font-normal text-md">
+                                                {review?.description?.length > 100 ? review.description.slice(0, 100) + '...' : review.description}
                                             </th>
                                             <th className="md:p-3 p-2">{review.rating}</th>
                                             <th className="md:p-3 p-2">

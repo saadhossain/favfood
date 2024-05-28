@@ -1,7 +1,7 @@
 
 const TableSkeletonLoader = () => {
     return (
-        <div>
+        <div className='mt-4'>
             {Array.from({ length: 6 }).map((_, index) => (
                 <div key={index} className="flex items-center justify-between gap-1 md:gap-3 text-center border-b border-opacity-20 border-gray-500 bg-gray-100 p-3">
                     {/* Remove Button */}

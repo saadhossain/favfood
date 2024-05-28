@@ -64,7 +64,7 @@ const UsersTable = ({ users }: Props) => {
                                                 <Image src={user.profileImg} alt={user.fullName} width={60} height={60} className='rounded-md max-h-16' />
                                                 <div className='text-left'>
                                                     <p>{user.fullName}</p>
-                                                    <p>{user.email}</p>
+                                                    <p className='font-normal'>{user.email}</p>
                                                 </div>
                                             </th>
                                             <th className="p-3 capitalize">{user.phone ? user.phone : 'Not Found'}</th>

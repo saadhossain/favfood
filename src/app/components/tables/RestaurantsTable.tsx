@@ -91,7 +91,7 @@ const RestaurantsTable = ({ restaurants }: Props) => {
                                             </th>
                                             <th className="md:p-3 p-2 grid grid-cols-3 font-normal">
                                                 {
-                                                    restaurant.foodCategory.map((category: string) => <p>{category}</p>)
+                                                    restaurant?.foodCategory?.map((category: string) => <p>{category}</p>)
                                                 }
                                             </th>
                                             {/* Restaurant Action Buttons */}
