@@ -9,7 +9,7 @@ import { FaSearch } from "react-icons/fa";
 const DashboardSearch = () => {
     const { initialData, setAdminData } = useContext(DataContext) as DataContextType;
     return (
-        <div className='w-80 bg-gray-200 rounded-md flex items-center'>
+        <div className='w-60 md:w-80 bg-gray-200 rounded-md flex items-center'>
             <input type="text" name="search" id="search"
                 onChange={(e) => handleDashboardSearch(e.target.value as string, initialData, setAdminData)}
                 placeholder='Search Here...'
