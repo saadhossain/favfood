@@ -20,7 +20,7 @@ const Foods = () => {
   return (
     <div>
       <div className='flex gap-5 items-center justify-between'>
-        <SubHeading heading={'All Foods'} />
+        <SubHeading heading={'Foods'} />
         <DashboardSearch />
       </div>
       {

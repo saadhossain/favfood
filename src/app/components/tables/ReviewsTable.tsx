@@ -42,7 +42,7 @@ const ReviewsTable = ({ reviews }: Props) => {
                                     <tr className="text-center">
                                         {/* Product Remove Button */}
                                         <th className="p-3 text-left">Description</th>
-                                        <th className="md:p-3 px-24">Rating</th>
+                                        <th className="md:p-3">Rating</th>
                                         <th className="p-3">Review For</th>
                                         <th>Rated By</th>
                                         <th className="p-3">Restaurant</th>
@@ -55,17 +55,17 @@ const ReviewsTable = ({ reviews }: Props) => {
                                             key={review._id}
                                             className="text-center border-b-2 border-gray-200">
                                             {/* Product Image and product name */}
-                                            <th className="md:p-3 p-2 text-left font-normal text-md">
+                                            <th className="md:p-3 p-2 text-justify font-normal text-md min-w-72 md:min-w-0">
                                                 {review?.description?.length > 100 ? review.description.slice(0, 100) + '...' : review.description}
                                             </th>
                                             <th className="md:p-3 p-2">{review.rating}</th>
-                                            <th className="md:p-3 p-2">
+                                            <th className="md:p-3 p-2 min-w-60 md:min-w-0">
                                                 {review.foodSlug}
                                             </th>
-                                            <th className="md:p-3 p-2">
+                                            <th className="md:p-3 p-2 min-w-36 md:min-w-0">
                                                 {review.userName}
                                             </th>
-                                            <th className="md:p-3 p-2">
+                                            <th className="md:p-3 p-2 min-w-36 md:min-w-0">
                                                 {review.restaurantName}
                                             </th>
                                             {/* Restaurant Action Buttons */}

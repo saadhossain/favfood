@@ -21,7 +21,7 @@ const AllOrders = () => {
   return (
     <div>
       <div className='flex gap-5 items-center justify-between'>
-        <SubHeading heading={'All Orders'} />
+        <SubHeading heading={'Orders'} />
         <DashboardSearch />
       </div>
       {
