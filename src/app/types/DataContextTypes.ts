@@ -36,4 +36,8 @@ export interface DataContextType {
     setShowPassword: Dispatch<SetStateAction<boolean>>;
     adminData:[] | any;
     setAdminData: Dispatch<SetStateAction<[] | any>>;
+    singleRestaurant: any;
+    setSingleRestaurant: Dispatch<SetStateAction<any>>;
+    reviewData: any;
+    setReviewData: Dispatch<SetStateAction<any>>;
 }
