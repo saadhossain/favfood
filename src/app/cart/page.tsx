@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import CartSummery from '../components/ui/cart/CartSummery';
-import ProductsTable from '../components/ui/cart/ProductsTable';
+import ProductsTable from '../components/tables/ProductsTable';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
 import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';

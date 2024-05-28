@@ -1,7 +1,7 @@
 'use client'
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import TableSkeletonLoader from '@/app/components/spinner/TableSkeletonLoader';
-import UsersTable from '@/app/components/ui/admin/UsersTable';
+import UsersTable from '@/app/components/tables/UsersTable';
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';

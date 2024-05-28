@@ -1,7 +1,7 @@
 'use client'
 import SubHeading from '@/app/components/shared/headings/SubHeading'
 import TableSkeletonLoader from '@/app/components/spinner/TableSkeletonLoader'
-import FoodsTable from '@/app/components/ui/admin/FoodsTable'
+import FoodsTable from '@/app/components/tables/FoodsTable'
 import { DataContext } from '@/app/context/DataContext'
 import { DataContextType } from '@/app/types/DataContextTypes'
 import { fetchFoodData } from '@/app/utils/fetchFoodData'

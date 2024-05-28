@@ -32,7 +32,7 @@ const UsersTable = ({ users }: Props) => {
     return (
         <div className='w-full'>
             {
-                users?.length <= 0 ? <h1 className='text-lg font-semibold text-gray-800'>No Order Found. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : (
+                users?.length <= 0 ? <h1 className='text-lg font-semibold text-gray-800'>No User Found. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : (
                     <div className={`container py-2 mx-auto sm:py-4 text-gray-900 ${users?.length <= 0 && 'hidden'}`}>
                         <div className="overflow-x-auto">
                             <table className="min-w-full">

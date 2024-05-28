@@ -7,7 +7,8 @@ const restaurantModel = new mongoose.Schema({
     location: String,
     deliveryCharge: String,
     profileImage: String,
-    offers: []
+    offers: [],
+    isActive: Boolean
 })
 
-export const restaurantSchema = mongoose.models.restaurants|| mongoose.model('restaurants', restaurantModel);
+export const restaurantSchema = mongoose.models.restaurants || mongoose.model('restaurants', restaurantModel);

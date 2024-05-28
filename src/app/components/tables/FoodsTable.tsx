@@ -25,7 +25,7 @@ const FoodsTable = ({ foods }: Props) => {
     return (
         <div className='w-full'>
             {
-                foods?.length <= 0 ? <h1 className='text-lg font-semibold text-gray-800'>No Order Found. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : (
+                foods?.length <= 0 ? <h1 className='text-lg font-semibold text-gray-800'>No Food Found. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : (
                     <div className={`container py-2 mx-auto sm:py-4 text-gray-900 ${foods?.length <= 0 && 'hidden'}`}>
                         <div className="overflow-x-auto">
                             <table className="min-w-full">
