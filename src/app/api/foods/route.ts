@@ -46,9 +46,18 @@ export const POST = async (request: NextRequest) => {
     return NextResponse.json({ status: true, result });
 };
 
-export const DELETE = async () => {
+
+export const DELETE = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+    const foodId = searchParams.get('foodId');
     await mongoose.connect(mongoUrl);
-    return;
-    const result = await foodSchema.deleteMany();
+    const result = await foodSchema.deleteOne({ _id: foodId });
     return NextResponse.json({ status: true, result });
 }
+
+// export const DELETE = async () => {
+//     await mongoose.connect(mongoUrl);
+//     return;
+//     const result = await foodSchema.deleteMany();
+//     return NextResponse.json({ status: true, result });
+// }
