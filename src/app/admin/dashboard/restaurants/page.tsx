@@ -20,8 +20,8 @@ const Restaurants = () => {
       <div className='flex gap-5 items-center justify-between'>
         <SubHeading heading={'Restaurants'} />
         <div className='flex flex-col gap-2 items-end'>
-          <DashboardSearch />
           <AddButton endpoint='/restaurants/add-restaurant' title='Add Restaurant'/>
+          <DashboardSearch />
         </div>
       </div>
       {
