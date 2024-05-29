@@ -21,8 +21,8 @@ const AllOrders = () => {
       <div className='flex gap-5 items-start justify-between'>
         <SubHeading heading={'Orders'} />
         <div className='flex flex-col gap-2 items-end'>
-          <DashboardSearch />
           <AddButton endpoint='/orders/create-order' title='Create Order' />
+          <DashboardSearch />
         </div>
       </div>
       {
