@@ -3,62 +3,130 @@ import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
+import { FoodData, UserData } from '@/app/types/DataTypes';
 import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
-import { useContext, useState } from 'react';
+import { saveToDatabase } from '@/app/utils/saveToDatabase';
+import { useRouter } from 'next/navigation';
+import { FormEvent, useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 const CreateOrder = () => {
-  const { loading } = useContext(DataContext) as DataContextType;
-  const [error, setError] = useState(null);
-  const restaurants = fetchDataForAdmin('/api/restaurants');
+  const { setLoading, loading } = useContext(DataContext) as DataContextType;
+  const route = useRouter();
+
+  //Get the foods
+  const foods = fetchDataForAdmin('/api/foods');
+  //Get the Registered Users
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const getUsers = async () => {
+      const res = await fetch('/api/users');
+      const { result } = await res.json();
+      setUsers(result);
+    }
+    getUsers();
+  }, [])
+  //Set the selected Restaurant to the state
+  const [selectedFood, setSelectedFood] = useState<FoodData | any>(null);
+  //Set the selected Restaurant to the state
+  const [selectedUser, setSelectedUser] = useState<UserData | any>(null);
+
+  const handleFoodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const foodId = e.target.value;
+    const foundFood = foods.find((food: FoodData) => food._id === foodId);
+    setSelectedFood(foundFood);
+  };
+
+  const handleUserChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const userId = e.target.value;
+    const foundUser = users.find((user: UserData) => user._id === userId);
+    setSelectedUser(foundUser);
+  };
+
+
+  const handleAddFood = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    const form = e.target as HTMLFormElement;
+
+    //Arrange Product Informations
+    const productData = {
+      _id: selectedFood._id,
+      name: selectedFood.name,
+      slug: selectedFood.slug,
+      restaurantName: selectedFood.restaurant_Name,
+      price: selectedFood.price,
+      image: selectedFood.image,
+      quantity: 1
+    };
+    // //Arrange order data to save to database
+    const orderData = {
+      products: productData,
+      orderAmount: selectedFood.price,
+      userInfo: {
+        _id: selectedUser._id,
+        fullName: selectedUser.fullName
+      },
+      paymentMethod: 'cod',
+      orderStatus: 'processing',
+      deliveryAddress: selectedUser.address || null,
+      orderDate: new Date(),
+      paymentStatus: 'unpaid'
+    }
+    try {
+      const data = await saveToDatabase('/api/orders', orderData);
+      if (data.status) {
+        form.reset();
+        setLoading(false);
+        toast.success('Order Created Successfully.');
+        route.push('/admin/dashboard/orders');
+      }
+    } catch (error: any) {
+      console.log(error.message);
+      setLoading(false);
+    }
+  }
+  console.log(selectedFood, selectedUser);
   return (
     <div>
       <SubHeading heading={'Create Order'} />
-      {/* Create New Order */}
-      <form
-        // onSubmit={(e) => handleUserRegistration(e)}
-        className="space-y-6">
+      <form onSubmit={handleAddFood} className="space-y-6">
         <div className="space-y-2">
-          {/* Name and Price */}
           <div className='flex gap-2 items-center justify-between'>
-            <div className='w-4/5'>
-              <label htmlFor="foodName" className="block mb-2 text-sm">Product Name</label>
-              <input type="text" name="foodName" id="foodName" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+            <div className='w-3/5'>
+              <label htmlFor="food" className="block mb-2 text-sm">Select Food</label>
+              <select
+                className='w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none'
+                onChange={handleFoodChange}
+                name="food"
+                id="food"
+              >
+                <option value="">Select a food</option>
+                {foods.map((food: FoodData) => (
+                  <option key={food._id} value={food._id}>{food.name}</option>
+                ))}
+              </select>
             </div>
-            <div className='w-1/5'>
-              <label htmlFor="price" className="block mb-2 text-sm">Price</label>
-              <input type="number" name="price" id="price" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+            <div className='w-2/5'>
+              <label htmlFor="user" className="block mb-2 text-sm">Assign to User</label>
+              <select
+                className='w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none'
+                onChange={handleUserChange}
+                name="user"
+                id="user"
+              >
+                <option value="">Select a user</option>
+                {users.map((user: UserData) => (
+                  <option key={user._id} value={user._id}>{user.email}</option>
+                ))}
+              </select>
             </div>
           </div>
-          {/* Category, Restaurant Name and Food Image */}
-          <div className='flex gap-2 items-center justify-between'>
-            <div className='w-1/3'>
-              <label htmlFor="category" className="block mb-2 text-sm">Category</label>
-              <input type="text" name="category" id="category" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
-            </div>
-            <div className='w-1/3'>
-              <label htmlFor="restrauName" className="block mb-2 text-sm">Restaurant Name</label>
-              <input type="text" name="restrauName" id="restrauName" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
-            </div>
-            <div className='w-1/3'>
-              <label htmlFor="foodImage" className="text-sm">Image</label>
-              <input type="file" name="foodImage" id="foodImage" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
-            </div>
-          </div>
-          <div>
-              <label htmlFor="description" className="text-sm">Description</label>
-              <textarea name="description" id="description" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"></textarea>
-            </div>
         </div>
-        {
-          error &&
-          <div className="text-red-500 text-lg">
-            {error}
-          </div>
-        }
         <div className="space-y-2">
-          <div>
-            <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">{loading ? <Processing title={'Processing'} /> : 'Add Food'}</button>
-          </div>
+          <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">
+            {loading ? <Processing title={'Processing'} /> : 'Create Order'}
+          </button>
         </div>
       </form>
     </div>

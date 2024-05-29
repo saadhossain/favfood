@@ -16,9 +16,9 @@ const AddFood = () => {
     const restaurants = fetchDataForAdmin('/api/restaurants');
     const categories = ["Burger", "Pizza", "Sandwich", "Fries", "Chicken"];
     //Set the selected Restaurant to the state
-    const [selectedRestaurant, setSelectedRestaurant] = useState('kfc');
+    const [selectedRestaurant, setSelectedRestaurant] = useState<string>('');
     //Set the selected Restaurant to the state
-    const [selectedCategory, setSelectedCategory] = useState('Burger');
+    const [selectedCategory, setSelectedCategory] = useState<string>('');
 
     const route = useRouter();
 
@@ -31,7 +31,7 @@ const AddFood = () => {
         const description = form.description.value;
 
         //Validations
-        if (!foodName || !foodPrice || !description) {
+        if (!foodName || !foodPrice || !description || !selectedRestaurant || !selectedCategory) {
             setError('All fields are required.');
             setLoading(false);
             return;
@@ -103,6 +103,7 @@ const AddFood = () => {
                                 name="category"
                                 id="category"
                             >
+                                <option value="">Select a Category</option>
                                 {
                                     categories.map((category: string, index: number) => <option
                                         key={index}
@@ -120,6 +121,7 @@ const AddFood = () => {
                                 name="restaurant"
                                 id="restaurant"
                             >
+                                <option value="">Select a Restaurant</option>
                                 {
                                     restaurants.map((restaurant: any) => <option
                                         key={restaurant._id}
