@@ -94,7 +94,7 @@ const RestaurantsTable = ({ restaurants }: Props) => {
                                             <th className="md:p-3 p-2">
                                                 <div className='grid grid-cols-2 md:grid-cols-3 font-normal min-w-40 md:min-w-0'>
                                                     {
-                                                        restaurant?.foodCategory?.map((category: string) => <p>{category}</p>)
+                                                        restaurant?.foodCategory?.map((category: string) => <p key={category}>{category}</p>)
                                                     }
                                                 </div>
                                             </th>
