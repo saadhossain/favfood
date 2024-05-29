@@ -16,8 +16,8 @@ type Props = {
 }
 
 const SingleFoodReviews = ({ params }: Props) => {
-  const reviews = fetchReviewData('restaurantsReview', params.id);
   const { loading } = useContext(DataContext) as DataContextType;
+  const reviews = fetchReviewData('restaurantsReview', params.id);
   if (loading) {
     return <LoadingSpinner />
   }
