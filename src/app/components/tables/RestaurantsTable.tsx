@@ -76,7 +76,7 @@ const RestaurantsTable = ({ restaurants }: Props) => {
                                                 </div>
                                             </th>
                                             <th className="md:p-3 p-2">
-                                                <p className='w-20'>{restaurant.minOrderAmount}</p>
+                                                <p className='w-20'>${restaurant.minOrderAmount}</p>
                                             </th>
                                             <th className="md:p-3 p-2">
                                                 <div className='flex items-center gap-1'>

@@ -86,7 +86,6 @@ const CreateOrder = () => {
       setLoading(false);
     }
   }
-  console.log(selectedFood, selectedUser);
   return (
     <div>
       <SubHeading heading={'Create Order'} />
