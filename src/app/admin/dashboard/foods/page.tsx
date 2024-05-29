@@ -1,23 +1,31 @@
 'use client'
+import DashboardSearch from '@/app/components/common/DashboardSearch'
+import AddButton from '@/app/components/shared/buttons/AddButton'
 import SubHeading from '@/app/components/shared/headings/SubHeading'
 import TableSkeletonLoader from '@/app/components/spinner/TableSkeletonLoader'
-import FoodsTable from '@/app/components/ui/admin/FoodsTable'
+import FoodsTable from '@/app/components/tables/FoodsTable'
 import { DataContext } from '@/app/context/DataContext'
 import { DataContextType } from '@/app/types/DataContextTypes'
-import { fetchFoodData } from '@/app/utils/fetchFoodData'
+import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin'
 import { useSession } from 'next-auth/react'
 import { useContext } from 'react'
 
 const Foods = () => {
   const { data: session } = useSession();
-  const { loading } = useContext(DataContext) as DataContextType;
-  const foods = fetchFoodData();
-  console.log(foods);
+  const { loading, adminData } = useContext(DataContext) as DataContextType;
+  //Get the foods from the server
+  fetchDataForAdmin('/api/foods');
   return (
     <div>
-      <SubHeading heading={'All Foods'} />
+      <div className='flex gap-5 items-center justify-between'>
+        <SubHeading heading={'Foods'} />
+        <div className='flex flex-col gap-2 items-end'>
+          <DashboardSearch />
+          <AddButton endpoint='/foods/add-food' title='Add Food' />
+        </div>
+      </div>
       {
-        (loading || !session) ? <TableSkeletonLoader /> : <FoodsTable foods={foods} />
+        (loading || !session) ? <TableSkeletonLoader /> : <FoodsTable foods={adminData} />
       }
     </div>
   )

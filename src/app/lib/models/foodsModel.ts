@@ -6,7 +6,6 @@ const foodsModel = new mongoose.Schema({
     description:String,
     price:Number,
     restaurant_Name:String,
-    restaurant_Id:String,
     image:String,
     category:String,
     reviewCount:Number,

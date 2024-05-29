@@ -74,3 +74,37 @@ export interface OrderDataType {
     orderDate: string,
     paymentStatus: string
 }
+
+export interface RestaurantData {
+    _id: string,
+    name: string,
+    foodCategory: string[],
+    minOrderAmount: string,
+    location: string,
+    deliveryCharge: string,
+    profileImage: string,
+    offers: [
+        {
+            name: string,
+            discount: string,
+            minOrderAmount: string,
+            description: string
+        }
+    ],
+    isActive: boolean,
+}
+
+export interface ReviewData {
+    _id: string,
+    title: string,
+    description: string,
+    rating: number,
+    foodId: string,
+    foodSlug: string,
+    restaurantId: string,
+    restaurantName: string,
+    userId: string,
+    userName: string,
+    userProfileImage: string,
+    addedOn: string
+}

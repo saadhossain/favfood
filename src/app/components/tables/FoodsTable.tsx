@@ -25,7 +25,7 @@ const FoodsTable = ({ foods }: Props) => {
     return (
         <div className='w-full'>
             {
-                foods?.length <= 0 ? <h1 className='text-lg font-semibold text-gray-800'>No Order Found. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : (
+                foods?.length <= 0 ? <h1 className='text-lg font-semibold text-gray-800'>No Food Found. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : (
                     <div className={`container py-2 mx-auto sm:py-4 text-gray-900 ${foods?.length <= 0 && 'hidden'}`}>
                         <div className="overflow-x-auto">
                             <table className="min-w-full">
@@ -40,8 +40,8 @@ const FoodsTable = ({ foods }: Props) => {
                                 <thead className="bg-gray-300">
                                     <tr className="text-center">
                                         {/* Product Remove Button */}
-                                        <th className="p-3 text-left">Image, Name & Email</th>
-                                        <th className="md:p-3 px-24">Price</th>
+                                        <th className="p-3">Image, Name & Email</th>
+                                        <th className="md:p-3">Price</th>
                                         <th className="p-3">Restaurant</th>
                                         <th className="p-3">Category</th>
                                         <th className="p-3">Actions</th>
@@ -54,13 +54,13 @@ const FoodsTable = ({ foods }: Props) => {
                                             className="text-center border-b-2 border-gray-200">
                                             {/* Product Image and product name */}
                                             <th className="md:p-3 p-2">
-                                                <div className='flex gap-2 items-center'>
+                                                <div className='flex gap-2 items-center min-w-72 md:min-w-0'>
                                                     <Image src={food.image} alt={food.name} width={60} height={60} className='rounded-md max-h-16' />
                                                     <p>{food.name}</p>
                                                 </div>
                                             </th>
                                             <th className="md:p-3 p-2">${food.price}</th>
-                                            <th className="md:p-3 p-2">{food.restaurant_Name}</th>
+                                            <th className="md:p-3 p-2 min-w-36 md:min-w-0">{food.restaurant_Name}</th>
                                             <th className="md:p-3 p-2">{food.category}</th>
                                             {/* Product Action Buttons */}
                                             <th className="p-3">

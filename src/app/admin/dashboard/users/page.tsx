@@ -1,7 +1,9 @@
 'use client'
+import DashboardSearch from '@/app/components/common/DashboardSearch';
+import AddButton from '@/app/components/shared/buttons/AddButton';
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import TableSkeletonLoader from '@/app/components/spinner/TableSkeletonLoader';
-import UsersTable from '@/app/components/ui/admin/UsersTable';
+import UsersTable from '@/app/components/tables/UsersTable';
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
@@ -9,14 +11,21 @@ import { useSession } from 'next-auth/react';
 import { useContext } from 'react';
 
 const Users = () => {
-  const { loading } = useContext(DataContext) as DataContextType;
   const { data: session } = useSession();
-  const users = fetchDataForAdmin('/api/users');
+  const { loading, adminData } = useContext(DataContext) as DataContextType;
+  //Get the Users from the server
+  fetchDataForAdmin('/api/users');
   return (
     <div>
-      <SubHeading heading={'Users'} />
+      <div className='flex gap-5 items-center justify-between'>
+        <SubHeading heading={'Users'} />
+        <div className='flex flex-col gap-2 items-end'>
+          <DashboardSearch />
+          <AddButton endpoint='/users/add-user' title='Add User'/>
+        </div>
+      </div>
       {
-        (loading || !session) ? <TableSkeletonLoader /> : <UsersTable users={users}/>
+        (loading || !session) ? <TableSkeletonLoader /> : <UsersTable users={adminData} />
       }
     </div>
   )

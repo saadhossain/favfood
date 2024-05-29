@@ -70,13 +70,15 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     const [showPassword, setShowPassword] = useState(true);
     //Get and Set the admin data
     const [adminData, setAdminData] = useState([]);
+    //Get the admin data and set as initial data to the initial data state
+    const [initialData, setInitialData] = useState([]);
     //Set single Restaurant Data to the state
     const [singleRestaurant,setSingleRestaurant] = useState([]);
 
     //Set the review data to the state
     const [reviewData, setReviewData] = useState([]);
 
-    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, adminData, setAdminData, singleRestaurant,setSingleRestaurant, reviewData, setReviewData };
+    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, adminData, setAdminData, singleRestaurant,setSingleRestaurant, reviewData, setReviewData , initialData, setInitialData};
     return (
         <div>
             <DataContext.Provider value={allData}>

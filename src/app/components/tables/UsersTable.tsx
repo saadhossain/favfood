@@ -32,7 +32,7 @@ const UsersTable = ({ users }: Props) => {
     return (
         <div className='w-full'>
             {
-                users?.length <= 0 ? <h1 className='text-lg font-semibold text-gray-800'>No Order Found. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : (
+                users?.length <= 0 ? <h1 className='text-lg font-semibold text-gray-800'>No User Found. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : (
                     <div className={`container py-2 mx-auto sm:py-4 text-gray-900 ${users?.length <= 0 && 'hidden'}`}>
                         <div className="overflow-x-auto">
                             <table className="min-w-full">
@@ -48,7 +48,7 @@ const UsersTable = ({ users }: Props) => {
                                     <tr className="text-center">
                                         {/* Product Remove Button */}
                                         <th className="p-3 text-left">Image, Name & Email</th>
-                                        <th className="md:p-3 px-24">Phone</th>
+                                        <th className="md:p-3">Phone</th>
                                         <th className="p-3">Status</th>
                                         <th className="p-3">Role</th>
                                         <th className="p-3">Actions</th>
@@ -60,11 +60,11 @@ const UsersTable = ({ users }: Props) => {
                                             key={user._id}
                                             className="text-center border-b-2 border-gray-200">
                                             {/* Product Image and product name */}
-                                            <th className="md:p-3 p-2 flex gap-2 items-center">
+                                            <th className="md:p-3 p-2 flex gap-2 items-center min-w-72 md:min-w-0">
                                                 <Image src={user.profileImg} alt={user.fullName} width={60} height={60} className='rounded-md max-h-16' />
                                                 <div className='text-left'>
                                                     <p>{user.fullName}</p>
-                                                    <p>{user.email}</p>
+                                                    <p className='font-normal'>{user.email}</p>
                                                 </div>
                                             </th>
                                             <th className="p-3 capitalize">{user.phone ? user.phone : 'Not Found'}</th>

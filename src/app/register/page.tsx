@@ -16,12 +16,14 @@ const RegisterPage = () => {
     const { showPassword, setShowPassword, loading, setLoading } = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
     const [error, setError] = useState('');
+    //Save the User to the Database.
     const handleUserRegistration = async (e: FormEvent<HTMLFormElement>) => {
         setLoading(true);
         e.preventDefault();
         const form = e.target as HTMLFormElement;
         const email: string = form.email.value;
         const fullName: string = form.fullname.value;
+        const phone: string = form.phone.value;
         const password: string = form.password.value;
 
         //Validations
@@ -57,7 +59,7 @@ const RegisterPage = () => {
             profileImg,
             role: 'customer',
             isActive: true,
-            phone: '',
+            phone,
             address: null
         };
         try {
@@ -119,6 +121,12 @@ const RegisterPage = () => {
                                     showPassword ? <FaEye /> : <FaEyeSlash />
                                 }
                             </div>
+                        </div>
+                        <div>
+                            <label htmlFor="phone" className="text-sm">Phone Number</label>
+                            <input type="text" name="phone" id="phone" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
+                                placeholder="+880-1XX-XXXX-XXX"
+                            />
                         </div>
                         <div>
                             <label htmlFor="profileImage" className="text-sm">Select Profile Image</label>

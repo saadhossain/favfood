@@ -15,14 +15,12 @@ interface Props {
 
 const page = ({ params }: Props) => {
   const { loading } = useContext(DataContext) as DataContextType;
-  const restaurantName = params.restaurantName;
+  const restaurantName = decodeURIComponent(params.restaurantName); 
   const foods = fetchFoodData();
   const restaurantFoods = foods.filter((food: FoodData) => food.restaurant_Name.toLocaleLowerCase() === restaurantName);
-  // console.log(restaurantFoods);
     if (loading) {
         return <ProductLoader />;
     }
-  // console.log(foods);
   return (
     <div className='grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 my-5'>
       {

@@ -1,10 +1,27 @@
 import { mongoUrl } from '@/app/lib/db';
 import { reviewSchema } from '@/app/lib/models/reviewsModel';
 import mongoose from 'mongoose';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
+
+export const POST = async (request: Request) => {
+    const payload = await request.json();
+    await mongoose.connect(mongoUrl);
+    const reviews = new reviewSchema(payload);
+
+    const result = await reviews.save();
+    return NextResponse.json({ status: true, result });
+}
 export const GET = async () => {
     await mongoose.connect(mongoUrl);
-    const reviews = await reviewSchema.find();
-    return NextResponse.json(reviews);
+    const result = await reviewSchema.find();
+    return NextResponse.json({ status: true, result });
 };
+
+export const DELETE = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    await mongoose.connect(mongoUrl);
+    const result = await reviewSchema.deleteOne({ _id: id });
+    return NextResponse.json({ status: true, result });
+}
