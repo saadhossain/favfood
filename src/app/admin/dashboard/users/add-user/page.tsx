@@ -87,15 +87,15 @@ const AddUser = () => {
             <form onSubmit={(e) => handleUserRegistration(e)} className="space-y-6">
                 <div className="space-y-2">
                     <div>
-                        <label htmlFor="email" className="block mb-2 text-sm">Email address</label>
+                        <label htmlFor="email" className="font-semibold block mb-2 text-sm">Email address</label>
                         <input type="email" name="email" id="email" placeholder="leroy@jenkins.com" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
                     </div>
                     <div>
-                        <label htmlFor="fullname" className="block mb-2 text-sm">Full Name</label>
+                        <label htmlFor="fullname" className="font-semibold block mb-2 text-sm">Full Name</label>
                         <input type="text" name="fullname" id="fullname" placeholder="Leroy Jenkins" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
                     </div>
                     <div className='relative'>
-                        <label htmlFor="password" className="text-sm">Password</label>
+                        <label htmlFor="password" className="font-semibold text-sm">Password</label>
                         <input type={`${showPassword ? 'password' : 'text'}`} name="password" id="password" placeholder="***************" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
                         {/* Eye button for hide and show password */}
                         <div
@@ -108,13 +108,13 @@ const AddUser = () => {
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="phone" className="text-sm">Phone Number</label>
+                        <label htmlFor="phone" className="font-semibold text-sm">Phone Number</label>
                         <input type="text" name="phone" id="phone" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
                             placeholder="+880-1XX-XXXX-XXX"
                         />
                     </div>
                     <div>
-                        <label htmlFor="profileImage" className="text-sm">Select Profile Image</label>
+                        <label htmlFor="profileImage" className="font-semibold text-sm">Select Profile Image</label>
                         <input type="file" name="profileImage" id="profileImage" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
                     </div>
                 </div>

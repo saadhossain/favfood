@@ -93,7 +93,7 @@ const CreateOrder = () => {
         <div className="space-y-2">
           <div className='flex gap-2 items-center justify-between'>
             <div className='w-3/5'>
-              <label htmlFor="food" className="block mb-2 text-sm">Select Food</label>
+              <label htmlFor="food" className="font-semibold block mb-2 text-sm">Select Food</label>
               <select
                 className='w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none'
                 onChange={handleFoodChange}
@@ -107,7 +107,7 @@ const CreateOrder = () => {
               </select>
             </div>
             <div className='w-2/5'>
-              <label htmlFor="user" className="block mb-2 text-sm">Assign to User</label>
+              <label htmlFor="user" className="font-semibold block mb-2 text-sm">Assign to User</label>
               <select
                 className='w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none'
                 onChange={handleUserChange}
