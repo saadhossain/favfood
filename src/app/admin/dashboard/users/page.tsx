@@ -8,23 +8,20 @@ import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
 import { useSession } from 'next-auth/react';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 
 const Users = () => {
   const { data: session } = useSession();
-  const { loading, adminData, setAdminData, setLoading, setInitialData } = useContext(DataContext) as DataContextType;
-
-  useEffect(() => {
-    // Fetch the initial data and set it
-    fetchDataForAdmin('/api/users', setLoading, setAdminData, setInitialData);
-  }, [setLoading, setAdminData]);
+  const { loading, adminData } = useContext(DataContext) as DataContextType;
+  //Get the Users from the server
+  fetchDataForAdmin('/api/users');
   return (
     <div>
       <div className='flex gap-5 items-center justify-between'>
         <SubHeading heading={'Users'} />
         <div className='flex flex-col gap-2 items-end'>
           <DashboardSearch />
-          <AddButton endpoint='add-user' />
+          <AddButton endpoint='/users/add-user' title='Add User'/>
         </div>
       </div>
       {

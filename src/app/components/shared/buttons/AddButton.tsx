@@ -1,12 +1,11 @@
 import Link from 'next/link'
 
-const AddButton = ({endpoint}:{endpoint:string}) => {
-    const buttonTitle = endpoint.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+const AddButton = ({endpoint, title}:{endpoint:string, title:string}) => {
     return (
         <Link
-            href={`/admin/dashboard/orders/${endpoint}`}
+            href={`/admin/dashboard${endpoint}`}
             className='bg-primary text-white hover:bg-secondary duration-300 ease-in-out font-semibold py-3 px-5 rounded-3xl'
-        >{buttonTitle}</Link>
+        >{title}</Link>
     )
 }
 
