@@ -27,7 +27,7 @@ const FoodCard = ({ food }: { food: FoodData }) => {
                     <Link href={`/foods/${food.restaurant_Name.toLowerCase()}/${food.slug}`}>
                         <h3 className='w-full md:w-9/12 text-sm md:text-[15px] font-semibold'>{food.name}</h3>
                     </Link>
-                    <Link href={`/foods/reviews/${food.slug}/${food._id}`} className='w-3/12 md:flex gap-1 items-center underline hover:text-primary hidden'><FaStar className='text-primary' />{food.reviewCount}</Link>
+                    <Link href={`/foods/${food.restaurant_Name.toLowerCase()}/${food.slug}`} className='w-3/12 md:flex gap-1 items-center underline hover:text-primary hidden'><FaStar className='text-primary' />{food.reviewCount}</Link>
                 </div>
                 {/* Restaurant Name and Item Sold */}
                 <div className='flex items-start justify-between mt-1 md:mt-2'>
