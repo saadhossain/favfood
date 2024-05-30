@@ -23,7 +23,7 @@ export const fetchReviewData = (query: string, id: string) => {
         };
         getReview();
 
-    }, [setLoading]);
+    }, [setLoading, id]);
 
     return reviewData;
 };

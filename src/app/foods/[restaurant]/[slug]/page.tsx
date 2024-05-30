@@ -1,11 +1,13 @@
 'use client';
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
+import ReviewCard from '@/app/components/ui/reviews/ReviewCard';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
 import { DataContextType } from '@/app/types/DataContextTypes';
-import { FoodData } from '@/app/types/DataTypes';
+import { FoodData, ReviewData } from '@/app/types/DataTypes';
+import { fetchReviewData } from '@/app/utils/fetchReviewData';
 import { fetchSingleFoodData } from '@/app/utils/fetchSingleFoodData';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,6 +25,9 @@ const FoodSinglePage = ({ params }: { params: paramsTypes }) => {
   const singleFood: FoodData = fetchSingleFoodData(params.restaurant, params.slug);
   const handleAddToCart = useHandleAddToCart();
   const handleAddToWishlist = useHandleAddToWishlist();
+  //Get the Reviews
+  const reviews = fetchReviewData('foodsReview', singleFood?._id);
+
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -64,6 +69,13 @@ const FoodSinglePage = ({ params }: { params: paramsTypes }) => {
             </div>
             {/* Product Reviews */}
             <h2 className='text-lg md:text-xl font-semibold text-primary border-l-4 border-primary pl-2 mt-5'>Reviews</h2>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5 mt-5'>
+              {
+                reviews?.map((review: ReviewData) => <ReviewCard
+                  key={review._id}
+                  review={review} />)
+              }
+            </div>
           </>
         )
       }
