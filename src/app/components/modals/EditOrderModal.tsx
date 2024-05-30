@@ -64,7 +64,7 @@ const EditOrderModal = () => {
     return (
         <>
             {
-                openOrderEditModal && <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-60`}>
+                openOrderEditModal && <div className={`w-full min-h-screen flex items-center justify-center absolute pt-20 pb-40 md:pt-0 md:pb-0 md:fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-60`}>
                     <div className='w-11/12 md:w-2/5  flex items-center bg-gray-700 text-white p-5 my-5 md:my-0 rounded-md relative'>
                         <button
                             onClick={() => setOpenOrderEditModal(false)}
