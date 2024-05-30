@@ -65,7 +65,7 @@ const EditOrderModal = () => {
         <>
             {
                 openOrderEditModal && <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-60`}>
-                    <div className='w-11/12 md:w-2/5  flex items-center bg-gray-700 text-white p-5 rounded-md relative'>
+                    <div className='w-11/12 md:w-2/5  flex items-center bg-gray-700 text-white p-5 my-5 md:my-0 rounded-md relative'>
                         <button
                             onClick={() => setOpenOrderEditModal(false)}
                             className='font-bold text-xl absolute top-1 right-2 bg-gray-900 bg-opacity-60 py-1 px-3 rounded-full'>X</button>
@@ -76,12 +76,12 @@ const EditOrderModal = () => {
                             {/* Order Details */}
                             <div className="space-y-4">
                                 <SubHeading heading={'Order Details'} />
-                                <div className='w-full flex gap-2'>
-                                    <div className='w-1/4'>
+                                <div className='w-full flex flex-col md:flex-row gap-2'>
+                                    <div className='w-full md:w-1/4'>
                                         <label htmlFor="orderAmount" className="block mb-2 text-sm">Order Amount</label>
                                         <input type="text" name="orderAmount" id="orderAmount" className={`${inputStyle}`} defaultValue={singleOrder?.orderAmount} />
                                     </div>
-                                    <div className='w-2/4'>
+                                    <div className='w-full md:w-2/4'>
                                         <label htmlFor="orderStatus" className="block mb-2 text-sm">Order Status</label>
                                         <select
                                             className={`${inputStyle}`}
@@ -99,7 +99,7 @@ const EditOrderModal = () => {
                                             }
                                         </select>
                                     </div>
-                                    <div className='w-1/4'>
+                                    <div className='w-full md:w-1/4'>
                                         <label htmlFor="paymentStatus" className="block mb-2 text-sm">Payment Status</label>
                                         <select
                                             className={`${inputStyle}`}
@@ -134,13 +134,13 @@ const EditOrderModal = () => {
                                     </div>
                                 </div>
                                 <div className='flex gap-2'>
-                                    <div>
+                                    <div className='w-2/4'>
                                         <label htmlFor="zipCode" className="block mb-2 text-sm">ZIP Code</label>
                                         <input type="text" name="zipCode" id="zipCode" className={`${inputStyle}`} defaultValue={singleOrder?.deliveryAddress?.zipCode} />
                                     </div>
-                                    <div>
+                                    <div className='w-2/4'>
                                         <label htmlFor="country" className="block mb-2 text-sm">Country</label>
-                                        <input type="text" name="country" id="country" className={`${inputStyle}`} value={singleOrder?.deliveryAddress?.country} disabled />
+                                        <p className={`${inputStyle}`}>{singleOrder?.deliveryAddress?.country}</p>
                                     </div>
                                 </div>
                             </div>
