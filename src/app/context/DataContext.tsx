@@ -80,10 +80,13 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //State to handle open close the order edit modal
     const [openOrderEditModal, setOpenOrderEditModal] = useState(false);
 
-    //State to set the single order id for EditOrderModal
-    const [singleOrderId, setSingleOrderId] = useState('');
+    //State to handle open close the order edit modal
+    const [openUserEditModal, setOpenUserEditModal] = useState(false);
 
-    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, adminData, setAdminData, singleRestaurant, setSingleRestaurant, reviewData, setReviewData, initialData, setInitialData, openOrderEditModal, setOpenOrderEditModal, singleOrderId, setSingleOrderId };
+    //State to set the single order id for EditOrderModal
+    const [singleDataId, setSingleDataId] = useState('');
+
+    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, adminData, setAdminData, singleRestaurant, setSingleRestaurant, reviewData, setReviewData, initialData, setInitialData, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal };
     return (
         <div>
             <DataContext.Provider value={allData}>

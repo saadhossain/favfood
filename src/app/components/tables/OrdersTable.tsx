@@ -15,7 +15,7 @@ import { TbProgressCheck, TbShoppingBagEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
-    const { openOrderEditModal, setOpenOrderEditModal, setSingleOrderId } = useContext(DataContext) as DataContextType;
+    const { openOrderEditModal, setOpenOrderEditModal, setSingleDataId } = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
     const handleCancelOrder = async (orderId: string | undefined, orderStatus: string) => {
         const isConfirmed = window.confirm('Do you agree to Cancel this order?');
@@ -112,7 +112,7 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                                                 title='Modify Order'
                                                                 onClick={() => {
                                                                     setOpenOrderEditModal(!openOrderEditModal)
-                                                                    setSingleOrderId(order._id)
+                                                                    setSingleDataId(order._id)
                                                                 }}
                                                             />
                                                         </div> :

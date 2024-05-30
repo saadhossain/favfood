@@ -44,6 +44,8 @@ export interface DataContextType {
     setInitialData: Dispatch<SetStateAction<[] | any>>;
     openOrderEditModal: boolean;
     setOpenOrderEditModal: Dispatch<SetStateAction<boolean>>;
-    singleOrderId: string | any;
-    setSingleOrderId: Dispatch<SetStateAction<string | any>>
+    singleDataId: string | any;
+    setSingleDataId: Dispatch<SetStateAction<string | any>>;
+    openUserEditModal: string | any;
+    setOpenUserEditModal: Dispatch<SetStateAction<string | any>>;
 }

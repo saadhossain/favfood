@@ -22,6 +22,13 @@ export interface UserData {
     role: string;
     phone?: string;
     isActive?: boolean;
+    address?: {
+        streetAddress: string,
+        city: string,
+        state: string,
+        zipCode: string,
+        country: string
+    },
 }
 
 

@@ -1,7 +1,10 @@
+import { DataContext } from '@/app/context/DataContext';
+import { DataContextType } from '@/app/types/DataContextTypes';
 import { UserData } from '@/app/types/DataTypes';
 import { updateUserProfile } from '@/app/utils/updateUserProfile';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { FaToggleOff, FaToggleOn, FaUserEdit } from 'react-icons/fa';
 import { TiDelete } from "react-icons/ti";
@@ -11,6 +14,7 @@ interface Props {
 }
 
 const UsersTable = ({ users }: Props) => {
+    const { openUserEditModal, setOpenUserEditModal, setSingleDataId } = useContext(DataContext) as DataContextType;
     const handleDeleteUser = async (userId: string) => {
         const isConfirmed = window.confirm('Do you want to Delete this User?');
         if (isConfirmed) {
@@ -91,6 +95,10 @@ const UsersTable = ({ users }: Props) => {
                                                     />
                                                     <FaUserEdit
                                                         className='w-6 h-6 cursor-pointer text-green-600' title='Edit User'
+                                                        onClick={() => {
+                                                            setOpenUserEditModal(!openUserEditModal)
+                                                            setSingleDataId(user._id)
+                                                        }}
                                                     />
                                                 </div>
                                             </th>
