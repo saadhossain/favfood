@@ -47,7 +47,7 @@ const SearchModal = () => {
     return (
         <>
             {
-                isSearchModalOpen && <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-40`}>
+                isSearchModalOpen && <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-60`}>
                     <div className='w-11/12 md:w-2/4 h-48 flex items-center bg-gray-700 text-white px-5 rounded-md relative'>
                         <button
                             onClick={() => setIsSearchModalOpen(false)}

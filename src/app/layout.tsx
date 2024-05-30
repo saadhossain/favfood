@@ -11,6 +11,7 @@ import AuthProvider from './context/AuthProvider';
 import DataProvider from './context/DataContext';
 import "./globals.css";
 import AddAddressModal from './components/modals/AddAddressModal';
+import EditOrderModal from './components/modals/EditOrderModal';
 
 const inter = Fira_Code({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({
             <Footer />
             <SearchModal />
             <AddAddressModal />
+            <EditOrderModal/>
           </DataProvider>
           <Toaster />
         </body>

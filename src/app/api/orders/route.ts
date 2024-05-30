@@ -28,3 +28,14 @@ export const DELETE = async (request: NextRequest) => {
     const result = await orderSchema.deleteOne({ _id: orderId });
     return NextResponse.json({ status: true, result });
 }
+
+export const PATCH = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    const payload = await request.json();
+    //Connect to database
+    await mongoose.connect(mongoUrl);
+    //Update the Restaurant
+    const result = await orderSchema.updateOne({ _id: id }, { $set: payload });
+    return NextResponse.json({ status: true, result });
+}

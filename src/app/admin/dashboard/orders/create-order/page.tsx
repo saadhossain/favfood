@@ -67,11 +67,11 @@ const CreateOrder = () => {
         _id: selectedUser._id,
         fullName: selectedUser.fullName
       },
-      paymentMethod: 'cod',
-      orderStatus: 'processing',
+      paymentMethod: 'COD',
+      orderStatus: 'Processing',
       deliveryAddress: selectedUser.address || null,
       orderDate: new Date(),
-      paymentStatus: 'unpaid'
+      paymentStatus: 'Unpaid'
     }
     try {
       const data = await saveToDatabase('/api/orders', orderData);

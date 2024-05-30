@@ -29,10 +29,6 @@ const AddAddressModal = () => {
     }, [openAddressBoxModal]);
     //Set the selected country to the state
     const [selectedCountry, setSelectedCountry] = useState('Bangladesh');
-    //Handle the selected country
-    const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedCountry(e.target.value);
-    };
     const handleAddAddress = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
@@ -59,13 +55,13 @@ const AddAddressModal = () => {
     return (
         <>
             {
-                openAddressBoxModal && <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-40`}>
+                openAddressBoxModal && <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-60`}>
                     <div className='w-11/12 md:w-2/5  flex items-center bg-gray-700 text-white p-5 rounded-md relative'>
                         <button
                             onClick={() => setOpenAddressBoxModal(false)}
                             className='font-bold text-xl absolute top-1 right-2 bg-gray-900 bg-opacity-60 py-1 px-3 rounded-full'>X</button>
                         <form
-                            onSubmit={(e) => handleAddAddress(e)} className="w-full space-y-6">
+                            onSubmit={handleAddAddress} className="w-full space-y-6">
                             <div className="space-y-4">
                                 <div>
                                     <label htmlFor="streetAddress" className="block mb-2 text-sm">Street Address</label>
@@ -93,10 +89,11 @@ const AddAddressModal = () => {
                                         <select
                                             className={`${inputStyle}`}
                                             value={selectedCountry}
-                                            onChange={handleCountryChange}
+                                            onChange={(e)=> setSelectedCountry(e.target.value)}
                                             name="country"
                                             id="country"
                                         >
+                                            <option value="">Select Country</option>
                                             {
                                                 countries.map((country: CountryPros) => <option
                                                     key={country._id}

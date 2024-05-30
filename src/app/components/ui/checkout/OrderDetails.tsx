@@ -50,7 +50,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
             fullName: session?.user?.fullName
         },
         paymentMethod: paymentMethod,
-        orderStatus: 'processing',
+        orderStatus: 'Processing',
         deliveryAddress: session?.user?.address,
         orderDate: new Date(),
     }
@@ -96,14 +96,14 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
                 <input
                     type="radio"
                     name="payment_method"
-                    id="stripe"
+                    id="Stripe"
                     onChange={handlePaymentMethod}
                 />
-                <label htmlFor="stripe"
-                    className='flex gap-2 items-center font-semibold cursor-pointer'>Stripe<Image src={stripe} alt='stripe' width={150} /></label>
+                <label htmlFor="Stripe"
+                    className='flex gap-2 items-center font-semibold cursor-pointer'>Stripe<Image src={stripe} alt='Stripe' width={150} /></label>
             </div>
             {
-                paymentMethod === 'stripe' && <Elements stripe={stripePromise}>
+                paymentMethod === 'Stripe' && <Elements stripe={stripePromise}>
                     <CheckoutForm
                         paymentAmount={grandTotal}
                         session={session}
@@ -121,13 +121,13 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
                 <input
                     type="radio"
                     name="payment_method"
-                    id="cod"
+                    id="COD"
                     onChange={handlePaymentMethod}
                 />
-                <label htmlFor="cod" className='flex gap-2 items-center font-semibold cursor-pointer'>Cash on Delivery<Image src={cod} alt='cod' width={60} /></label>
+                <label htmlFor="COD" className='flex gap-2 items-center font-semibold cursor-pointer'>Cash on Delivery<Image src={cod} alt='COD' width={60} /></label>
             </div>
             {
-                paymentMethod === 'cod' && <button
+                paymentMethod === 'COD' && <button
                     onClick={handleCashOnDelivery}
                     className='w-full flex items-center justify-center bg-primary text-white font-semibold rounded-md py-3 my-5 hover:bg-secondary duration-300 ease-in-out'>{loading ? <Processing title='Placing Order' /> : 'Confirm Order'}</button>
             }

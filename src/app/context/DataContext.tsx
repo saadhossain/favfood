@@ -73,12 +73,17 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //Get the admin data and set as initial data to the initial data state
     const [initialData, setInitialData] = useState([]);
     //Set single Restaurant Data to the state
-    const [singleRestaurant,setSingleRestaurant] = useState([]);
+    const [singleRestaurant, setSingleRestaurant] = useState([]);
 
     //Set the review data to the state
     const [reviewData, setReviewData] = useState([]);
+    //State to handle open close the order edit modal
+    const [openOrderEditModal, setOpenOrderEditModal] = useState(false);
 
-    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, adminData, setAdminData, singleRestaurant,setSingleRestaurant, reviewData, setReviewData , initialData, setInitialData};
+    //State to set the single order id for EditOrderModal
+    const [singleOrderId, setSingleOrderId] = useState('');
+
+    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, adminData, setAdminData, singleRestaurant, setSingleRestaurant, reviewData, setReviewData, initialData, setInitialData, openOrderEditModal, setOpenOrderEditModal, singleOrderId, setSingleOrderId };
     return (
         <div>
             <DataContext.Provider value={allData}>

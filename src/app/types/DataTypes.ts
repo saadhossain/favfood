@@ -68,7 +68,7 @@ export interface OrderDataType {
         streetAddress: string,
         city: string,
         state: string,
-        zipCode: String,
+        zipCode: String | any,
         country: string
     },
     orderDate: string,

@@ -1,8 +1,11 @@
 'use client';
+import { DataContext } from '@/app/context/DataContext';
+import { DataContextType } from '@/app/types/DataContextTypes';
 import { OrderDataType } from '@/app/types/DataTypes';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegCreditCard } from "react-icons/fa";
 import { FaShop } from 'react-icons/fa6';
@@ -12,6 +15,7 @@ import { TbProgressCheck, TbShoppingBagEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
+    const { openOrderEditModal, setOpenOrderEditModal, setSingleOrderId } = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
     const handleCancelOrder = async (orderId: string | undefined, orderStatus: string) => {
         const isConfirmed = window.confirm('Do you agree to Cancel this order?');
@@ -106,6 +110,10 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                                             <TbShoppingBagEdit
                                                                 className='w-6 h-6 text-green-600 cursor-pointer'
                                                                 title='Modify Order'
+                                                                onClick={() => {
+                                                                    setOpenOrderEditModal(!openOrderEditModal)
+                                                                    setSingleOrderId(order._id)
+                                                                }}
                                                             />
                                                         </div> :
                                                             <div className='flex gap-1 items-center justify-center'>
