@@ -46,14 +46,16 @@ const HeaderNavigation = () => {
             }
           </div>
           {/* Mobile Navigation */}
-          <div
-            className='cursor-pointer hover:text-secondary md:hidden'
-            onClick={() => setIsExpand(!isExpand)}
-          >
-            {
-              isExpand ? <IoClose className='w-7 h-7' /> : <RiMenu2Fill className='w-7 h-7' />
-            }
-          </div>
+          {
+            session && <div
+              className='cursor-pointer hover:text-secondary md:hidden'
+              onClick={() => setIsExpand(!isExpand)}
+            >
+              {
+                isExpand ? <IoClose className='w-7 h-7' /> : <RiMenu2Fill className='w-7 h-7' />
+              }
+            </div>
+          }
         </div>
       </div>
       <MobileMenus isExpand={isExpand} setIsExpand={setIsExpand} />
