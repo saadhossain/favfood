@@ -1,10 +1,10 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
+import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { UserData } from '@/app/types/DataTypes';
 import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
 import { updateData } from '@/app/utils/updateData';
-import { uploadImgToImgbb } from '@/app/utils/uploadImgToImgbb';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -13,7 +13,7 @@ import Processing from '../spinner/Processing';
 
 
 const EditUserModal = () => {
-    const { openUserEditModal, setOpenUserEditModal, singleDataId, showPassword, setShowPassword } = useContext(DataContext) as DataContextType;
+    const { openUserEditModal, setOpenUserEditModal, singleDataId, showPassword, setShowPassword, formData, setFormData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     const users = fetchDataForAdmin('/api/users');
 
@@ -27,35 +27,15 @@ const EditUserModal = () => {
         getSingleOrder();
     }, [openUserEditModal]);
     const [isUpdating, setIsUpdating] = useState(false);
+    //Handle Input Change for Update or Add New Data.
+    const handleInputChange = useHandleInputChange();
+    //Handle the Update User
     const handleUpdateUser = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsUpdating(true);
         const form = e.target as HTMLFormElement;
-        const fullName = form.fullName.value;
-        const email = form.email.value;
-        const phone = form.phone.value;
-        const password = form.password.value;
-        //Addresses
-        const streetAddress = form.streetAddress.value;
-        const city = form.city.value;
-        const state = form.state.value;
-        const zipCode = form.zipCode.value;
-
-        const updatedOrderData = {
-            fullName: fullName || singleUser?.fullName,
-            email: email || singleUser?.email,
-            phone: phone || singleUser?.phone,
-            password: password || singleUser?.password,
-            address: {
-                streetAddress: streetAddress || singleUser?.address?.streetAddress,
-                city: city || singleUser?.address?.city,
-                state: state || singleUser?.address?.state,
-                zipCode: zipCode || singleUser?.address?.zipCode,
-                country: 'Bangladesh'
-            }
-        }
-        //Update the order in the database
-        const data = await updateData(`/users?userId=${singleUser?._id}`, updatedOrderData);
+        //Update the User in the database
+        const data = await updateData(`/users?userId=${singleUser?._id}`, formData);
         if (data.acknowledged) {
             toast.success('User Updated Successfully.');
             form.reset();
@@ -80,19 +60,34 @@ const EditUserModal = () => {
                                 <SubHeading heading={'User Details'} />
                                 <div>
                                     <label htmlFor="fullName" className="block mb-2 text-sm">User Name</label>
-                                    <input type="text" name="fullName" id="fullName" className={`${inputStyle}`} defaultValue={singleUser?.fullName} />
+                                    <input type="text" name="fullName" id="fullName"
+                                        className={`${inputStyle}`}
+                                        defaultValue={singleUser?.fullName}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm">Email Address</label>
-                                    <input type="email" name="email" id="email" className={`${inputStyle}`} defaultValue={singleUser?.email} />
+                                    <input type="email" name="email" id="email"
+                                        className={`${inputStyle}`}
+                                        defaultValue={singleUser?.email}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                                 <div>
                                     <label htmlFor="phone" className="block mb-2 text-sm">Phone</label>
-                                    <input type="text" name="phone" id="phone" className={`${inputStyle}`} defaultValue={singleUser?.phone} />
+                                    <input type="text" name="phone" id="phone"
+                                        className={`${inputStyle}`}
+                                        defaultValue={singleUser?.phone}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                                 <div className='relative'>
                                     <label htmlFor="password" className="text-sm">Password</label>
-                                    <input type={`${showPassword ? 'password' : 'text'}`} name="password" id="password" placeholder="***************" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+                                    <input type={`${showPassword ? 'password' : 'text'}`} name="password" id="password" placeholder="***************"
+                                        className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
+                                        onChange={handleInputChange}
+                                    />
                                     {/* Eye button for hide and show password */}
                                     <div
                                         onClick={() => setShowPassword(!showPassword)}
@@ -109,23 +104,39 @@ const EditUserModal = () => {
                                 <SubHeading heading={'Delivery Address'} />
                                 <div>
                                     <label htmlFor="streetAddress" className="block mb-2 text-sm">Street Address</label>
-                                    <input type="text" name="streetAddress" id="streetAddress" className={`${inputStyle}`} defaultValue={singleUser?.address?.streetAddress} />
+                                    <input type="text" name="streetAddress" id="streetAddress"
+                                        className={`${inputStyle}`}
+                                        defaultValue={singleUser?.address?.streetAddress}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                                 {/* //City and State */}
                                 <div className='flex gap-2'>
                                     <div>
                                         <label htmlFor="city" className="block mb-2 text-sm">City</label>
-                                        <input type="text" name="city" id="city" className={`${inputStyle}`} defaultValue={singleUser?.address?.city} />
+                                        <input type="text" name="city" id="city"
+                                            className={`${inputStyle}`}
+                                            defaultValue={singleUser?.address?.city}
+                                            onChange={handleInputChange}
+                                        />
                                     </div>
                                     <div>
                                         <label htmlFor="state" className="block mb-2 text-sm">State/Division</label>
-                                        <input type="text" name="state" id="state" className={`${inputStyle}`} defaultValue={singleUser?.address?.state} />
+                                        <input type="text" name="state" id="state"
+                                            className={`${inputStyle}`}
+                                            defaultValue={singleUser?.address?.state}
+                                            onChange={handleInputChange}
+                                        />
                                     </div>
                                 </div>
                                 <div className='flex gap-2'>
                                     <div className='w-2/4'>
                                         <label htmlFor="zipCode" className="block mb-2 text-sm">ZIP Code</label>
-                                        <input type="text" name="zipCode" id="zipCode" className={`${inputStyle}`} defaultValue={singleUser?.address?.zipCode} />
+                                        <input type="text" name="zipCode" id="zipCode"
+                                            className={`${inputStyle}`}
+                                            defaultValue={singleUser?.address?.zipCode}
+                                            onChange={handleInputChange}
+                                        />
                                     </div>
                                     <div className='w-2/4'>
                                         <label htmlFor="country" className="block mb-2 text-sm">Country</label>

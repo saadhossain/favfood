@@ -86,7 +86,10 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //State to set the single order id for EditOrderModal
     const [singleDataId, setSingleDataId] = useState('');
 
-    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, adminData, setAdminData, singleRestaurant, setSingleRestaurant, reviewData, setReviewData, initialData, setInitialData, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal };
+    //Set the FormData to the State as object when input changes
+    const [formData, setFormData] = useState({});
+
+    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, adminData, setAdminData, singleRestaurant, setSingleRestaurant, reviewData, setReviewData, initialData, setInitialData, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData };
     return (
         <div>
             <DataContext.Provider value={allData}>
