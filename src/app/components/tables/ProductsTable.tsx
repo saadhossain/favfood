@@ -37,7 +37,7 @@ const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: an
         const updatedProducts = productsInLocalStorage.filter((item: CartDataType) => item.productId !== id);
         // Update local storage with the updated products
         localStorage.setItem('favFoodCart', JSON.stringify(updatedProducts));
-        
+
         // //If there is no product in the favFoodCart then completely remove the array
         // if (updatedProducts.length <= 0) {
         //     localStorage.removeItem('favFoodCart');
@@ -81,7 +81,7 @@ const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: an
                                                 <button onClick={() => handleRemoveProductFromCart(cartProduct?.product?._id)} className='text-red-600 font-bold'>X</button>
                                             </td>
                                             <td className="p-3 hidden md:block">
-                                                <Link href={`/food/${cartProduct?.product?.restaurant_Name.toLowerCase()}/${cartProduct?.product?.slug}`}>
+                                                <Link href={`/food/${cartProduct?.product?.restaurant.toLowerCase()}/${cartProduct?.product?.slug}`}>
                                                     <Image src={cartProduct?.product?.image} alt={cartProduct?.product?.name} width={60} height={40} className='rounded-md' />
                                                 </Link>
                                             </td>
@@ -89,7 +89,7 @@ const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: an
                                                 <Image src={cartProduct?.product?.image} alt={cartProduct?.product?.name} width={60} height={40} className='rounded-md' />
                                             </div>
                                             <td className="p-3 text-left">
-                                                <Link href={`/food/${cartProduct?.product?.restaurant_Name.toLowerCase()}/${cartProduct?.product?.slug}`}>{cartProduct?.product?.name}</Link>
+                                                <Link href={`/food/${cartProduct?.product?.restaurant.toLowerCase()}/${cartProduct?.product?.slug}`}>{cartProduct?.product?.name}</Link>
                                             </td>
                                             <td className="p-3">
                                                 <p>$ {cartProduct?.product?.price}</p>

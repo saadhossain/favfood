@@ -15,7 +15,7 @@ export const GET = async (request: NextRequest) => {
                 $or: [
                     { name: { $regex: word, $options: 'i' } },
                     { description: { $regex: word, $options: 'i' } },
-                    { restaurant_Name: { $regex: word, $options: 'i' } },
+                    { restaurant: { $regex: word, $options: 'i' } },
                     { category: { $regex: word, $options: 'i' } }
                 ]
             }))

@@ -16,7 +16,7 @@ const page = ({ params }: Props) => {
   const { loading } = useContext(DataContext) as DataContextType;
   const restaurantName = decodeURIComponent(params.restaurantName);
   const foods = fetchFoodData();
-  const restaurantFoods = foods.filter((food: FoodData) => food.restaurant_Name.toLocaleLowerCase() === restaurantName);
+  const restaurantFoods = foods.filter((food: FoodData) => food.restaurant.toLocaleLowerCase() === restaurantName);
   if (loading) {
     return <ProductLoader />;
   }

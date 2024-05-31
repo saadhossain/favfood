@@ -47,7 +47,7 @@ const FoodSinglePage = ({ params }: { params: paramsTypes }) => {
               <Image src={singleFood.image} alt={singleFood.name} width={450} height={250} className='w-64 h-40 my-2 rounded-md block md:hidden' />
               <h2 className='text-xl md:text-3xl font-semibold'>{singleFood.name}</h2>
               <h5 className='flex items-center gap-1 font-semibold text-green-600'><FaCheckCircle /> In Stock</h5>
-              <Link href={`/restaurants/${singleFood.restaurant_Name?.toLocaleLowerCase()}`} className='flex items-center gap-1 font-semibold hover:text-primary'><FaShop />{singleFood.restaurant_Name}</Link>
+              <Link href={`/restaurants/${singleFood.restaurant?.toLocaleLowerCase()}`} className='flex items-center gap-1 font-semibold hover:text-primary'><FaShop />{singleFood.restaurant}</Link>
               <h3 className='text-2xl font-semibold text-primary'>${singleFood.price}</h3>
               <h5 className='font-semibold'>Product Details</h5>
               <p>{singleFood.description}</p>

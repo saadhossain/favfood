@@ -60,7 +60,7 @@ const FoodsTable = ({ foods }: Props) => {
                                                 </div>
                                             </th>
                                             <th className="md:p-3 p-2">${food.price}</th>
-                                            <th className="md:p-3 p-2 min-w-36 md:min-w-0">{food.restaurant_Name}</th>
+                                            <th className="md:p-3 p-2 min-w-36 md:min-w-0">{food.restaurant}</th>
                                             <th className="md:p-3 p-2">{food.category}</th>
                                             {/* Product Action Buttons */}
                                             <th className="p-3">

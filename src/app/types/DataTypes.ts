@@ -4,7 +4,7 @@ export interface FoodData {
     slug: string;
     description: string;
     price: number;
-    restaurant_Name: string;
+    restaurant: string;
     image: string;
     category: string;
     reviewCount: number;

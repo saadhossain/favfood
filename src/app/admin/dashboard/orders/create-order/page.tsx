@@ -54,7 +54,7 @@ const CreateOrder = () => {
       _id: selectedFood._id,
       name: selectedFood.name,
       slug: selectedFood.slug,
-      restaurantName: selectedFood.restaurant_Name,
+      restaurantName: selectedFood.restaurant,
       price: selectedFood.price,
       image: selectedFood.image,
       quantity: 1

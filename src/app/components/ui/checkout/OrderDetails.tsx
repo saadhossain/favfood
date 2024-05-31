@@ -36,7 +36,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
         _id: item.product._id,
         name: item.product.name,
         slug: item.product.slug,
-        restaurantName: item.product.restaurant_Name,
+        restaurantName: item.product.restaurant,
         price: item.product.price,
         image: item.product.image,
         quantity: item.quantity

@@ -13,7 +13,7 @@ const FoodCard = ({ food }: { food: FoodData }) => {
     const handleAddToWishlist = useHandleAddToWishlist();
     return (
         <div className='bg-gray-100 border-gray-100 rounded-md h-56 md:h-[350px] relative'>
-            <Link href={`/foods/${food.restaurant_Name.toLowerCase()}/${food.slug}`}>
+            <Link href={`/foods/${food.restaurant.toLowerCase()}/${food.slug}`}>
                 <Image src={food.image} alt={food.name} width={400} height={250} className='rounded-t-md relative h-28 md:h-44' />
             </Link>
             {/* Wishlist Button */}
@@ -24,14 +24,14 @@ const FoodCard = ({ food }: { food: FoodData }) => {
             <div className='flex flex-col justify-between p-2 md:p-4'>
                 {/* Food name and its Reviews */}
                 <div className='flex items-start justify-between'>
-                    <Link href={`/foods/${food.restaurant_Name.toLowerCase()}/${food.slug}`}>
+                    <Link href={`/foods/${food.restaurant.toLowerCase()}/${food.slug}`}>
                         <h3 className='w-full md:w-9/12 text-sm md:text-[15px] font-semibold'>{food.name}</h3>
                     </Link>
-                    <Link href={`/foods/${food.restaurant_Name.toLowerCase()}/${food.slug}`} className='w-3/12 md:flex gap-1 items-center underline hover:text-primary hidden'><FaStar className='text-primary' />{food.reviewCount}</Link>
+                    <Link href={`/foods/${food.restaurant.toLowerCase()}/${food.slug}`} className='w-3/12 md:flex gap-1 items-center underline hover:text-primary hidden'><FaStar className='text-primary' />{food.reviewCount}</Link>
                 </div>
                 {/* Restaurant Name and Item Sold */}
                 <div className='flex items-start justify-between mt-1 md:mt-2'>
-                    <Link href={`/restaurants/${food.restaurant_Name.toLowerCase()}`} className='text-sm md:text-base font-semibold flex items-center gap-1 hover:text-secondary'><FaShop className='text-primary h-4 w-4' />{food.restaurant_Name}</Link>
+                    <Link href={`/restaurants/${food.restaurant.toLowerCase()}`} className='text-sm md:text-base font-semibold flex items-center gap-1 hover:text-secondary'><FaShop className='text-primary h-4 w-4' />{food.restaurant}</Link>
                     <p className='w-3/12 md:flex gap-1 items-center hidden'><MdSell className='text-primary' />{food.itemSold}</p>
                 </div>
                 {/* Price and Order Button */}
