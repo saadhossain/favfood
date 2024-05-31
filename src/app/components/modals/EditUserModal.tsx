@@ -140,7 +140,7 @@ const EditUserModal = () => {
                                     </div>
                                     <div className='w-2/4'>
                                         <label htmlFor="country" className="block mb-2 text-sm">Country</label>
-                                        <p className={`${inputStyle}`}>{singleUser?.address?.country}</p>
+                                        <p className={`${inputStyle}`}>{singleUser?.address?.country ? singleUser?.address?.country :'Bangladesh'}</p>
                                     </div>
                                 </div>
                             </div>

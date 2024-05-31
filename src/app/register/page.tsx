@@ -9,6 +9,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Processing from '../components/spinner/Processing';
 import { DataContext } from '../context/DataContext';
 import { DataContextType } from '../types/DataContextTypes';
+import { saveToDatabase } from '../utils/saveToDatabase';
 import { uploadImgToImgbb } from '../utils/uploadImgToImgbb';
 import LoginBg from '/public/login-bg.jpg';
 
@@ -64,14 +65,7 @@ const RegisterPage = () => {
         };
         try {
             //Save user data to database
-            const res = await fetch(`/api/users`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            });
-            const data = await res.json();
+            const data = await saveToDatabase('/api/users', userData);
             if (data.status) {
                 form.reset();
                 setLoading(false);
