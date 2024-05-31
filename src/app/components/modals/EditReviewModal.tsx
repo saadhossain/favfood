@@ -2,73 +2,55 @@
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
 import { DataContextType } from '@/app/types/DataContextTypes';
-import { OrderDataType } from '@/app/types/DataTypes';
+import { ReviewData } from '@/app/types/DataTypes';
 import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
-import { saveToDatabase } from '@/app/utils/saveToDatabase';
-import { useSession } from 'next-auth/react';
+import { updateData } from '@/app/utils/updateData';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import SubHeading from '../shared/headings/SubHeading';
 import Processing from '../spinner/Processing';
 
 
-const AddReviewModal = () => {
-    const { openAddReviewModal, setOpenAddReviewModal, singleDataId, formData } = useContext(DataContext) as DataContextType;
-    const { data: session } = useSession();
+const EditReviewModal = () => {
+    const { openEditReviewModal, setOpenEditReviewModal, singleDataId, formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
-    const orders = fetchDataForAdmin('/api/orders');
-
-    //GEt single order
-    const [singleOrder, setSingleOrder] = useState<OrderDataType>();
+    const reviews = fetchDataForAdmin('/api/reviews');
+    //GEt single Review
+    const [singleReview, setSingleReview] = useState<ReviewData>();
     useEffect(() => {
-        const getSingleOrder = async () => {
-            const singleOrder = orders.find((order: OrderDataType) => order._id === singleDataId);
-            setSingleOrder(singleOrder);
+        const getSingleReview = async () => {
+            const singleReview = reviews.find((review: ReviewData) => review._id === singleDataId);
+            setSingleReview(singleReview);
         }
-        getSingleOrder();
-    }, [setOpenAddReviewModal, openAddReviewModal]);
-    const [isAddingReview, setIsAddingReview] = useState(false);
+        getSingleReview();
+    }, [singleDataId, openEditReviewModal]);
     //Handle Input Change for Update or Add New Data.
     const handleInputChange = useHandleInputChange();
-    //Handle the Add or Modify the Review
-    const handleAddReview = async (e: FormEvent<HTMLFormElement>) => {
+    const [isUpdating, setIsUpdating] = useState<boolean>(false);
+    //Handle the Modify the Review
+    const handleEditReview = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsAddingReview(true);
+        setIsUpdating(true);
         const form = e.target as HTMLFormElement;
-        //Arrange the Review Data...
-        const reviewData = {
-            ...formData,
-            foodId: singleOrder?.products[0]._id,
-            foodSlug: singleOrder?.products[0].slug,
-            restaurantName: singleOrder?.products[0].restaurantName,
-            userId: session?.user._id,
-            userName: session?.user.fullName,
-            userProfileImage: session?.user.image,
-            addedOn: new Date(),
-        }
         //Update the order in the database
-        const data = await saveToDatabase('/api/reviews', reviewData);
-        if (data.status) {
-            toast.success('Review Added Successfully.');
+        const data = await updateData(`/reviews?id=${singleDataId}`, formData);
+        if (data.acknowledged) {
+            toast.success('Review Edit Successfully.');
             form.reset();
-            setIsAddingReview(false);
-            setOpenAddReviewModal(false);
-        } else {
-            toast.error(data.message);
-            setIsAddingReview(false);
-            setOpenAddReviewModal(false);
+            setIsUpdating(false);
+            setOpenEditReviewModal(false);
         }
     }
     return (
         <>
             {
-                openAddReviewModal && <div className={`w-full min-h-screen flex items-center justify-center absolute py-10 md:py-0 md:fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-60`}>
+                openEditReviewModal && <div className={`w-full min-h-screen flex items-center justify-center absolute py-10 md:py-0 md:fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-60`}>
                     <div className='w-11/12 md:w-2/5  flex items-center bg-gray-700 text-white p-5 my-5 md:my-0 rounded-md relative'>
                         <button
-                            onClick={() => setOpenAddReviewModal(false)}
+                            onClick={() => setOpenEditReviewModal(false)}
                             className='font-bold text-xl absolute top-1 right-2 bg-gray-900 bg-opacity-60 py-1 px-3 rounded-full'>X</button>
                         <form
-                            onSubmit={handleAddReview}
+                            onSubmit={handleEditReview}
                             className="w-full space-y-6"
                         >
                             {/* Review Details */}
@@ -79,7 +61,7 @@ const AddReviewModal = () => {
                                     <input type="text" name="title" id="title"
                                         className={`${inputStyle}`}
                                         onChange={handleInputChange}
-                                        placeholder='Enter the Title'
+                                        defaultValue={singleReview?.title}
                                     />
                                 </div>
                                 <div>
@@ -87,6 +69,7 @@ const AddReviewModal = () => {
                                     <input type="text" name="rating" id="rating"
                                         className={`${inputStyle}`}
                                         onChange={handleInputChange}
+                                        defaultValue={singleReview?.rating}
                                     />
                                 </div>
                                 <div>
@@ -94,14 +77,14 @@ const AddReviewModal = () => {
                                     <textarea name="description" id="description"
                                         className={`${inputStyle}`}
                                         onChange={handleInputChange}
-                                        placeholder='Write your Review Here...'
+                                        defaultValue={singleReview?.description}
                                     ></textarea>
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <div>
                                     <button type="submit" className="w-full flex items-center justify-center px-8 py-3 font-semibold rounded-md bg-primary text-white">
-                                        {isAddingReview ? <Processing title={'Processing'} /> : 'Add Review'}
+                                        {isUpdating ? <Processing title={'Processing'} /> : 'Update Review'}
                                     </button>
                                 </div>
                             </div>
@@ -113,4 +96,4 @@ const AddReviewModal = () => {
     )
 }
 
-export default AddReviewModal
+export default EditReviewModal

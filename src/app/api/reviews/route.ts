@@ -28,3 +28,16 @@ export const DELETE = async (request: NextRequest) => {
     const result = await reviewSchema.deleteOne({ _id: id });
     return NextResponse.json({ status: true, result });
 }
+
+//Edit Review details
+export const PATCH = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get('id');
+    const payload = await request.json();
+    //Connect to database
+    await mongoose.connect(mongoUrl);
+
+    //Update the user
+    const result = await reviewSchema.updateOne({ _id: userId }, { $set: payload });
+    return NextResponse.json({ status: true, result });
+}

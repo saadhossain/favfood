@@ -1,5 +1,8 @@
 'use client'
+import { DataContext } from '@/app/context/DataContext';
+import { DataContextType } from '@/app/types/DataContextTypes';
 import Link from 'next/link';
+import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { TbEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
@@ -9,6 +12,7 @@ interface Props {
 }
 
 const ReviewsTable = ({ reviews }: Props) => {
+    const { openEditReviewModal, setOpenEditReviewModal, setSingleDataId } = useContext(DataContext) as DataContextType;
     const handleDeleteReview = async (reviewId: string) => {
         const isConfirmed = window.confirm('Do you want to Delete this Review?');
         if (isConfirmed) {
@@ -77,6 +81,10 @@ const ReviewsTable = ({ reviews }: Props) => {
                                                     />
                                                     <TbEdit
                                                         className='w-6 h-6 cursor-pointer text-green-600' title='Edit Review'
+                                                        onClick={() => {
+                                                            setOpenEditReviewModal(!openEditReviewModal)
+                                                            setSingleDataId(review._id)
+                                                        }}
                                                     />
                                                 </div>
                                             </th>
