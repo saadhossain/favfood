@@ -22,7 +22,7 @@ const Profile = () => {
     e.preventDefault();
     setLoading(true);
     //Call the updateUserProfile function
-    const data = await updateData(`/api/users?userId=${session?.user._id}`, formData);
+    const data = await updateData(`/users?userId=${session?.user._id}`, formData);
     if (data.acknowledged) {
       toast.success('Profile updated successfully');
       setLoading(false);

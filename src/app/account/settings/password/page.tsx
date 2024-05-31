@@ -4,7 +4,7 @@ import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
-import { updateUserProfile } from '@/app/utils/updateUserProfile';
+import { updateData } from '@/app/utils/updateData';
 import { signOut, useSession } from 'next-auth/react';
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -25,7 +25,7 @@ const Password = () => {
       setLoading(false);
       return;
     }
-    const data = await updateUserProfile(session?.user._id, { password: newPassword });
+    const data = await updateData(`/users?userId=${session?.user._id}`, { password: newPassword });
     if (data.acknowledged) {
       toast.success('Password updated successfully');
       setLoading(false);
