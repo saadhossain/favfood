@@ -7,8 +7,11 @@ import { NextRequest, NextResponse } from 'next/server';
 export const POST = async (request: Request) => {
     const payload = await request.json();
     await mongoose.connect(mongoUrl);
+    const isExist = await reviewSchema.findOne({ foodId: payload.foodId, userId: payload.userId });
+    if (isExist) {
+        return NextResponse.json({ status: false, message: 'You have already wrote review for this.' });
+    }
     const reviews = new reviewSchema(payload);
-
     const result = await reviews.save();
     return NextResponse.json({ status: true, result });
 }

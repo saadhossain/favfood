@@ -15,7 +15,7 @@ import { TbProgressCheck, TbShoppingBagEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
-    const { openOrderEditModal, setOpenOrderEditModal, setSingleDataId } = useContext(DataContext) as DataContextType;
+    const { openOrderEditModal, setOpenOrderEditModal, setSingleDataId, openAddReviewModal, setOpenAddReviewModal } = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
     const handleCancelOrder = async (orderId: string | undefined, orderStatus: string) => {
         const isConfirmed = window.confirm('Do you agree to Cancel this order?');
@@ -125,7 +125,14 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
                                                                     <HiCursorArrowRipple className='text-primary absolute -bottom-1 left-4' />
                                                                 </button>
                                                                 <TbProgressCheck className='w-6 h-6 cursor-pointer text-green-600' title='Track Package' />
-                                                                <MdOutlineRateReview className='w-6 h-6 cursor-pointer' title='Write a Review' />
+                                                                <MdOutlineRateReview
+                                                                    className='w-6 h-6 cursor-pointer'
+                                                                    title='Write a Review'
+                                                                    onClick={() => {
+                                                                        setOpenAddReviewModal(!openAddReviewModal)
+                                                                        setSingleDataId(order._id)
+                                                                    }}
+                                                                />
                                                             </div>
                                                     }
                                                 </div>

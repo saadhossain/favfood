@@ -13,7 +13,7 @@ import Processing from '../spinner/Processing';
 
 
 const EditUserModal = () => {
-    const { openUserEditModal, setOpenUserEditModal, singleDataId, showPassword, setShowPassword, formData, setFormData } = useContext(DataContext) as DataContextType;
+    const { openUserEditModal, setOpenUserEditModal, singleDataId, showPassword, setShowPassword, formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     const users = fetchDataForAdmin('/api/users');
 
@@ -140,7 +140,7 @@ const EditUserModal = () => {
                                     </div>
                                     <div className='w-2/4'>
                                         <label htmlFor="country" className="block mb-2 text-sm">Country</label>
-                                        <p className={`${inputStyle}`}>{singleUser?.address?.country ? singleUser?.address?.country :'Bangladesh'}</p>
+                                        <p className={`${inputStyle}`}>{singleUser?.address?.country ? singleUser?.address?.country : 'Bangladesh'}</p>
                                     </div>
                                 </div>
                             </div>

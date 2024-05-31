@@ -50,4 +50,6 @@ export interface DataContextType {
     setOpenUserEditModal: Dispatch<SetStateAction<string | any>>;
     formData: {} | any;
     setFormData: Dispatch<SetStateAction<{} | any>>;
+    openAddReviewModal: boolean;
+    setOpenAddReviewModal: Dispatch<SetStateAction<boolean>>;
 }

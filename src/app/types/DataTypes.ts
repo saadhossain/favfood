@@ -58,7 +58,7 @@ export interface OrderDataType {
     _id?: string;
     products: [
         {
-            id: string,
+            _id: string,
             name: string,
             slug: string,
             restaurantName: string,
