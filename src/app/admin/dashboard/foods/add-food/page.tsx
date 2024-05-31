@@ -2,6 +2,7 @@
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
+import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
@@ -11,55 +12,48 @@ import { FormEvent, useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const AddFood = () => {
-    const { setLoading, loading } = useContext(DataContext) as DataContextType;
+    const { setLoading, loading, formData } = useContext(DataContext) as DataContextType;
     const [error, setError] = useState('');
     const restaurants = fetchDataForAdmin('/api/restaurants');
     const categories = ["Burger", "Pizza", "Sandwich", "Fries", "Chicken"];
-    //Set the selected Restaurant to the state
-    const [selectedRestaurant, setSelectedRestaurant] = useState<string>('');
-    //Set the selected Restaurant to the state
-    const [selectedCategory, setSelectedCategory] = useState<string>('');
 
     const route = useRouter();
+    //Get the useHandleInputChange hook to get all the data from the input
+    const handleInputChange = useHandleInputChange();
 
     const handleAddFood = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         const form = e.target as HTMLFormElement;
-        const foodName = form.foodName.value;
-        const foodPrice = form.foodPrice.value;
-        const description = form.description.value;
 
         //Validations
-        if (!foodName || !foodPrice || !description || !selectedRestaurant || !selectedCategory) {
+        if (!formData.foodName || !formData.price || !formData.description || !formData.restaurant || !formData.category) {
             setError('All fields are required.');
             setLoading(false);
             return;
         }
         //Handle profile image and upload to Imgbb
-        const image = form.foodImage.files[0];
+        const imageInput = form.foodImage.files[0];
         //check if image uploaded
-        if (!image) {
+        if (!imageInput) {
             setError('Please upload the image, its required.');
             setLoading(false);
             return;
         }
-        const formData = new FormData();
-        formData.append('image', image);
-        const foodImage = await uploadImgToImgbb(formData);
+        const imageFormData = new FormData();
+        imageFormData.append('image', imageInput);
+        const image = await uploadImgToImgbb(imageFormData);
 
         //Arrange Food data for saving
         const foodData = {
-            name: foodName,
-            description,
-            price: parseFloat(foodPrice),
-            restaurant_Name: selectedRestaurant,
-            image: foodImage,
-            category: selectedCategory,
+            ...formData,
+            price: parseFloat(formData.price),
+            image,
             reviewCount: Math.floor(Math.random() * 80),
             itemSold: Math.floor(Math.random() * 100),
             discountPercentage: 0
         };
+
         try {
             const data = await saveToDatabase('/api/foods', foodData);
             if (data.status) {
@@ -85,11 +79,15 @@ const AddFood = () => {
                     <div className='flex flex-col md:flex-row gap-2 items-center justify-between'>
                         <div className='w-full md:w-4/5'>
                             <label htmlFor="foodName" className="font-semibold block mb-2 text-sm">Product Name</label>
-                            <input type="text" name="foodName" id="foodName" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+                            <input type="text" name="foodName" id="foodName" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
+                                onChange={handleInputChange}
+                            />
                         </div>
                         <div className='w-full md:w-1/5'>
-                            <label htmlFor="foodPrice" className="font-semibold block mb-2 text-sm">Price</label>
-                            <input type="text" name="foodPrice" id="foodPrice" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" placeholder='1.50' />
+                            <label htmlFor="price" className="font-semibold block mb-2 text-sm">Price</label>
+                            <input type="text" name="price" id="price" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" placeholder='1.50'
+                                onChange={handleInputChange}
+                            />
                         </div>
                     </div>
                     {/* Category, Restaurant Name and Food Image */}
@@ -98,8 +96,8 @@ const AddFood = () => {
                             <label htmlFor="category" className="font-semibold block mb-2 text-sm">Category</label>
                             <select
                                 className='w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none'
-                                value={selectedCategory}
-                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                value={formData.category}
+                                onChange={handleInputChange}
                                 name="category"
                                 id="category"
                             >
@@ -116,8 +114,8 @@ const AddFood = () => {
                             <label htmlFor="restrauName" className="font-semibold block mb-2 text-sm">Restaurant Name</label>
                             <select
                                 className='w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none'
-                                value={selectedRestaurant}
-                                onChange={(e) => setSelectedRestaurant(e.target.value)}
+                                value={formData.restaurant}
+                                onChange={handleInputChange}
                                 name="restaurant"
                                 id="restaurant"
                             >
@@ -137,7 +135,9 @@ const AddFood = () => {
                     </div>
                     <div>
                         <label htmlFor="description" className="font-semibold text-sm">Description</label>
-                        <textarea name="description" id="description" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"></textarea>
+                        <textarea name="description" id="description" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
+                            onChange={handleInputChange}
+                        ></textarea>
                     </div>
                 </div>
                 {
