@@ -1,5 +1,6 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
+import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { OrderDataType } from '@/app/types/DataTypes';
 import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
@@ -11,7 +12,7 @@ import Processing from '../spinner/Processing';
 
 
 const EditOrderModal = () => {
-    const { openOrderEditModal, setOpenOrderEditModal, singleDataId } = useContext(DataContext) as DataContextType;
+    const { openOrderEditModal, setOpenOrderEditModal, singleDataId, formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     const orders = fetchDataForAdmin('/api/orders');
 
@@ -26,34 +27,14 @@ const EditOrderModal = () => {
     }, [openOrderEditModal]);
     const [isUpdating, setIsUpdating] = useState(false);
     const statuses = ['Pending', 'Processing', 'Packaging', 'Shipped', 'Delivered'];
-    //Set the order Status to the state
-    const [orderStatus, setOrderStatus] = useState(singleOrder?.orderStatus);
-    //Set the Payment Status to the state
-    const [paymentStatus, setPaymentStatus] = useState(singleOrder?.paymentStatus);
+    //Handle Input Change for Update or Add New Data.
+    const handleInputChange = useHandleInputChange();
     const handleUpdateOrder = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsUpdating(true);
         const form = e.target as HTMLFormElement;
-        const orderAmount = form.orderAmount.value;
-        //Addresses
-        const streetAddress = form.streetAddress.value;
-        const city = form.city.value;
-        const state = form.state.value;
-        const zipCode = form.zipCode.value;
-
-        const updatedOrderData = {
-            orderAmount: orderAmount || singleOrder?.orderAmount,
-            orderStatus: orderStatus || singleOrder?.orderStatus,
-            paymentStatus: paymentStatus || singleOrder?.paymentStatus,
-            deliveryAddress: {
-                streetAddress: streetAddress || singleOrder?.deliveryAddress.streetAddress,
-                city: city || singleOrder?.deliveryAddress.city,
-                state: state || singleOrder?.deliveryAddress.state,
-                zipCode: zipCode || singleOrder?.deliveryAddress.zipCode
-            }
-        }
         //Update the order in the database
-        const data = await updateData(`/orders?id=${singleOrder?._id}`, updatedOrderData);
+        const data = await updateData(`/orders?id=${singleOrder?._id}`, formData);
         if (data.acknowledged) {
             toast.success('Order Updated Successfully.');
             form.reset();
@@ -79,16 +60,20 @@ const EditOrderModal = () => {
                                 <div className='w-full flex flex-col md:flex-row gap-2'>
                                     <div className='w-full md:w-1/4'>
                                         <label htmlFor="orderAmount" className="block mb-2 text-sm">Order Amount</label>
-                                        <input type="text" name="orderAmount" id="orderAmount" className={`${inputStyle}`} defaultValue={singleOrder?.orderAmount} />
+                                        <input type="text" name="orderAmount" id="orderAmount"
+                                            className={`${inputStyle}`}
+                                            defaultValue={singleOrder?.orderAmount}
+                                            onChange={handleInputChange}
+                                        />
                                     </div>
                                     <div className='w-full md:w-2/4'>
                                         <label htmlFor="orderStatus" className="block mb-2 text-sm">Order Status</label>
                                         <select
                                             className={`${inputStyle}`}
-                                            value={orderStatus}
-                                            onChange={(e) => setOrderStatus(e.target.value)}
+                                            value={formData.orderStatus}
                                             name="orderStatus"
                                             id="orderStatus"
+                                            onChange={handleInputChange}
                                         >
                                             <option value="">Change Status</option>
                                             {
@@ -103,8 +88,8 @@ const EditOrderModal = () => {
                                         <label htmlFor="paymentStatus" className="block mb-2 text-sm">Payment Status</label>
                                         <select
                                             className={`${inputStyle}`}
-                                            value={paymentStatus}
-                                            onChange={(e) => setPaymentStatus(e.target.value)}
+                                            value={formData.paymentStatus}
+                                            onChange={handleInputChange}
                                             name="paymentStatus"
                                             id="paymentStatus"
                                         >
@@ -120,23 +105,39 @@ const EditOrderModal = () => {
                                 <SubHeading heading={'Delivery Address'} />
                                 <div>
                                     <label htmlFor="streetAddress" className="block mb-2 text-sm">Street Address</label>
-                                    <input type="text" name="streetAddress" id="streetAddress" className={`${inputStyle}`} defaultValue={singleOrder?.deliveryAddress?.streetAddress} />
+                                    <input type="text" name="streetAddress" id="streetAddress"
+                                        className={`${inputStyle}`}
+                                        defaultValue={singleOrder?.deliveryAddress?.streetAddress}
+                                        onChange={handleInputChange}
+                                    />
                                 </div>
                                 {/* //City and State */}
                                 <div className='flex gap-2'>
                                     <div>
                                         <label htmlFor="city" className="block mb-2 text-sm">City</label>
-                                        <input type="text" name="city" id="city" className={`${inputStyle}`} defaultValue={singleOrder?.deliveryAddress?.city} />
+                                        <input type="text" name="city" id="city"
+                                            className={`${inputStyle}`}
+                                            defaultValue={singleOrder?.deliveryAddress?.city}
+                                            onChange={handleInputChange}
+                                        />
                                     </div>
                                     <div>
                                         <label htmlFor="state" className="block mb-2 text-sm">State/Division</label>
-                                        <input type="text" name="state" id="state" className={`${inputStyle}`} defaultValue={singleOrder?.deliveryAddress?.state} />
+                                        <input type="text" name="state" id="state"
+                                            className={`${inputStyle}`}
+                                            defaultValue={singleOrder?.deliveryAddress?.state}
+                                            onChange={handleInputChange}
+                                        />
                                     </div>
                                 </div>
                                 <div className='flex gap-2'>
                                     <div className='w-2/4'>
                                         <label htmlFor="zipCode" className="block mb-2 text-sm">ZIP Code</label>
-                                        <input type="text" name="zipCode" id="zipCode" className={`${inputStyle}`} defaultValue={singleOrder?.deliveryAddress?.zipCode} />
+                                        <input type="text" name="zipCode" id="zipCode"
+                                            className={`${inputStyle}`}
+                                            defaultValue={singleOrder?.deliveryAddress?.zipCode}
+                                            onChange={handleInputChange}
+                                        />
                                     </div>
                                     <div className='w-2/4'>
                                         <label htmlFor="country" className="block mb-2 text-sm">Country</label>

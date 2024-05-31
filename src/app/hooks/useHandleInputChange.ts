@@ -4,7 +4,7 @@ import { DataContextType } from '../types/DataContextTypes';
 
 export const useHandleInputChange = () => {
     const { formData, setFormData } = useContext(DataContext) as DataContextType;
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,

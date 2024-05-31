@@ -48,6 +48,6 @@ export interface DataContextType {
     setSingleDataId: Dispatch<SetStateAction<string | any>>;
     openUserEditModal: string | any;
     setOpenUserEditModal: Dispatch<SetStateAction<string | any>>;
-    formData: {};
-    setFormData: Dispatch<SetStateAction<{}>>;
+    formData: {} | any;
+    setFormData: Dispatch<SetStateAction<{} | any>>;
 }
