@@ -8,59 +8,54 @@ import toast from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Processing from '../components/spinner/Processing';
 import { DataContext } from '../context/DataContext';
+import { useHandleInputChange } from '../hooks/useHandleInputChange';
 import { DataContextType } from '../types/DataContextTypes';
 import { saveToDatabase } from '../utils/saveToDatabase';
 import { uploadImgToImgbb } from '../utils/uploadImgToImgbb';
 import LoginBg from '/public/login-bg.jpg';
 
 const RegisterPage = () => {
-    const { showPassword, setShowPassword, loading, setLoading } = useContext(DataContext) as DataContextType;
+    const { showPassword, setShowPassword, loading, setLoading, formData } = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
     const [error, setError] = useState('');
+    //Get the useHandleInputChange hook to get all the input
+    const handleInputChange = useHandleInputChange();
     //Save the User to the Database.
     const handleUserRegistration = async (e: FormEvent<HTMLFormElement>) => {
         setLoading(true);
         e.preventDefault();
         const form = e.target as HTMLFormElement;
-        const email: string = form.email.value;
-        const fullName: string = form.fullname.value;
-        const phone: string = form.phone.value;
-        const password: string = form.password.value;
-
         //Validations
-        if (!email || !fullName || !password) {
+        if (!formData.email || !formData.fullName || !formData.password) {
             setError('All fields are required.');
             setLoading(false);
             return;
         }
 
-        if (password.length < 10) {
+        if (formData.password.length < 10) {
             setError('Password must be at least 10 characters long');
             setLoading(false);
             return;
         }
 
         //Handle profile image and upload to Imgbb
-        const image = form.profileImage.files[0];
+        const imageInput = form.profileImage.files[0];
         //check if image uploaded
-        if (!image) {
+        if (!imageInput) {
             setError('Please upload the image, its required.');
             setLoading(false);
             return;
         }
-        const formData = new FormData();
-        formData.append('image', image);
-        const profileImg = await uploadImgToImgbb(formData);
+        const imageFormData = new FormData();
+        imageFormData.append('image', imageInput);
+        const profileImg = await uploadImgToImgbb(imageFormData);
 
         //Arrange User data
         const userData = {
-            email,
-            fullName,
-            password,
+            ...formData,
             profileImg,
             role: 'customer',
             isActive: true,
-            phone,
             address: null
         };
         try {
@@ -69,10 +64,10 @@ const RegisterPage = () => {
             if (data.status) {
                 form.reset();
                 setLoading(false);
-                toast.success('User Registration Successful.');
+                toast.success('New User Added Successfully.');
                 signIn('credentials', {
-                    email,
-                    password,
+                    email: formData.email,
+                    password: formData.password,
                     redirect: false
                 });
                 redirect('/account');
@@ -97,15 +92,24 @@ const RegisterPage = () => {
                     <div className="space-y-2">
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm">Email address</label>
-                            <input type="email" name="email" id="email" placeholder="leroy@jenkins.com" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+                            <input type="email" name="email" id="email" placeholder="leroy@jenkins.com" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
+                                required
+                                onChange={handleInputChange}
+                            />
                         </div>
                         <div>
-                            <label htmlFor="fullname" className="block mb-2 text-sm">Full Name</label>
-                            <input type="text" name="fullname" id="fullname" placeholder="Leroy Jenkins" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+                            <label htmlFor="fullName" className="block mb-2 text-sm">Full Name</label>
+                            <input type="text" name="fullName" id="fullName" placeholder="Leroy Jenkins" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
+                                required
+                                onChange={handleInputChange}
+                            />
                         </div>
                         <div className='relative'>
                             <label htmlFor="password" className="text-sm">Password</label>
-                            <input type={`${showPassword ? 'password' : 'text'}`} name="password" id="password" placeholder="***************" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+                            <input type={`${showPassword ? 'password' : 'text'}`} name="password" id="password" placeholder="***************" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
+                                required
+                                onChange={handleInputChange}
+                            />
                             {/* Eye button for hide and show password */}
                             <div
                                 onClick={() => setShowPassword(!showPassword)}
@@ -120,6 +124,9 @@ const RegisterPage = () => {
                             <label htmlFor="phone" className="text-sm">Phone Number</label>
                             <input type="text" name="phone" id="phone" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
                                 placeholder="+880-1XX-XXXX-XXX"
+
+                                required
+                                onChange={handleInputChange}
                             />
                         </div>
                         <div>
