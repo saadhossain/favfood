@@ -3,8 +3,9 @@ import SubHeading from '@/app/components/shared/headings/SubHeading';
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
+import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
 import { DataContextType } from '@/app/types/DataContextTypes';
-import { updateUserProfile } from '@/app/utils/updateUserProfile';
+import { updateData } from '@/app/utils/updateData';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { FormEvent, useContext, useState } from 'react';
@@ -12,23 +13,16 @@ import toast from 'react-hot-toast';
 import { FaEdit } from "react-icons/fa";
 
 const Profile = () => {
-  const { loading, setLoading } = useContext(DataContext) as DataContextType;
+  const { loading, setLoading, formData } = useContext(DataContext) as DataContextType;
   const { data: session } = useSession();
   const [isEditable, setIsEditable] = useState(false);
-  const [userInfo, setUserInfo] = useState(session?.user);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserInfo({
-      ...userInfo,
-      [name]: value,
-    });
-  };
+  //Handle Input Change for Update or Add New Data.
+  const handleInputChange = useHandleInputChange();
   const handleEditProfile = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     //Call the updateUserProfile function
-    const data = await updateUserProfile(session?.user._id, userInfo)
+    const data = await updateData(`/api/users?userId=${session?.user._id}`, formData);
     if (data.acknowledged) {
       toast.success('Profile updated successfully');
       setLoading(false);

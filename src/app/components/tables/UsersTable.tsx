@@ -1,7 +1,7 @@
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { UserData } from '@/app/types/DataTypes';
-import { updateUserProfile } from '@/app/utils/updateUserProfile';
+import { updateData } from '@/app/utils/updateData';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext } from 'react';
@@ -28,7 +28,7 @@ const UsersTable = ({ users }: Props) => {
         }
     }
     const handleUserStatusChange = async (userId: string, currentStatus: boolean | undefined) => {
-        const data = await updateUserProfile(userId, { isActive: !currentStatus });
+        const data = await updateData(userId, { isActive: !currentStatus });
         if (data.acknowledged) {
             toast.success('User Status Changed Successfully.');
         }
