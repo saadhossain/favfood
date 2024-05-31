@@ -2,6 +2,7 @@
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
+import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { uploadImgToImgbb } from '@/app/utils/uploadImgToImgbb';
@@ -14,7 +15,7 @@ interface categoryProps {
 }
 
 const AddRestaurant = () => {
-    const { loading, setLoading } = useContext(DataContext) as DataContextType;
+    const { loading, setLoading, formData } = useContext(DataContext) as DataContextType;
     const [error, setError] = useState('');
     const route = useRouter();
     const categories: categoryProps[] = [
@@ -28,40 +29,35 @@ const AddRestaurant = () => {
     const handleChange = (selectedCategories: any) => {
         setSelectedCategories(selectedCategories || []);
     };
-
+    //Get useHandleInputChange hook to handle input values
+    const handleInputChange = useHandleInputChange();
     const handleAddRestaurant = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         const form = e.target as HTMLFormElement;
-        const name = form.restaurantName.value;
-        const minOrderAmount = form.minOrderAmount.value;
-        const deliveryCharge = form.deliveryCharge.value;
-
         // Validations
-        if (!name || !minOrderAmount || !deliveryCharge || selectedCategories.length === 0) {
+        if (!formData.name || !formData.minOrderAmount || !formData.deliveryCharge || selectedCategories.length === 0) {
             setError('All fields are required.');
             setLoading(false);
             return;
         }
         // Handle profile image and upload to Imgbb
-        const image = form.profileImage.files[0];
+        const imageInput = form.profileImage.files[0];
         // Check if image uploaded
-        if (!image) {
+        if (!imageInput) {
             setError('Please upload the image, it\'s required.');
             setLoading(false);
             return;
         }
-        const formData = new FormData();
-        formData.append('image', image);
-        const profileImage = await uploadImgToImgbb(formData);
+        const imageFormData = new FormData();
+        imageFormData.append('image', imageInput);
+        const profileImage = await uploadImgToImgbb(imageFormData);
         const foodCategory = selectedCategories.map((item: any) => item.value);
         // Arrange Restaurant Data to Save to Database
         const restaurantData = {
-            name,
+            ...formData,
             foodCategory,
-            minOrderAmount,
             location: "",
-            deliveryCharge,
             profileImage,
             offers: null,
             isActive: true,
@@ -88,8 +84,10 @@ const AddRestaurant = () => {
                 <div className="space-y-2">
                     <div className='flex flex-col md:flex-row gap-2 items-center justify-between'>
                         <div className='w-full md:w-3/5'>
-                            <label htmlFor="restaurantName" className="font-semibold block mb=2 text-sm">Restaurant Name</label>
-                            <input type="text" name="restaurantName" id="restaurantName" placeholder="eg: KFC" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+                            <label htmlFor="name" className="font-semibold block mb=2 text-sm">Restaurant Name</label>
+                            <input type="text" name="name" id="name" placeholder="eg: KFC" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
+                                onChange={handleInputChange}
+                            />
                         </div>
                         <div className='w-full md:w-2/5'>
                             <label htmlFor="profileImage" className="font-semibold text-sm">Select Profile Image</label>
@@ -99,12 +97,15 @@ const AddRestaurant = () => {
                     <div className='flex flex-col md:flex-row items-center gap-2'>
                         <div className='w-full md:w-1/5'>
                             <label htmlFor="minOrderAmount" className="font-semibold block mb-2 text-sm">Min Order Amount</label>
-                            <input type="text" name="minOrderAmount" id="minOrderAmount" placeholder="eg: 1" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none" />
+                            <input type="text" name="minOrderAmount" id="minOrderAmount" placeholder="eg: 1" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
+                                onChange={handleInputChange}
+                            />
                         </div>
                         <div className='w-full md:w-1/5'>
                             <label htmlFor="deliveryCharge" className="font-semibold text-sm">Delivery Charge</label>
                             <input type="text" name="deliveryCharge" id="deliveryCharge" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
                                 placeholder="eg: Free"
+                                onChange={handleInputChange}
                             />
                         </div>
                         <div className='w-full md:w-3/5'>
