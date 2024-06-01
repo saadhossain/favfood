@@ -22,7 +22,7 @@ const Wishlist = () => {
             <div className='w-full md:w-10/12'>
                 <Heading heading={'Wishlist'} />
                 {
-                    (loading || !productsInWishlist) ? <TableSkeletonLoader /> :
+                    (loading) ? <TableSkeletonLoader /> :
                         <div className='rounded-md grid grid-cols-2 md:block gap-2 md:gap-0'>
                             {
                                 productsInWishlist?.map((product: FoodData) => <WishlistCard key={product?._id} product={product} />)

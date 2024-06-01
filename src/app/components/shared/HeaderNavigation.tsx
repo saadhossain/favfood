@@ -40,7 +40,7 @@ const HeaderNavigation = () => {
             {
               status === "authenticated" ?
                 <Link href={`${session?.user?.role === 'admin' ? '/admin/dashboard' : '/account'}`}>
-                  <Image src={session.user.image} alt={session.user.name} width={40} height={40} className='rounded-full h-10' />
+                  <Image src={session.user.image} alt={session.user.name} width={40} height={40} className='rounded-full max-h-10 max-w-10 w-10 h-10' />
                 </Link>
                 : <Link href='/login' className='bg-primary text-white py-2 px-4 md:px-8 rounded-3xl hover:bg-secondary duration-200 ease-in'>Login</Link>
             }
