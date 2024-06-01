@@ -9,7 +9,7 @@ export const fetchDataForAdmin = (apiEndpoint: string,) => {
         const getAdminData = async () => {
             setLoading(true);
             try {
-                const res = await fetch(apiEndpoint, { cache: 'no-store' });
+                const res = await fetch(apiEndpoint);
                 if (!res.ok) {
                     throw new Error('Failed to fetch data');
                 }
@@ -23,6 +23,6 @@ export const fetchDataForAdmin = (apiEndpoint: string,) => {
             }
         }
         getAdminData();
-    }, [setLoading, setAdminData])
+    }, [setAdminData])
     return adminData;
 };

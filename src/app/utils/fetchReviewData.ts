@@ -9,7 +9,7 @@ export const fetchReviewData = (query: string, id: string) => {
         const getReview = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`/api/reviews/${query}?id=${id}`, { cache: 'no-store' });
+                const res = await fetch(`/api/reviews/${query}?id=${id}`);
                 if (!res.ok) {
                     throw new Error('Failed to fetch data');
                 }
@@ -23,7 +23,7 @@ export const fetchReviewData = (query: string, id: string) => {
         };
         getReview();
 
-    }, [setLoading, id]);
+    }, [id]);
 
     return reviewData;
 };

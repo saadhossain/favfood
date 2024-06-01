@@ -11,7 +11,7 @@ export const fetchFoodDataByQuery = (tabQuery: string, page: number) => {
         const getFoodData = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`/api/foods?tabQuery=${tabQuery}&page=${page}&limit=12`, { cache: 'no-store' });
+                const res = await fetch(`/api/foods?tabQuery=${tabQuery}&page=${page}&limit=12`);
                 if (!res.ok) {
                     throw new Error('Failed to fetch data');
                 }
@@ -29,7 +29,7 @@ export const fetchFoodDataByQuery = (tabQuery: string, page: number) => {
         };
         getFoodData();
 
-    }, [setLoading,tabQuery, page]);
+    }, [setLoading, tabQuery, page]);
 
     return foods;
 };

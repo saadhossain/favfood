@@ -8,7 +8,7 @@ export const fetchSingleRestaurantData = (name: string) => {
     useEffect(() => {
         const getSingleRestaurantData = async () => {
             setLoading(true);
-            const res = await fetch(`/api/restaurants/single?name=${name}`, { cache: 'no-store' });
+            const res = await fetch(`/api/restaurants/single?name=${name}`);
             const data = await res.json();
             setSingleRestaurant(data.result[0]);
             setLoading(false);

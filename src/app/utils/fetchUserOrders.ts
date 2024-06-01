@@ -10,12 +10,12 @@ export const fetchUserOrders = (session: any) => {
     useEffect(() => {
         const getUserOrders = async () => {
             setLoading(true);
-            const res = await fetch(`/api/orders/user/?userId=${userId}`, { cache: 'no-store' });
+            const res = await fetch(`/api/orders/user/?userId=${userId}`);
             const { result } = await res.json();
             setUserOrders(result);
             setLoading(false);
         };
         getUserOrders();
-    }, [setLoading, session]);
+    }, [session]);
     return userOrders;
 };

@@ -11,7 +11,7 @@ export const fetchFoodData = () => {
         const getFoodData = async () => {
             setLoading(true);
             try {
-                const res = await fetch('/api/foods', { cache: 'no-store' });
+                const res = await fetch('/api/foods');
                 if (!res.ok) {
                     throw new Error('Failed to fetch data');
                 }
@@ -25,7 +25,7 @@ export const fetchFoodData = () => {
         };
         getFoodData();
 
-    }, [setLoading]);
+    }, []);
 
     return foods;
 };
