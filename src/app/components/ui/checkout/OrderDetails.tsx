@@ -56,7 +56,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     }
     //Save order details to the database
     const handleCashOnDelivery = async () => {
-        const oderDataModified = { ...orderData, paymentStatus: 'unpaid' };
+        const oderDataModified = { ...orderData, paymentStatus: 'Unpaid' };
         try {
             setLoading(true);
             if (!session?.user?.address?.city) {

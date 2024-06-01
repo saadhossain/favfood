@@ -67,9 +67,9 @@ const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, 
         let paymentStatus;
         //If Payment is successful, then save the order to database
         if (paymentIntent?.status === 'succeeded') {
-            paymentStatus = 'paid'
+            paymentStatus = 'Paid'
         }
-        paymentStatus = 'unpaid';
+        paymentStatus = 'Unpaid';
         //Save order details to the database
         try {
             const oderDataModified = { ...orderData, paymentStatus };

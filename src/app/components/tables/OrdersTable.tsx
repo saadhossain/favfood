@@ -19,11 +19,11 @@ const OrdersTable = ({ userOrders }: { userOrders: OrderDataType[] }) => {
     const { data: session } = useSession();
     const handleCancelOrder = async (orderId: string | undefined, orderStatus: string) => {
         const isConfirmed = window.confirm('Do you agree to Cancel this order?');
-        if (orderStatus !== 'processing') {
+        if (orderStatus !== 'Processing') {
             toast.error('You can not cancel this order.');
             return;
         }
-        if (isConfirmed && orderStatus === 'processing') {
+        if (isConfirmed && orderStatus === 'Processing') {
             const res = await fetch(`/api/orders?orderId=${orderId}`, {
                 method: 'DELETE'
             });
