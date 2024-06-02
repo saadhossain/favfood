@@ -2,14 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  color:#333333;
+body {
+  color: #333333;
 }
 
 .fira_code {
   font-family: var(--font-fira_code);
 }
 
-.slick-prev:before, .slick-next:before{
-  display: none !important;
+.slick-prev {
+  left: 5px;
+  z-index: 9999999;
+}
+
+.slick-next {
+  right: 5px;
+  z-index: 9999999;
+}
+
+.slick-next,
+.slick-prev {
+  width: 50px !important;
+  height: 100px !important;
+}
+
+.slick-prev:before {
+  content: url('https://i.ibb.co/2gtYF4q/left-arrow.png');
+}
+
+.slick-next:before {
+  content: url('https://i.ibb.co/DrTcn5T/right-arrow.png');
+}
+
+.slick-dots li.slick-active button:before {
+  color: #FE5E05;
 }

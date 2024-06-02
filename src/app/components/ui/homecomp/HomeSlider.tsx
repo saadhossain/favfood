@@ -1,10 +1,11 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import Slider from 'react-slick';
-import FoodBurger from '/public/slides/food-burger-slide.png';
-import ItalianPizza from '/public/slides/italian-pizza-slide.png';
-import SaleOffer from '/public/slides/sale-offer-slide.png';
-import WingsDay from '/public/slides/wings-day-slide.png';
+import Burger from '/public/slides/burger-banner.png';
+import Chicken from '/public/slides/chicken-banner.png';
+import Fries from '/public/slides/fries-banner.png';
+import Pizza from '/public/slides/pizza-banner.png';
 
 const HomeSlider = () => {
     const settings = {
@@ -15,23 +16,23 @@ const HomeSlider = () => {
         cssEase: "linear",
         slidesToShow: 1,
         slidesToScroll: 1,
-        arrow:false,
+        arrow: true,
     };
     return (
         <div className="slider-container">
             <Slider {...settings}>
-                <div>
-                    <Image src={ItalianPizza} alt='Hero Banner' width={1140} height={350} />
-                </div>
-                <div>
-                    <Image src={FoodBurger} alt='Hero Banner' width={1140} height={350} />
-                </div>
-                <div>
-                    <Image src={SaleOffer} alt='Hero Banner' width={1140} height={350} />
-                </div>
-                <div>
-                    <Image src={WingsDay} alt='Hero Banner' width={1140} height={350} />
-                </div>
+                <Link href='/foods/category/burger'>
+                    <Image src={Burger} alt='Delicious Burger Menu' width={1140} height={350} />
+                </Link>
+                <Link href='/foods/category/fries'>
+                    <Image src={Fries} alt='Super Special Delux Fries' width={1140} height={350} />
+                </Link>
+                <Link href='/foods/category/chicken'>
+                    <Image src={Chicken} alt='Delicious Chicken Menu' width={1140} height={350} />
+                </Link>
+                <Link href='/foods/category/pizza'>
+                    <Image src={Pizza} alt='Delicios Pizza Offer' width={1140} height={350} />
+                </Link>
             </Slider>
         </div>
     );
