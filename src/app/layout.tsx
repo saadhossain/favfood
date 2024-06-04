@@ -15,6 +15,7 @@ import HeaderNavigation from './components/shared/HeaderNavigation';
 import DataProvider from './context/DataContext';
 import "./globals.css";
 import AuthProvider from './providers/AuthProvider';
+import StoreProvider from './providers/StoreProvider';
 
 const inter = Fira_Code({
   subsets: ["latin"],
@@ -34,25 +35,27 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <AuthProvider>
+    <StoreProvider>
       <html lang="en">
         <body className={`${inter.variable} fira_code`}>
-          <DataProvider>
-            <HeaderNavigation />
-            <div className='min-h-[70vh]'>
-              {children}
-            </div>
-            <Footer />
-            <SearchModal />
-            <AddAddressModal />
-            <EditOrderModal />
-            <EditUserModal />
-            <AddReviewModal />
-            <EditReviewModal />
-          </DataProvider>
+          <AuthProvider>
+            <DataProvider>
+              <HeaderNavigation />
+              <div className='min-h-[70vh]'>
+                {children}
+              </div>
+              <Footer />
+              <SearchModal />
+              <AddAddressModal />
+              <EditOrderModal />
+              <EditUserModal />
+              <AddReviewModal />
+              <EditReviewModal />
+            </DataProvider>
+          </AuthProvider>
           <Toaster />
         </body>
       </html>
-    </AuthProvider>
+    </StoreProvider>
   );
 }
