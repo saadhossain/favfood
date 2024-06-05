@@ -120,3 +120,7 @@ export interface AdminDataType {
    map(arg0: (restaurant: any) => import("react").JSX.Element): import("react").ReactNode;
    data: [] | any
 }
+
+export interface FetchedDataType {
+    result: [] | any;
+}
