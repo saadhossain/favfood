@@ -6,10 +6,11 @@ import { TbEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 interface Props {
-    foods: FoodData[]
+    foods: FoodData[],
+    refetch: any
 }
 
-const FoodsTable = ({ foods }: Props) => {
+const FoodsTable = ({ foods, refetch }: Props) => {
     const handleDeleteFood = async (foodId: string) => {
         const isConfirmed = window.confirm('Do you want to Delete this Food?');
         if (isConfirmed) {
@@ -19,6 +20,7 @@ const FoodsTable = ({ foods }: Props) => {
             const { result } = await res.json();
             if (result.acknowledged) {
                 toast.success('Food Deleted Successfully.');
+                refetch();
             }
         }
     }

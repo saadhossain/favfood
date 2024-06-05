@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react'
 const Foods = () => {
   const { data: session } = useSession();
   //Get the foods from the server
-  const { isLoading, data } = useGetAdminDataQuery('/foods');
+  const { isLoading, data, refetch } = useGetAdminDataQuery('/foods');
   return (
     <div>
       <div className='flex gap-5 items-center justify-between'>
@@ -21,7 +21,7 @@ const Foods = () => {
         </div>
       </div>
       {
-        (isLoading || !session) ? <TableSkeletonLoader /> : <FoodsTable foods={data?.result} />
+        (isLoading || !session) ? <TableSkeletonLoader /> : <FoodsTable foods={data?.result} refetch={refetch}/>
       }
     </div>
   )

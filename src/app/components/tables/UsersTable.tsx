@@ -10,10 +10,11 @@ import { FaToggleOff, FaToggleOn, FaUserEdit } from 'react-icons/fa';
 import { TiDelete } from "react-icons/ti";
 
 interface Props {
-    users: UserData[]
+    users: UserData[],
+    refetch: any
 }
 
-const UsersTable = ({ users }: Props) => {
+const UsersTable = ({ users, refetch }: Props) => {
     const { openUserEditModal, setOpenUserEditModal, setSingleDataId } = useContext(DataContext) as DataContextType;
     const handleDeleteUser = async (userId: string) => {
         const isConfirmed = window.confirm('Do you want to Delete this User?');
@@ -24,6 +25,7 @@ const UsersTable = ({ users }: Props) => {
             const { result } = await res.json();
             if (result.acknowledged) {
                 toast.success('User Deleted Successfully.');
+                refetch();
             }
         }
     }

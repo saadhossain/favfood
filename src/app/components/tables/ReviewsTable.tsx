@@ -8,10 +8,11 @@ import { TbEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 interface Props {
-    reviews: any[]
+    reviews: any[],
+    refetch: any
 }
 
-const ReviewsTable = ({ reviews }: Props) => {
+const ReviewsTable = ({ reviews, refetch }: Props) => {
     const { openEditReviewModal, setOpenEditReviewModal, setSingleDataId } = useContext(DataContext) as DataContextType;
     const handleDeleteReview = async (reviewId: string) => {
         const isConfirmed = window.confirm('Do you want to Delete this Review?');
@@ -23,6 +24,7 @@ const ReviewsTable = ({ reviews }: Props) => {
             console.log(result);
             if (result.acknowledged) {
                 toast.success('Review Deleted Successfully.');
+                refetch()
             }
         }
     }

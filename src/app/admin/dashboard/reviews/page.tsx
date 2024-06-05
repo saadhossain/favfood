@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react'
 const Reviews = () => {
   const { data: session } = useSession();
   //Get the reviews from the server
-  const { isLoading, data } = useGetAdminDataQuery('/reviews')
+  const { isLoading, data, refetch } = useGetAdminDataQuery('/reviews')
   return (
     <div>
       <div className='flex gap-5 items-center justify-between'>
@@ -17,7 +17,7 @@ const Reviews = () => {
         <DashboardSearch />
       </div>
       {
-        (isLoading || !session) ? <TableSkeletonLoader /> : <ReviewsTable reviews={data?.result} />
+        (isLoading || !session) ? <TableSkeletonLoader /> : <ReviewsTable reviews={data?.result} refetch={refetch}/>
       }
     </div>
   )

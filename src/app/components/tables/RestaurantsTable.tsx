@@ -7,10 +7,11 @@ import { TbEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 interface Props {
-    restaurants: any[]
+    restaurants: any[],
+    refetch: any
 }
 
-const RestaurantsTable = ({ restaurants }: Props) => {
+const RestaurantsTable = ({ restaurants, refetch }: Props) => {
     const handleDeleteRestaurant = async (restaurantId: string) => {
         const isConfirmed = window.confirm('Do you want to Delete this Restaurant?');
         if (isConfirmed) {
@@ -20,6 +21,7 @@ const RestaurantsTable = ({ restaurants }: Props) => {
             const { result } = await res.json();
             if (result.acknowledged) {
                 toast.success('Restaurant Deleted Successfully.');
+                refetch();
             }
         }
     }

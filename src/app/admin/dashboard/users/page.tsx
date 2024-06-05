@@ -11,7 +11,7 @@ const Users = () => {
   const { data: session } = useSession();
   //Get the Users from the server
 
-  const { isLoading, data } = useGetAdminDataQuery('/users');
+  const { isLoading, data, refetch } = useGetAdminDataQuery('/users');
   return (
     <div>
       <div className='flex gap-5 items-center justify-between'>
@@ -22,7 +22,7 @@ const Users = () => {
         </div>
       </div>
       {
-        (isLoading || !session) ? <TableSkeletonLoader /> : <UsersTable users={data?.result} />
+        (isLoading || !session) ? <TableSkeletonLoader /> : <UsersTable users={data?.result} refetch={refetch}/>
       }
     </div>
   )
