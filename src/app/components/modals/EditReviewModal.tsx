@@ -1,9 +1,9 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { ReviewData } from '@/app/types/DataTypes';
-import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
 import { updateData } from '@/app/utils/updateData';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -14,12 +14,14 @@ import Processing from '../spinner/Processing';
 const EditReviewModal = () => {
     const { openEditReviewModal, setOpenEditReviewModal, singleDataId, formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
-    const reviews = fetchDataForAdmin('/api/reviews');
+    //Get Reviews Data from server
+    const { data, refetch } = useGetAdminDataQuery('/reviews');
+    const reviews = data?.result;
     //GEt single Review
     const [singleReview, setSingleReview] = useState<ReviewData>();
     useEffect(() => {
         const getSingleReview = async () => {
-            const singleReview = reviews.find((review: ReviewData) => review._id === singleDataId);
+            const singleReview = reviews?.find((review: ReviewData) => review._id === singleDataId);
             setSingleReview(singleReview);
         }
         getSingleReview();
@@ -39,6 +41,7 @@ const EditReviewModal = () => {
             form.reset();
             setIsUpdating(false);
             setOpenEditReviewModal(false);
+            refetch();
         }
     }
     return (

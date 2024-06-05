@@ -1,9 +1,9 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { OrderDataType } from '@/app/types/DataTypes';
-import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
 import { updateData } from '@/app/utils/updateData';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -14,19 +14,21 @@ import Processing from '../spinner/Processing';
 const EditOrderModal = () => {
     const { openOrderEditModal, setOpenOrderEditModal, singleDataId, formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
-    const orders = fetchDataForAdmin('/api/orders');
+    //Get Orders Data from server
+    const { data, refetch } = useGetAdminDataQuery('/orders');
+    const orders = data?.result;
 
     //GEt single order
     const [singleOrder, setSingleOrder] = useState<OrderDataType>();
     useEffect(() => {
         const getSingleOrder = async () => {
-            const singleOrder = orders.find((order: OrderDataType) => order._id === singleDataId);
+            const singleOrder = orders?.find((order: OrderDataType) => order._id === singleDataId);
             setSingleOrder(singleOrder);
         }
         getSingleOrder();
     }, [openOrderEditModal]);
     const [isUpdating, setIsUpdating] = useState(false);
-    const statuses = ['Pending', 'Processing', 'Packaging', 'Shipped', 'Delivered'];
+    const statuses = ['Pending', 'On Hold', 'Processing', 'Packaging', 'Shipped', 'Delivered'];
     //Handle Input Change for Update or Add New Data.
     const handleInputChange = useHandleInputChange();
     const handleUpdateOrder = async (e: FormEvent<HTMLFormElement>) => {
@@ -40,6 +42,7 @@ const EditOrderModal = () => {
             form.reset();
             setIsUpdating(false);
             setOpenOrderEditModal(false);
+            refetch();
         }
     }
     return (

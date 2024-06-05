@@ -1,9 +1,9 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { UserData } from '@/app/types/DataTypes';
-import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
 import { updateData } from '@/app/utils/updateData';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -15,13 +15,15 @@ import Processing from '../spinner/Processing';
 const EditUserModal = () => {
     const { openUserEditModal, setOpenUserEditModal, singleDataId, showPassword, setShowPassword, formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
-    const users = fetchDataForAdmin('/api/users');
+    //Get Reviews Data from server
+    const { data, refetch } = useGetAdminDataQuery('/users');
+    const users = data?.result;
 
     //GEt single order
     const [singleUser, setSingleUser] = useState<UserData>();
     useEffect(() => {
         const getSingleOrder = async () => {
-            const singleUser = users.find((user: UserData) => user._id === singleDataId);
+            const singleUser = users?.find((user: UserData) => user._id === singleDataId);
             setSingleUser(singleUser);
         }
         getSingleOrder();
@@ -41,6 +43,7 @@ const EditUserModal = () => {
             form.reset();
             setIsUpdating(false);
             setOpenUserEditModal(false);
+            refetch();
         }
     }
     return (

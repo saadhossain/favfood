@@ -3,8 +3,8 @@ import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
-import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { uploadImgToImgbb } from '@/app/utils/uploadImgToImgbb';
 import { useRouter } from 'next/navigation';
@@ -14,7 +14,9 @@ import toast from 'react-hot-toast';
 const AddFood = () => {
     const { setLoading, loading, formData } = useContext(DataContext) as DataContextType;
     const [error, setError] = useState('');
-    const restaurants = fetchDataForAdmin('/api/restaurants');
+    //Get Restaurant Data from server
+    const { data } = useGetAdminDataQuery('/restaurants');
+    const restaurants = data?.result;
     const categories = ["Burger", "Pizza", "Sandwich", "Fries", "Chicken"];
 
     const route = useRouter();

@@ -1,9 +1,9 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { OrderDataType } from '@/app/types/DataTypes';
-import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { useSession } from 'next-auth/react';
 import { FormEvent, useContext, useEffect, useState } from 'react';
@@ -16,13 +16,15 @@ const AddReviewModal = () => {
     const { openAddReviewModal, setOpenAddReviewModal, singleDataId, formData } = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
-    const orders = fetchDataForAdmin('/api/orders');
+    //Get Foods Data from server
+    const { data } = useGetAdminDataQuery('/orders');
+    const orders = data?.result;
 
     //GEt single order
     const [singleOrder, setSingleOrder] = useState<OrderDataType>();
     useEffect(() => {
         const getSingleOrder = async () => {
-            const singleOrder = orders.find((order: OrderDataType) => order._id === singleDataId);
+            const singleOrder = orders?.find((order: OrderDataType) => order._id === singleDataId);
             setSingleOrder(singleOrder);
         }
         getSingleOrder();

@@ -2,9 +2,9 @@
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { FoodData, UserData } from '@/app/types/DataTypes';
-import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useContext, useEffect, useState } from 'react';
@@ -14,8 +14,9 @@ const CreateOrder = () => {
   const { setLoading, loading } = useContext(DataContext) as DataContextType;
   const route = useRouter();
 
-  //Get the foods
-  const foods = fetchDataForAdmin('/api/foods');
+  //Get Foods Data from server
+  const { data } = useGetAdminDataQuery('/foods');
+  const foods = data?.result;
   //Get the Registered Users
   const [users, setUsers] = useState([]);
   useEffect(() => {
