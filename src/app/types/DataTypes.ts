@@ -117,5 +117,6 @@ export interface ReviewData {
 }
 
 export interface AdminDataType {
-    result: [] | any
+   map(arg0: (restaurant: any) => import("react").JSX.Element): import("react").ReactNode;
+   data: [] | any
 }

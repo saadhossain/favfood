@@ -3,6 +3,7 @@ import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { uploadImgToImgbb } from '@/app/utils/uploadImgToImgbb';
@@ -29,6 +30,8 @@ const AddRestaurant = () => {
     const handleChange = (selectedCategories: any) => {
         setSelectedCategories(selectedCategories || []);
     };
+    //Get the refetch function from redux to update restaurant list after add new
+    const {refetch} = useGetAdminDataQuery('/restaurants');
     //Get useHandleInputChange hook to handle input values
     const handleInputChange = useHandleInputChange();
     const handleAddRestaurant = async (e: FormEvent<HTMLFormElement>) => {
@@ -69,6 +72,7 @@ const AddRestaurant = () => {
                 setLoading(false);
                 toast.success('Restaurant added successfully.');
                 route.push('/admin/dashboard/restaurants');
+                refetch();
             }
         } catch (error: any) {
             console.log(error.message);

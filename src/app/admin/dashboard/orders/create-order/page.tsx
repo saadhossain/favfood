@@ -7,7 +7,7 @@ import { DataContextType } from '@/app/types/DataContextTypes';
 import { FoodData, UserData } from '@/app/types/DataTypes';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useContext, useEffect, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const CreateOrder = () => {
@@ -15,18 +15,11 @@ const CreateOrder = () => {
   const route = useRouter();
 
   //Get Foods Data from server
-  const { data } = useGetAdminDataQuery('/foods');
-  const foods = data?.result;
-  //Get the Registered Users
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    const getUsers = async () => {
-      const res = await fetch('/api/users');
-      const { result } = await res.json();
-      setUsers(result);
-    }
-    getUsers();
-  }, [])
+  const { data: foods } = useGetAdminDataQuery('/foods');
+
+  const { refetch } = useGetAdminDataQuery('/orders');
+  //Get the Registered Users from the server
+  const { data: users } = useGetAdminDataQuery('/users');
   //Set the selected Restaurant to the state
   const [selectedFood, setSelectedFood] = useState<FoodData | any>(null);
   //Set the selected Restaurant to the state
@@ -34,18 +27,18 @@ const CreateOrder = () => {
 
   const handleFoodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const foodId = e.target.value;
-    const foundFood = foods.find((food: FoodData) => food._id === foodId);
+    const foundFood = foods?.find((food: FoodData) => food._id === foodId);
     setSelectedFood(foundFood);
   };
 
   const handleUserChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const userId = e.target.value;
-    const foundUser = users.find((user: UserData) => user._id === userId);
+    const foundUser = users?.find((user: UserData) => user._id === userId);
     setSelectedUser(foundUser);
   };
 
 
-  const handleAddFood = async (e: FormEvent<HTMLFormElement>) => {
+  const handleCreateOrder = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     const form = e.target as HTMLFormElement;
@@ -81,6 +74,7 @@ const CreateOrder = () => {
         setLoading(false);
         toast.success('Order Created Successfully.');
         route.push('/admin/dashboard/orders');
+        refetch();
       }
     } catch (error: any) {
       console.log(error.message);
@@ -90,7 +84,7 @@ const CreateOrder = () => {
   return (
     <div>
       <SubHeading heading={'Create Order'} />
-      <form onSubmit={handleAddFood} className="space-y-6">
+      <form onSubmit={handleCreateOrder} className="space-y-6">
         <div className="space-y-2">
           <div className='flex gap-2 items-center justify-between'>
             <div className='w-3/5'>
@@ -102,7 +96,7 @@ const CreateOrder = () => {
                 id="food"
               >
                 <option value="">Select a food</option>
-                {foods.map((food: FoodData) => (
+                {foods?.map((food: FoodData) => (
                   <option key={food._id} value={food._id}>{food.name}</option>
                 ))}
               </select>
@@ -116,7 +110,7 @@ const CreateOrder = () => {
                 id="user"
               >
                 <option value="">Select a user</option>
-                {users.map((user: UserData) => (
+                {users?.map((user: UserData) => (
                   <option key={user._id} value={user._id}>{user.email}</option>
                 ))}
               </select>

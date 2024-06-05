@@ -4,13 +4,16 @@ import AddButton from '@/app/components/shared/buttons/AddButton'
 import SubHeading from '@/app/components/shared/headings/SubHeading'
 import TableSkeletonLoader from '@/app/components/spinner/TableSkeletonLoader'
 import FoodsTable from '@/app/components/tables/FoodsTable'
-import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice'
+import { useSetAdminData } from '@/app/hooks/useSetAdminData'
+import { useAppSelector } from '@/app/lib/hooks'
 import { useSession } from 'next-auth/react'
 
 const Foods = () => {
   const { data: session } = useSession();
   //Get the foods from the server
-  const { isLoading, data, refetch } = useGetAdminDataQuery('/foods');
+  const { adminData:foods } = useAppSelector((state) => state.adminData);
+  // Enable Search Functionality
+  const { isLoading, refetch } = useSetAdminData('/foods');
   return (
     <div>
       <div className='flex gap-5 items-center justify-between'>
@@ -21,7 +24,7 @@ const Foods = () => {
         </div>
       </div>
       {
-        (isLoading || !session) ? <TableSkeletonLoader /> : <FoodsTable foods={data?.result} refetch={refetch}/>
+        (isLoading || !session) ? <TableSkeletonLoader /> : <FoodsTable foods={foods} refetch={refetch} />
       }
     </div>
   )

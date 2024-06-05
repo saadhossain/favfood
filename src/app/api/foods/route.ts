@@ -40,7 +40,7 @@ export const GET = async (request: NextRequest) => {
 export const POST = async (request: NextRequest) => {
     await mongoose.connect(mongoUrl);
     const payload = await request.json();
-    const slug = payload?.name.toLowerCase().replace(/[&/:]+|\s+/g, '-').replace(/--+/g, '-');
+    const slug = payload?.foodName?.toLowerCase().replace(/[&/:]+|\s+/g, '-').replace(/--+/g, '-');
     const food = new foodSchema({ ...payload, slug, createdAt: new Date() });
     const result = await food.save();
     return NextResponse.json({ status: true, result });

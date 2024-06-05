@@ -8,6 +8,7 @@ export const dataApiSlice = createApi({
     endpoints: (builder) => ({
         getAdminData: builder.query<AdminDataType, any>({
             query: (endpint) => `${endpint}`,
+            transformResponse: (response: any) => response.result
         }),
     }),
 })

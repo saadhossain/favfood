@@ -15,8 +15,9 @@ const AddFood = () => {
     const { setLoading, loading, formData } = useContext(DataContext) as DataContextType;
     const [error, setError] = useState('');
     //Get Restaurant Data from server
-    const { data } = useGetAdminDataQuery('/restaurants');
-    const restaurants = data?.result;
+    const { data: restaurants } = useGetAdminDataQuery('/restaurants');
+    const { refetch } = useGetAdminDataQuery('/foods');
+    // const restaurants = data
     const categories = ["Burger", "Pizza", "Sandwich", "Fries", "Chicken"];
 
     const route = useRouter();
@@ -29,7 +30,7 @@ const AddFood = () => {
         const form = e.target as HTMLFormElement;
 
         //Validations
-        if (!formData.foodName || !formData.price || !formData.description || !formData.restaurant || !formData.category) {
+        if (!formData.name || !formData.price || !formData.description || !formData.restaurant || !formData.category) {
             setError('All fields are required.');
             setLoading(false);
             return;
@@ -63,6 +64,7 @@ const AddFood = () => {
                 setLoading(false);
                 toast.success('Food added Successful.');
                 route.push('/admin/dashboard/foods');
+                refetch();
             }
         } catch (error: any) {
             console.log(error.message);
@@ -80,8 +82,8 @@ const AddFood = () => {
                     {/* Name and Price */}
                     <div className='flex flex-col md:flex-row gap-2 items-center justify-between'>
                         <div className='w-full md:w-4/5'>
-                            <label htmlFor="foodName" className="font-semibold block mb-2 text-sm">Product Name</label>
-                            <input type="text" name="foodName" id="foodName" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
+                            <label htmlFor="name" className="font-semibold block mb-2 text-sm">Product Name</label>
+                            <input type="text" name="name" id="name" className="w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none"
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -123,7 +125,7 @@ const AddFood = () => {
                             >
                                 <option value="">Select a Restaurant</option>
                                 {
-                                    restaurants.map((restaurant: any) => <option
+                                    restaurants?.map((restaurant: any) => <option
                                         key={restaurant._id}
                                         value={restaurant.name}
                                     >{restaurant.name}</option>)

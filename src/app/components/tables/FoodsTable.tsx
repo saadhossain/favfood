@@ -6,7 +6,7 @@ import { TbEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 interface Props {
-    foods: FoodData[],
+    foods: [] | any,
     refetch: any
 }
 

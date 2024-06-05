@@ -3,6 +3,7 @@ import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { uploadImgToImgbb } from '@/app/utils/uploadImgToImgbb';
@@ -15,6 +16,9 @@ const AddUser = () => {
     const { showPassword, setShowPassword, loading, setLoading, formData } = useContext(DataContext) as DataContextType;
     const [error, setError] = useState('');
     const route = useRouter();
+
+    //Get the user refetch function from redux to update list after add new user
+    const {refetch} = useGetAdminDataQuery('/users')
 
     //Get the useHandleInputChange hook to get all the input
     const handleInputChange = useHandleInputChange();
@@ -65,6 +69,7 @@ const AddUser = () => {
                 setLoading(false);
                 toast.success('New User Added Successfully.');
                 route.push('/admin/dashboard/users');
+                refetch();
             }
         } catch (error: any) {
             console.log(error.message);

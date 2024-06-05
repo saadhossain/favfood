@@ -34,14 +34,10 @@ export interface DataContextType {
     setOpenAddressBoxModal: Dispatch<SetStateAction<boolean>>;
     showPassword: boolean;
     setShowPassword: Dispatch<SetStateAction<boolean>>;
-    adminData: [] | any;
-    setAdminData: Dispatch<SetStateAction<[] | any>>;
     singleRestaurant: any;
     setSingleRestaurant: Dispatch<SetStateAction<any>>;
     reviewData: any;
     setReviewData: Dispatch<SetStateAction<any>>;
-    initialData: [] | any;
-    setInitialData: Dispatch<SetStateAction<[] | any>>;
     openOrderEditModal: boolean;
     setOpenOrderEditModal: Dispatch<SetStateAction<boolean>>;
     singleDataId: string | any;

@@ -14,7 +14,7 @@ import { MdOutlineRateReview } from "react-icons/md";
 import { TbProgressCheck, TbShoppingBagEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
-const OrdersTable = ({ userOrders, refetch }: { userOrders: OrderDataType[], refetch: any }) => {
+const OrdersTable = ({ orders, refetch }: { orders: OrderDataType[], refetch: any }) => {
     const { openOrderEditModal, setOpenOrderEditModal, setSingleDataId, openAddReviewModal, setOpenAddReviewModal } = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
     const handleCancelOrder = async (orderId: string | undefined, orderStatus: string) => {
@@ -38,8 +38,8 @@ const OrdersTable = ({ userOrders, refetch }: { userOrders: OrderDataType[], ref
     return (
         <div className='w-full'>
             {
-                userOrders?.length <= 0 ? <h1 className='text-lg font-semibold text-gray-800'>No Order Found. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : (
-                    <div className={`container py-2 mx-auto sm:py-4 text-gray-900 ${userOrders?.length <= 0 && 'hidden'}`}>
+                orders?.length <= 0 ? <h1 className='text-lg font-semibold text-gray-800'>No Order Found. <Link href='/' className='text-primary'>Go to Shop</Link></h1> : (
+                    <div className={`container py-2 mx-auto sm:py-4 text-gray-900 ${orders?.length <= 0 && 'hidden'}`}>
                         <div className="overflow-x-auto">
                             <table className="min-w-full">
                                 <colgroup>
@@ -62,7 +62,7 @@ const OrdersTable = ({ userOrders, refetch }: { userOrders: OrderDataType[], ref
                                 </thead>
                                 <tbody>
                                     {
-                                        userOrders?.map((order: OrderDataType) => <tr
+                                        orders?.map((order: OrderDataType) => <tr
                                             key={order._id}
                                             className="text-center border-b-2 border-gray-200">
                                             {/* Product Image and product name */}

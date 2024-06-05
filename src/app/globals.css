@@ -12,12 +12,12 @@ body {
 
 .slick-prev {
   left: 5px;
-  z-index: 9999999;
+  z-index: 20;
 }
 
 .slick-next {
   right: 5px;
-  z-index: 9999999;
+  z-index: 20;
 }
 
 .slick-next,
