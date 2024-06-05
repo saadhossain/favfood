@@ -30,9 +30,10 @@ const UsersTable = ({ users, refetch }: Props) => {
         }
     }
     const handleUserStatusChange = async (userId: string, currentStatus: boolean | undefined) => {
-        const data = await updateData(userId, { isActive: !currentStatus });
+        const data = await updateData(`/users?userId=${userId}`, { isActive: !currentStatus });
         if (data.acknowledged) {
             toast.success('User Status Changed Successfully.');
+            refetch();
         }
     }
     return (

@@ -1,4 +1,5 @@
 'use client'
+import { updateData } from '@/app/utils/updateData';
 import Image from 'next/image';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -27,16 +28,10 @@ const RestaurantsTable = ({ restaurants, refetch }: Props) => {
     }
 
     const handleRestaurantStatusChange = async (id: string, currentStatus: boolean) => {
-        const res = await fetch(`/api/restaurants?id=${id}`, {
-            method: 'PATCH',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({ isActive: !currentStatus })
-        });
-        const { result } = await res.json();
-        if (result.acknowledged) {
+        const data = await updateData(`/restaurants?id=${id}`, { isActive: !currentStatus })
+        if (data.acknowledged) {
             toast.success('Restaurant Status Changed Successfully.');
+            refetch();
         }
     }
 
