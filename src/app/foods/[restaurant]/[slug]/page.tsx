@@ -1,16 +1,13 @@
 'use client';
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import ReviewCard from '@/app/components/ui/reviews/ReviewCard';
-import { DataContext } from '@/app/context/DataContext';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
-import { DataContextType } from '@/app/types/DataContextTypes';
+import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
 import { FoodData, ReviewData } from '@/app/types/DataTypes';
-import { fetchReviewData } from '@/app/utils/fetchReviewData';
 import { fetchSingleFoodData } from '@/app/utils/fetchSingleFoodData';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext } from 'react';
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
 import { FaCartShopping, FaShop, FaStar } from "react-icons/fa6";
 
@@ -20,14 +17,14 @@ interface paramsTypes {
 }
 
 const FoodSinglePage = ({ params }: { params: paramsTypes }) => {
-  const { loading } = useContext(DataContext) as DataContextType;
   const singleFood: FoodData = fetchSingleFoodData(params.restaurant, params.slug);
   const handleAddToCart = useHandleAddToCart();
   const handleAddToWishlist = useHandleAddToWishlist();
-  //Get the Reviews
-  const reviews = fetchReviewData('foodsReview', singleFood?._id);
+  //Get the Foods Reviews from the Server
+  const { data, isLoading } = useGetDataQuery(`/reviews/foodsReview?id=${singleFood?._id}`)
+  const reviews = data?.result;
 
-  if (loading) {
+  if (isLoading) {
     return <LoadingSpinner />;
   }
   return (
