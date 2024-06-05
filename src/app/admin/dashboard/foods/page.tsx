@@ -4,17 +4,13 @@ import AddButton from '@/app/components/shared/buttons/AddButton'
 import SubHeading from '@/app/components/shared/headings/SubHeading'
 import TableSkeletonLoader from '@/app/components/spinner/TableSkeletonLoader'
 import FoodsTable from '@/app/components/tables/FoodsTable'
-import { DataContext } from '@/app/context/DataContext'
-import { DataContextType } from '@/app/types/DataContextTypes'
-import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin'
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice'
 import { useSession } from 'next-auth/react'
-import { useContext } from 'react'
 
 const Foods = () => {
   const { data: session } = useSession();
-  const { loading, adminData } = useContext(DataContext) as DataContextType;
   //Get the foods from the server
-  fetchDataForAdmin('/api/foods');
+  const { isLoading, data } = useGetAdminDataQuery('/foods');
   return (
     <div>
       <div className='flex gap-5 items-center justify-between'>
@@ -25,7 +21,7 @@ const Foods = () => {
         </div>
       </div>
       {
-        (loading || !session) ? <TableSkeletonLoader /> : <FoodsTable foods={adminData} />
+        (isLoading || !session) ? <TableSkeletonLoader /> : <FoodsTable foods={data?.result} />
       }
     </div>
   )

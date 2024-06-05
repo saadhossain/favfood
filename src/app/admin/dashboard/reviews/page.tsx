@@ -3,17 +3,13 @@ import DashboardSearch from '@/app/components/common/DashboardSearch'
 import SubHeading from '@/app/components/shared/headings/SubHeading'
 import TableSkeletonLoader from '@/app/components/spinner/TableSkeletonLoader'
 import ReviewsTable from '@/app/components/tables/ReviewsTable'
-import { DataContext } from '@/app/context/DataContext'
-import { DataContextType } from '@/app/types/DataContextTypes'
-import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin'
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice'
 import { useSession } from 'next-auth/react'
-import { useContext } from 'react'
 
 const Reviews = () => {
   const { data: session } = useSession();
-  const { loading, adminData} = useContext(DataContext) as DataContextType;
   //Get the reviews from the server
-  fetchDataForAdmin('/api/reviews');
+  const { isLoading, data } = useGetAdminDataQuery('/reviews')
   return (
     <div>
       <div className='flex gap-5 items-center justify-between'>
@@ -21,7 +17,7 @@ const Reviews = () => {
         <DashboardSearch />
       </div>
       {
-        (loading || !session) ? <TableSkeletonLoader /> : <ReviewsTable reviews={adminData} />
+        (isLoading || !session) ? <TableSkeletonLoader /> : <ReviewsTable reviews={data?.result} />
       }
     </div>
   )

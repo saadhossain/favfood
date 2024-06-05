@@ -4,18 +4,14 @@ import AddButton from '@/app/components/shared/buttons/AddButton';
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import TableSkeletonLoader from '@/app/components/spinner/TableSkeletonLoader';
 import OrdersTable from '@/app/components/tables/OrdersTable';
-import { DataContext } from '@/app/context/DataContext';
-import { DataContextType } from '@/app/types/DataContextTypes';
-import { fetchDataForAdmin } from '@/app/utils/fetchDataForAdmin';
+import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
 import { useSession } from 'next-auth/react';
-import { useContext, useState } from 'react';
 
 
 const AllOrders = () => {
   const { data: session } = useSession();
-  const { loading, adminData } = useContext(DataContext) as DataContextType;
   //Get the orders from the server
-  fetchDataForAdmin('/api/orders');
+  const { isLoading, data } = useGetAdminDataQuery('/orders')
   return (
     <div>
       <div className='flex gap-5 items-start justify-between'>
@@ -26,7 +22,7 @@ const AllOrders = () => {
         </div>
       </div>
       {
-        (loading || !session) ? <TableSkeletonLoader /> : <OrdersTable userOrders={adminData} />
+        (isLoading || !session) ? <TableSkeletonLoader /> : <OrdersTable userOrders={data?.result} />
       }
     </div>
   )

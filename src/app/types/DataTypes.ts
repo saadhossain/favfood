@@ -115,3 +115,7 @@ export interface ReviewData {
     userProfileImage: string,
     addedOn: string
 }
+
+export interface AdminDataType {
+    result: [] | any
+}

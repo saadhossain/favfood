@@ -1,8 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { dataApiSlice } from './features/api/apiSlice'
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {}
+    reducer: {
+      [dataApiSlice.reducerPath]: dataApiSlice.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(dataApiSlice.middleware),
   })
 }
 
