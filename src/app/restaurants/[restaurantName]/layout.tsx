@@ -1,8 +1,7 @@
 'use client'
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import { RestaurantCard } from '@/app/components/ui/restaurant/RestaurantCard';
-import { RestaurantData } from '@/app/types/DataTypes';
-import { fetchSingleRestaurantData } from '@/app/utils/fetchSingleRestaurantData';
+import { useGetSingleRestaurantQuery } from '@/app/lib/features/api/apiSlice';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
@@ -13,15 +12,16 @@ interface LayoutProps {
 }
 
 const SingleRestaurantLayout: React.FC<LayoutProps> = ({ children, params }) => {
-    const singleRestaurant: RestaurantData = fetchSingleRestaurantData(params.restaurantName);
+    const { data } = useGetSingleRestaurantQuery(`/restaurants/single?name=${params.restaurantName}`);
+    const singleRestaurant = data?.result[0];
     const activePath = usePathname();
-    if (!singleRestaurant._id) {
+    if (!singleRestaurant?._id) {
         return <LoadingSpinner />
     }
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-3 md:my-10'>
             {
-                singleRestaurant._id && <div>
+                singleRestaurant?._id && <div>
                     <RestaurantCard restaurant={singleRestaurant} />
 
                     {/* Restaurant Tab */}
