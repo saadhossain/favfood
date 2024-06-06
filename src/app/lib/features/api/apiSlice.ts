@@ -13,16 +13,17 @@ export const dataApiSlice = createApi({
             query: (endpint) => `${endpint}`,
         }),
         getSingleFood: builder.query<FetchedDataType, any>({
-            query: (endpoint) => `${endpoint}`,
-            transformErrorResponse: (response: any) => response.result
+            query: (endpoint) => `${endpoint}`
         }),
         getSingleRestaurant: builder.query<FetchedDataType, any>({
-            query: (endpoint) => `${endpoint}`,
-            // transformErrorResponse: (response: any) => response.result
+            query: (endpoint) => `${endpoint}`
+        }),
+        getUsersData: builder.query<FetchedDataType, any>({
+            query: (endpoint) => `${endpoint}`
         }),
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAdminDataQuery, useGetDataQuery, useGetSingleFoodQuery, useGetSingleRestaurantQuery } = dataApiSlice;
+export const { useGetAdminDataQuery, useGetDataQuery, useGetSingleFoodQuery, useGetSingleRestaurantQuery, useGetUsersDataQuery } = dataApiSlice;
