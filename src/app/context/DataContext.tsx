@@ -9,9 +9,6 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     const [loading, setLoading] = useState(false);
     //Set fetched food data to the state
     const [foods, setFoods] = useState([]);
-
-    //Get single food data and set state accordingly
-    const [singleFood, setSingleFood] = useState([]);
     const [tabQuery, setTabQuery] = useState('all-food');
 
     //Cart
@@ -90,7 +87,7 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //Set the FormData to the State as object when input changes
     const [formData, setFormData] = useState<any>({});
 
-    const allData = { loading, setLoading, foods, setFoods, singleFood, setSingleFood, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, singleRestaurant, setSingleRestaurant, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData, openAddReviewModal, setOpenAddReviewModal, openEditReviewModal, setOpenEditReviewModal };
+    const allData = { loading, setLoading, foods, setFoods, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, userOrders, setUserOrders, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, singleRestaurant, setSingleRestaurant, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData, openAddReviewModal, setOpenAddReviewModal, openEditReviewModal, setOpenEditReviewModal };
     return (
         <div>
             <DataContext.Provider value={allData}>

@@ -3,9 +3,8 @@ import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import ReviewCard from '@/app/components/ui/reviews/ReviewCard';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
-import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
-import { FoodData, ReviewData } from '@/app/types/DataTypes';
-import { fetchSingleFoodData } from '@/app/utils/fetchSingleFoodData';
+import { useGetDataQuery, useGetSingleFoodQuery } from '@/app/lib/features/api/apiSlice';
+import { ReviewData } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
@@ -17,7 +16,9 @@ interface paramsTypes {
 }
 
 const FoodSinglePage = ({ params }: { params: paramsTypes }) => {
-  const singleFood: FoodData = fetchSingleFoodData(params.restaurant, params.slug);
+  //Get the Single food from ther server
+  const { data: foodData } = useGetSingleFoodQuery(`/foods/single?restaurant=${params.restaurant}&slug=${params.slug}`)
+  const singleFood = foodData?.result[0];
   const handleAddToCart = useHandleAddToCart();
   const handleAddToWishlist = useHandleAddToWishlist();
   //Get the Foods Reviews from the Server
@@ -30,7 +31,7 @@ const FoodSinglePage = ({ params }: { params: paramsTypes }) => {
   return (
     <div className='w-11/12 md:w-10/12 mx-auto my-2 md:my-5'>
       {
-        singleFood._id && <div>
+        singleFood?._id && <div>
           {/* Product Image and Details */}
           <div className='flex gap-12 text-gray-800'>
             <Image src={singleFood.image} alt={singleFood.name} width={450} height={350} className='rounded-md hidden md:block' />
