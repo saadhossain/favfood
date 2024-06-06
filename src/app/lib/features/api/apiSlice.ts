@@ -7,12 +7,10 @@ export const dataApiSlice = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
     endpoints: (builder) => ({
         getAdminData: builder.query<AdminDataType, any>({
-            query: (endpint) => `${endpint}`,
-            transformResponse: (response: any) => response.result
+            query: (endpint) => `${endpint}`
         }),
         getData: builder.query<FetchedDataType, any>({
             query: (endpint) => `${endpint}`,
-            transformErrorResponse: (response: any) => response.result
         })
     }),
 })

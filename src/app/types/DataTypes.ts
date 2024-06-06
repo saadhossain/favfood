@@ -118,7 +118,7 @@ export interface ReviewData {
 
 export interface AdminDataType {
    map(arg0: (restaurant: any) => import("react").JSX.Element): import("react").ReactNode;
-   data: [] | any
+   result: [] | any
 }
 
 export interface FetchedDataType {
