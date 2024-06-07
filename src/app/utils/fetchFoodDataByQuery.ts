@@ -22,7 +22,7 @@ export const fetchFoodDataByQuery = (tabQuery: string, page: number) => {
                 if (page === 1) {
                     dispatch(setFoods(result));
                 } else {
-                    dispatch(setFoods((prevFoods: any) => [...prevFoods, ...result]));
+                    dispatch(setFoods([...foods, ...result]));
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -33,6 +33,5 @@ export const fetchFoodDataByQuery = (tabQuery: string, page: number) => {
         getFoodData();
 
     }, [setLoading, tabQuery, page]);
-
     return foods;
 };
