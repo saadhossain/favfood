@@ -1,6 +1,8 @@
 'use client'
+import { setCartCount, setCartProducts } from '@/app/lib/features/cartSlice';
+import { useAppDispatch } from '@/app/lib/hooks';
 import { OrderDataType, SessionData } from '@/app/types/DataTypes';
-import { saveOrderToDB } from '@/app/utils/saveOrderToDB';
+import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Dispatch, FormEvent, SetStateAction } from 'react';
@@ -14,11 +16,11 @@ interface CheckoutProps {
     loading: boolean;
     setLoading: Dispatch<SetStateAction<boolean>>;
     route: AppRouterInstance;
-    setIsOrderConfirm: Dispatch<SetStateAction<boolean>>;
 }
 
 
-const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, route, setIsOrderConfirm }: CheckoutProps) => {
+const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, route }: CheckoutProps) => {
+    const dispatch = useAppDispatch();
     const stripe = useStripe()
     const elements = useElements();
     const handleMakePayment = async (e: FormEvent) => {
@@ -72,10 +74,16 @@ const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, 
         paymentStatus = 'Unpaid';
         //Save order details to the database
         try {
-            const oderDataModified = { ...orderData, paymentStatus };
-            await saveOrderToDB(oderDataModified, route);
-            setIsOrderConfirm(true);
-            setLoading(false);
+            const modifiedOrderData = { ...orderData, paymentStatus };
+            const data = await saveToDatabase('/api/orders', modifiedOrderData);
+            if (data.status) {
+                localStorage.removeItem('favFoodCart');
+                toast.success('Order has been placed successfully.');
+                route.push('/account/orders');
+                dispatch(setCartProducts([]));
+                dispatch(setCartCount(0))
+                setLoading(false);
+            }
         } catch (error: any) {
             console.log(error.message);
             setLoading(false);

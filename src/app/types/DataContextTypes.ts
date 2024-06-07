@@ -10,8 +10,6 @@ export interface DataContextType {
     setTabQuery: Dispatch<SetStateAction<string>>;
     paymentMethod: string;
     setPaymentMethod: Dispatch<SetStateAction<string>>;
-    isOrderConfirm: boolean;
-    setIsOrderConfirm: Dispatch<SetStateAction<boolean>>;
     searchedFoods: [] | any;
     setSearchedFoods: Dispatch<SetStateAction<[] | any>>;
     searchText: FoodData[] | any;

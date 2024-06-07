@@ -2,7 +2,7 @@
 import { DataContext } from '@/app/context/DataContext';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { getProductsInCart } from '@/app/utils/getProductsInCart';
-import { saveOrderToDB } from '@/app/utils/saveOrderToDB';
+import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { useSession } from 'next-auth/react';
@@ -15,11 +15,14 @@ import Processing from '../../spinner/Processing';
 import CheckoutForm from './CheckoutForm';
 import cod from '/public/cod.png';
 import stripe from '/public/stripe-payment.png';
+import { setCartCount, setCartProducts } from '@/app/lib/features/cartSlice';
+import { useAppDispatch } from '@/app/lib/hooks';
 const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
 const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     //Get the necessary states from datacontext
-    const { paymentMethod, setPaymentMethod, loading, setLoading, setIsOrderConfirm } = useContext(DataContext) as DataContextType;
+    const { paymentMethod, setPaymentMethod, loading, setLoading } = useContext(DataContext) as DataContextType;
+    const dispatch = useAppDispatch();
     const taxAmount = (totalPrice * 5 / 100);
     const grandTotal = (totalPrice + taxAmount).toFixed(2);
 
@@ -56,16 +59,22 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     }
     //Save order details to the database
     const handleCashOnDelivery = async () => {
-        const oderDataModified = { ...orderData, paymentStatus: 'Unpaid' };
+        const modifiedOrderData = { ...orderData, paymentStatus: 'Unpaid' };
         try {
             setLoading(true);
             if (!session?.user?.address?.city) {
                 toast.error('Please add the delivery address to confirm order');
                 return;
             }
-            await saveOrderToDB(oderDataModified, route);
-            setIsOrderConfirm(true);
-            setLoading(false);
+            const data = await saveToDatabase('/api/orders', modifiedOrderData);
+            if (data.status) {
+                localStorage.removeItem('favFoodCart');
+                toast.success('Order has been placed successfully.');
+                route.push('/account/orders');
+                dispatch(setCartProducts([]));
+                dispatch(setCartCount(0))
+                setLoading(false);
+            }
         } catch (error: any) {
             console.log(error.message);
             setLoading(false);
@@ -111,7 +120,6 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
                         loading={loading}
                         setLoading={setLoading}
                         route={route}
-                        setIsOrderConfirm={setIsOrderConfirm}
                     />
                 </Elements>
             }
