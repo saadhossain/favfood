@@ -1,14 +1,13 @@
 'use client';
-import { DataContext } from '@/app/context/DataContext';
-import { DataContextType } from '@/app/types/DataContextTypes';
+import { setCartCount } from '@/app/lib/features/cart/cartSlice';
+import { useAppDispatch } from '@/app/lib/hooks';
 import { CartDataType } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext } from 'react';
 import toast from 'react-hot-toast';
 
 const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: any, setCartProducts: any }) => {
-    const { setCartQuantity } = useContext(DataContext) as DataContextType;
+    const dispatch = useAppDispatch();
     const handleDecrementQuantity = (id: string) => {
         // Update local storage and state
         updateLocalStorage(id, -1);
@@ -43,7 +42,7 @@ const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: an
         //     localStorage.removeItem('favFoodCart');
         // }
         setCartProducts(updatedProducts);
-        setCartQuantity(updatedProducts.length);
+        dispatch(setCartCount(updatedProducts.length))
         toast.error('Food removed from cart.');
     };
 

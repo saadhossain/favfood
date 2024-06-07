@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import adminDataReducer from './features/adminData/adminDataSlice'
 import { dataApiSlice } from './features/api/apiSlice'
+import cartReducer from './features/cart/cartSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       adminData: adminDataReducer,
+      cart: cartReducer,
       [dataApiSlice.reducerPath]: dataApiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>

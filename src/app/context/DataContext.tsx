@@ -1,26 +1,17 @@
 'use client';
 import { ReactNode, createContext, useEffect, useState } from 'react';
+import { setCartCount } from '../lib/features/cart/cartSlice';
+import { useAppDispatch } from '../lib/hooks';
 import { DataContextType } from '../types/DataContextTypes';
 
 export const DataContext = createContext<DataContextType | null>(null);
 const DataProvider = ({ children }: { children: ReactNode }) => {
+    const dispatch = useAppDispatch();
     //Loading state
     const [loading, setLoading] = useState(false);
     //Set fetched food data to the state
     const [foods, setFoods] = useState([]);
     const [tabQuery, setTabQuery] = useState('all-food');
-
-    //Cart
-    //Set Cart Quantity from localStorage
-    const [cartQuantity, setCartQuantity] = useState(0);
-    //Get the initial cart quantity from the localStorage
-    useEffect(() => {
-        const cart = localStorage.getItem('favFoodCart') as string;
-        const cartCount = JSON.parse(cart);
-        if (cartCount) {
-            setCartQuantity(cartCount.length);
-        }
-    }, []);
     //Set the product to the state from localStorage
     const [cartProducts, setCartProducts] = useState([]);
     //Set wishlist Quantity from localStorage
@@ -45,7 +36,7 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         if (isOrderConfirm) {
             setCartProducts([]);
-            setCartQuantity(0);
+            dispatch(setCartCount(0))
         }
     }, [isOrderConfirm]);
 
@@ -82,7 +73,7 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //Set the FormData to the State as object when input changes
     const [formData, setFormData] = useState<any>({});
 
-    const allData = { loading, setLoading, foods, setFoods, tabQuery, setTabQuery, cartQuantity, setCartQuantity, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData, openAddReviewModal, setOpenAddReviewModal, openEditReviewModal, setOpenEditReviewModal };
+    const allData = { loading, setLoading, foods, setFoods, tabQuery, setTabQuery, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData, openAddReviewModal, setOpenAddReviewModal, openEditReviewModal, setOpenEditReviewModal };
     return (
         <div>
             <DataContext.Provider value={allData}>
