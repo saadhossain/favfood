@@ -1,5 +1,6 @@
 'use client';
 import { DataContext } from '@/app/context/DataContext';
+import { useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -12,15 +13,16 @@ import { IoClose } from 'react-icons/io5';
 import { RiMenu2Fill } from "react-icons/ri";
 import MobileMenus from './MobileMenus';
 import FavFood from '/public/favfood-for-web.png';
-import { useAppSelector } from '@/app/lib/hooks';
 
 const HeaderNavigation = () => {
   const { data: session, status } = useSession() as any;
-  const {cartCount} = useAppSelector((state)=> state.cart)
+  const state = useAppSelector((state) => state);
+  const cartCount = state.cart.cartCount;
+  const wishlistCount = state.wishlist.wishlistCount;
   const activePath = usePathname();
   const navStyle = `hover:text-secondary duration-300 ease-in-out}`;
   //Get Cart Quantity from the context api
-  const { wishlistQuantity, isSearchModalOpen, setIsSearchModalOpen } = useContext(DataContext) as DataContextType;
+  const { isSearchModalOpen, setIsSearchModalOpen } = useContext(DataContext) as DataContextType;
 
   const [isExpand, setIsExpand] = useState(false);
   return (
@@ -35,7 +37,7 @@ const HeaderNavigation = () => {
             className='w-6 h-6 text-gray-700 hover:text-secondary cursor-pointer duration-300'
             onClick={() => setIsSearchModalOpen(!isSearchModalOpen)}
           />
-          <Link href='/wishlist' className={`${navStyle} ${activePath === '/favourite' ? 'text-secondary' : 'text-gray-700'}`}><FaHeart className='w-6 h-6' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${wishlistQuantity <= 0 && 'hidden'}`}>{wishlistQuantity}</span></Link>
+          <Link href='/wishlist' className={`${navStyle} ${activePath === '/favourite' ? 'text-secondary' : 'text-gray-700'}`}><FaHeart className='w-6 h-6' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${wishlistCount <= 0 && 'hidden'}`}>{wishlistCount}</span></Link>
           <Link href='/cart' className={`${navStyle} ${activePath === '/cart' ? 'text-secondary' : 'text-gray-700'}`}><FaCartShopping className='w-6 h-6 relative' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${cartCount <= 0 && 'hidden'}`}>{cartCount}</span></Link>
           {/* Login Button and User Image */}
           <div>

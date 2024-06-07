@@ -1,6 +1,8 @@
 'use client';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
+import { setWishlistCount } from '@/app/lib/features/wishlist/wishlistSlice';
+import { useAppDispatch } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { CartDataType, FoodData } from '@/app/types/DataTypes';
 import Image from 'next/image';
@@ -11,7 +13,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 
 const WishlistCard = ({ product }: { product: FoodData }) => {
-    const { setWishlistProducts, setWishlistQuantity } = useContext(DataContext) as DataContextType;
+    const dispatch = useAppDispatch();
+    const { setWishlistProducts } = useContext(DataContext) as DataContextType;
     const handleAddToCart = useHandleAddToCart();
 
     const handleRemoveProductFromWishlist = (id: string) => {
@@ -25,7 +28,7 @@ const WishlistCard = ({ product }: { product: FoodData }) => {
         //     localStorage.removeItem('favFoodWishlist');
         // }
         setWishlistProducts(updatedProducts);
-        setWishlistQuantity(updatedProducts.length);
+        dispatch(setWishlistCount(updatedProducts.length))
         toast.error('Food removed from Wishlist.');
     };
     return (

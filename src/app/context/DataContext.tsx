@@ -14,16 +14,6 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     const [tabQuery, setTabQuery] = useState('all-food');
     //Set the product to the state from localStorage
     const [cartProducts, setCartProducts] = useState([]);
-    //Set wishlist Quantity from localStorage
-    const [wishlistQuantity, setWishlistQuantity] = useState(0);
-    //Get the initial wishlist quantity from the localStorage
-    useEffect(() => {
-        const wishlistLocal = localStorage.getItem('favFoodWishlist') as string;
-        const wishlist = JSON.parse(wishlistLocal);
-        if (wishlist) {
-            setWishlistQuantity(wishlist.length);
-        }
-    }, []);
     //Set the wishlist product to the state from localStorage
     const [wishlistProducts, setWishlistProducts] = useState();
 
@@ -73,7 +63,7 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //Set the FormData to the State as object when input changes
     const [formData, setFormData] = useState<any>({});
 
-    const allData = { loading, setLoading, foods, setFoods, tabQuery, setTabQuery, cartProducts, setCartProducts, wishlistQuantity, setWishlistQuantity, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData, openAddReviewModal, setOpenAddReviewModal, openEditReviewModal, setOpenEditReviewModal };
+    const allData = { loading, setLoading, foods, setFoods, tabQuery, setTabQuery, cartProducts, setCartProducts, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData, openAddReviewModal, setOpenAddReviewModal, openEditReviewModal, setOpenEditReviewModal };
     return (
         <div>
             <DataContext.Provider value={allData}>
