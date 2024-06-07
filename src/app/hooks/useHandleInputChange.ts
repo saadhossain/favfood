@@ -1,15 +1,17 @@
-import { ChangeEvent, useContext } from 'react';
-import { DataContext } from '../context/DataContext';
-import { DataContextType } from '../types/DataContextTypes';
+import { ChangeEvent } from 'react';
+import { setFormData } from '../lib/features/formSlice';
+import { useAppDispatch } from '../lib/hooks';
 
 export const useHandleInputChange = () => {
-    const { formData, setFormData } = useContext(DataContext) as DataContextType;
+    // const { formData, setFormData } = useContext(DataContext) as DataContextType;
+    const dispatch = useAppDispatch();
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+        dispatch(setFormData({ name, value }))
+        // setFormData({
+        //     ...formData,
+        //     [name]: value,
+        // });
     };
     return handleInputChange;
 }

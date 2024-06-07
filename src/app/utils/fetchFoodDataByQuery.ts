@@ -1,11 +1,14 @@
 'use client';
 import { useContext, useEffect } from 'react';
 import { DataContext } from '../context/DataContext';
+import { setFoods } from '../lib/features/foodSlice';
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import { DataContextType } from '../types/DataContextTypes';
 
 export const fetchFoodDataByQuery = (tabQuery: string, page: number) => {
-    const { setLoading, foods, setFoods } = useContext(DataContext) as DataContextType;
-
+    const { setLoading } = useContext(DataContext) as DataContextType;
+    const dispatch = useAppDispatch();
+    const { foods } = useAppSelector((state) => state.food)
     //Fetch the data from the api...
     useEffect(() => {
         const getFoodData = async () => {
@@ -17,9 +20,9 @@ export const fetchFoodDataByQuery = (tabQuery: string, page: number) => {
                 }
                 const { result } = await res.json();
                 if (page === 1) {
-                    setFoods(result);
+                    dispatch(setFoods(result));
                 } else {
-                    setFoods((prevFoods: any) => [...prevFoods, ...result]);
+                    dispatch(setFoods((prevFoods: any) => [...prevFoods, ...result]));
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);

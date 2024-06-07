@@ -6,14 +6,8 @@ export const DataContext = createContext<DataContextType | null>(null);
 const DataProvider = ({ children }: { children: ReactNode }) => {
     //Loading state
     const [loading, setLoading] = useState(false);
-    //Set fetched food data to the state
-    const [foods, setFoods] = useState([]);
-    const [tabQuery, setTabQuery] = useState('all-food');
 
-    //Set the FormData to the State as object when input changes
-    const [formData, setFormData] = useState<any>({});
-
-    const allData = { loading, setLoading, foods, setFoods, tabQuery, setTabQuery, formData, setFormData, };
+    const allData = { loading, setLoading };
     return (
         <div>
             <DataContext.Provider value={allData}>

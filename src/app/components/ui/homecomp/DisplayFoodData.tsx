@@ -3,7 +3,11 @@ import { FoodData } from '@/app/types/DataTypes';
 import { fetchFoodDataByQuery } from '@/app/utils/fetchFoodDataByQuery';
 import { useState } from 'react';
 import ProductLoader from '../../spinner/ProductLoader';
-const DisplayFoodData = ({ tabQuery, loading }: { tabQuery: string, loading: boolean }) => {
+
+interface Props {
+    tabQuery: string, loading: boolean
+}
+const DisplayFoodData = ({ tabQuery, loading }: Props) => {
     const [page, setPage] = useState(1);
     //Get the foods data...
     const foods = fetchFoodDataByQuery(tabQuery, page);
