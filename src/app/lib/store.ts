@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import adminDataReducer from './features/adminDataSlice'
 import { dataApiSlice } from './features/api/apiSlice'
 import cartReducer from './features/cartSlice'
+import commonFeaturesReducer from './features/commonFeaturesSlice'
 import searchReducer from './features/searchSlice'
 import wishlistReducer from './features/wishlistSlice'
 
@@ -12,6 +13,7 @@ export const makeStore = () => {
       cart: cartReducer,
       wishlist: wishlistReducer,
       search: searchReducer,
+      commonFeatures: commonFeaturesReducer,
       [dataApiSlice.reducerPath]: dataApiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>

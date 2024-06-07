@@ -2,6 +2,8 @@
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
 import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
+import { setOpenEditReviewModal } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { ReviewData } from '@/app/types/DataTypes';
 import { updateData } from '@/app/utils/updateData';
@@ -12,10 +14,12 @@ import Processing from '../spinner/Processing';
 
 
 const EditReviewModal = () => {
-    const { openEditReviewModal, setOpenEditReviewModal, singleDataId, formData } = useContext(DataContext) as DataContextType;
+    const { formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get Reviews Data from server
-    const { data:reviews, refetch } = useGetAdminDataQuery('/reviews');
+    const { data: reviews, refetch } = useGetAdminDataQuery('/reviews');
+    const dispatch = useAppDispatch();
+    const { singleDataId, openEditReviewModal } = useAppSelector((state) => state.commonFeatures)
     //GEt single Review
     const [singleReview, setSingleReview] = useState<ReviewData>();
     useEffect(() => {
@@ -39,7 +43,7 @@ const EditReviewModal = () => {
             toast.success('Review Edit Successfully.');
             form.reset();
             setIsUpdating(false);
-            setOpenEditReviewModal(false);
+            dispatch(setOpenEditReviewModal())
             refetch();
         }
     }
@@ -49,7 +53,7 @@ const EditReviewModal = () => {
                 openEditReviewModal && <div className={`w-full min-h-screen flex items-center justify-center absolute py-10 md:py-0 md:fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-60`}>
                     <div className='w-11/12 md:w-2/5  flex items-center bg-gray-700 text-white p-5 my-5 md:my-0 rounded-md relative'>
                         <button
-                            onClick={() => setOpenEditReviewModal(false)}
+                            onClick={() => dispatch(setOpenEditReviewModal())}
                             className='font-bold text-xl absolute top-1 right-2 bg-gray-900 bg-opacity-60 py-1 px-3 rounded-full'>X</button>
                         <form
                             onSubmit={handleEditReview}

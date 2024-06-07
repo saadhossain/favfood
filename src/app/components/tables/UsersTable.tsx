@@ -1,10 +1,9 @@
-import { DataContext } from '@/app/context/DataContext';
-import { DataContextType } from '@/app/types/DataContextTypes';
+import { setOpenUserEditModal, setSingleDataId } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch } from '@/app/lib/hooks';
 import { UserData } from '@/app/types/DataTypes';
 import { updateData } from '@/app/utils/updateData';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { FaToggleOff, FaToggleOn, FaUserEdit } from 'react-icons/fa';
 import { TiDelete } from "react-icons/ti";
@@ -15,7 +14,7 @@ interface Props {
 }
 
 const UsersTable = ({ users, refetch }: Props) => {
-    const { openUserEditModal, setOpenUserEditModal, setSingleDataId } = useContext(DataContext) as DataContextType;
+    const dispatch = useAppDispatch();
     const handleDeleteUser = async (userId: string) => {
         const isConfirmed = window.confirm('Do you want to Delete this User?');
         if (isConfirmed) {
@@ -99,8 +98,8 @@ const UsersTable = ({ users, refetch }: Props) => {
                                                     <FaUserEdit
                                                         className='w-6 h-6 cursor-pointer text-green-600' title='Edit User'
                                                         onClick={() => {
-                                                            setOpenUserEditModal(!openUserEditModal)
-                                                            setSingleDataId(user._id)
+                                                            dispatch(setOpenUserEditModal())
+                                                            dispatch(setSingleDataId(user._id))
                                                         }}
                                                     />
                                                 </div>

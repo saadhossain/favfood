@@ -1,15 +1,14 @@
 'use client'
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
-import { DataContext } from '@/app/context/DataContext';
-import { DataContextType } from '@/app/types/DataContextTypes';
+import { setOpenAddressBoxModal } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch } from '@/app/lib/hooks';
 import { useSession } from 'next-auth/react';
-import { useContext } from 'react';
 import { FaMapMarkerAlt, FaPlus } from 'react-icons/fa';
 
 const AddressBook = () => {
-  const { setOpenAddressBoxModal } = useContext(DataContext) as DataContextType;
   const { data: session } = useSession();
+  const dispatch = useAppDispatch();
   return (
     <div>
       <SubHeading heading={'Address Book'} />
@@ -31,7 +30,7 @@ const AddressBook = () => {
               <SubHeading heading={'No Address Found! Please Add One...'} />
               {/* Add New Address */}
               <div
-                onClick={() => setOpenAddressBoxModal(true)}
+                onClick={() => dispatch(setOpenAddressBoxModal())}
                 className='w-full md:w-2/4 flex flex-col justify-center text-gray-800 border-2 border-dashed border-gray-800 rounded-md p-4 mt-2 md:mt-0 cursor-pointer h-28'>
                 <p className='flex items-center justify-center gap-2 text-lg'>
                   <FaPlus /> Add New Address

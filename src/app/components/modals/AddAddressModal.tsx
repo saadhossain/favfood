@@ -1,6 +1,8 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
+import { setOpenAddressBoxModal } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { updateData } from '@/app/utils/updateData';
 import { useSession } from 'next-auth/react';
@@ -14,10 +16,13 @@ interface CountryPros {
 }
 
 const AddAddressModal = () => {
-    const { loading, setLoading, openAddressBoxModal, setOpenAddressBoxModal, formData } = useContext(DataContext) as DataContextType;
+    const { loading, formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get the logged in user from the session
     const { data: session } = useSession();
+
+    const { openAddressBoxModal } = useAppSelector((state) => state.commonFeatures)
+    const dispatch = useAppDispatch();
     //Get the countries from the database
     const [countries, setCountries] = useState([]);
     useEffect(() => {
@@ -32,14 +37,12 @@ const AddAddressModal = () => {
     const handleInputChange = useHandleInputChange();
     const handleAddAddress = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoading(true);
         const form = e.target as HTMLFormElement;
         const data = await updateData(`/users?userId=${session?.user._id}`, { address: formData });
         if (data.acknowledged) {
             toast.success('New Address added successfully');
             form.reset();
-            setLoading(false);
-            setOpenAddressBoxModal(false);
+            dispatch(setOpenAddressBoxModal())
         }
     }
     return (
@@ -49,7 +52,7 @@ const AddAddressModal = () => {
                 <div className={`w-full min-h-screen flex items-center justify-center fixed left-0 top-0 z-50 bg-gray-900 bg-opacity-60`}>
                     <div className='w-11/12 md:w-2/5  flex items-center bg-gray-700 text-white p-5 rounded-md relative'>
                         <button
-                            onClick={() => setOpenAddressBoxModal(false)}
+                            onClick={() => dispatch(setOpenAddressBoxModal())}
                             className='font-bold text-xl absolute top-1 right-2 bg-gray-900 bg-opacity-60 py-1 px-3 rounded-full'>X</button>
                         <form
                             onSubmit={handleAddAddress} className="w-full space-y-6">

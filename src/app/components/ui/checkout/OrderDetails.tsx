@@ -1,5 +1,8 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
+import { setCartCount, setCartProducts } from '@/app/lib/features/cartSlice';
+import { setPaymentMethod } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { getProductsInCart } from '@/app/utils/getProductsInCart';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
@@ -15,20 +18,19 @@ import Processing from '../../spinner/Processing';
 import CheckoutForm from './CheckoutForm';
 import cod from '/public/cod.png';
 import stripe from '/public/stripe-payment.png';
-import { setCartCount, setCartProducts } from '@/app/lib/features/cartSlice';
-import { useAppDispatch } from '@/app/lib/hooks';
 const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
 const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     //Get the necessary states from datacontext
-    const { paymentMethod, setPaymentMethod, loading, setLoading } = useContext(DataContext) as DataContextType;
+    const { loading, setLoading } = useContext(DataContext) as DataContextType;
     const dispatch = useAppDispatch();
+    const { paymentMethod } = useAppSelector((state) => state.commonFeatures)
     const taxAmount = (totalPrice * 5 / 100);
     const grandTotal = (totalPrice + taxAmount).toFixed(2);
 
     //Get the payment method and set
     const handlePaymentMethod = (event: ChangeEvent<HTMLInputElement>) => {
-        setPaymentMethod(event.target.id);
+        dispatch(setPaymentMethod(event.target.id))
     };
     //Get all products in the cart
     const productsInCart = getProductsInCart();

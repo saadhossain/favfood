@@ -3,6 +3,8 @@ import SubHeading from '@/app/components/shared/headings/SubHeading';
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
+import { setShowPassword } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { updateData } from '@/app/utils/updateData';
 import { signOut, useSession } from 'next-auth/react';
@@ -11,7 +13,9 @@ import toast from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Password = () => {
-  const { loading, setLoading, showPassword, setShowPassword } = useContext(DataContext) as DataContextType;
+  const { loading, setLoading } = useContext(DataContext) as DataContextType;
+  const dispatch = useAppDispatch();
+  const { showPassword } = useAppSelector((state) => state.commonFeatures)
   const { data: session } = useSession();
   const [newPassword, setNewPassword] = useState('');
   const [error, setError] = useState('');
@@ -20,7 +24,7 @@ const Password = () => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     setLoading(true);
-    if(newPassword.length < 10) {
+    if (newPassword.length < 10) {
       setError('Password must be at least 10 characters long');
       setLoading(false);
       return;
@@ -56,7 +60,7 @@ const Password = () => {
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}
               />
               <div
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => dispatch(setShowPassword())}
                 className='cursor-pointer absolute top-8 right-2'
               >
                 {

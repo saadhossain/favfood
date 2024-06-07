@@ -1,21 +1,20 @@
 'use client'
 import { useSession } from 'next-auth/react';
-import { useContext } from 'react';
 import { FaMapMarkerAlt, FaPlus } from 'react-icons/fa';
 import Heading from '../components/shared/headings/Heading';
 import SubHeading from '../components/shared/headings/SubHeading';
 import CartSummeryLoader from '../components/spinner/CartSummeryLoader';
 import OrderDetails from '../components/ui/checkout/OrderDetails';
-import { DataContext } from '../context/DataContext';
-import { DataContextType } from '../types/DataContextTypes';
+import { setCartProducts } from '../lib/features/cartSlice';
+import { setOpenAddressBoxModal } from '../lib/features/commonFeaturesSlice';
+import { useAppDispatch } from '../lib/hooks';
 import { SessionData } from '../types/DataTypes';
 import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';
 import { getTotalPrice } from '../utils/getTotalPrice';
-import { setCartProducts } from '../lib/features/cartSlice';
 
 const CheckoutPage = () => {
     const { data: session } = useSession<SessionData | any>();
-    const { setOpenAddressBoxModal } = useContext(DataContext) as DataContextType;
+    const dispatch = useAppDispatch();
     // Get products from localstorage and set them to setProductsInLocalStorage state
     getDataFromLocalStorage('favFoodCart', setCartProducts);
     //Calculate total price of all product in the cart
@@ -45,7 +44,7 @@ const CheckoutPage = () => {
                     }
                     {/* Add New Address Box */}
                     <div
-                        onClick={() => setOpenAddressBoxModal(true)}
+                        onClick={() => dispatch(setOpenAddressBoxModal())}
                         className='w-full md:w-2/4 flex flex-col justify-center text-gray-800 border-2 border-dashed border-gray-800 rounded-md p-4 mt-2 md:mt-0 cursor-pointer h-36'>
                         <p className='flex items-center justify-center gap-2 text-lg'>
                             <FaPlus /> Add New Address

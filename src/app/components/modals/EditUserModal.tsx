@@ -2,6 +2,8 @@
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
 import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
+import { setOpenUserEditModal, setShowPassword } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { UserData } from '@/app/types/DataTypes';
 import { updateData } from '@/app/utils/updateData';
@@ -13,11 +15,12 @@ import Processing from '../spinner/Processing';
 
 
 const EditUserModal = () => {
-    const { openUserEditModal, setOpenUserEditModal, singleDataId, showPassword, setShowPassword, formData } = useContext(DataContext) as DataContextType;
+    const { formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get Reviews Data from server
-    const { data:users, refetch } = useGetAdminDataQuery('/users');
-
+    const { data: users, refetch } = useGetAdminDataQuery('/users');
+    const dispatch = useAppDispatch();
+    const { showPassword, openUserEditModal, singleDataId } = useAppSelector((state) => state.commonFeatures)
     //GEt single order
     const [singleUser, setSingleUser] = useState<UserData>();
     useEffect(() => {
@@ -41,7 +44,7 @@ const EditUserModal = () => {
             toast.success('User Updated Successfully.');
             form.reset();
             setIsUpdating(false);
-            setOpenUserEditModal(false);
+            dispatch(setOpenUserEditModal())
             refetch();
         }
     }
@@ -51,7 +54,7 @@ const EditUserModal = () => {
                 openUserEditModal && <div className={`w-full min-h-screen flex items-center justify-center absolute py-10 left-0 top-0 z-50 bg-gray-900 bg-opacity-60`}>
                     <div className='w-11/12 md:w-2/5  flex items-center bg-gray-700 text-white p-5 my-5 md:my-0 rounded-md relative'>
                         <button
-                            onClick={() => setOpenUserEditModal(false)}
+                            onClick={() => dispatch(setOpenUserEditModal())}
                             className='font-bold text-xl absolute top-1 right-2 bg-gray-900 bg-opacity-60 py-1 px-3 rounded-full'>X</button>
                         <form
                             onSubmit={handleUpdateUser}
@@ -92,7 +95,7 @@ const EditUserModal = () => {
                                     />
                                     {/* Eye button for hide and show password */}
                                     <div
-                                        onClick={() => setShowPassword(!showPassword)}
+                                        onClick={() => dispatch(setShowPassword())}
                                         className='cursor-pointer absolute top-9 right-2 text-gray-900'
                                     >
                                         {

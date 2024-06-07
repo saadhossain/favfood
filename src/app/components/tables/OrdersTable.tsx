@@ -1,11 +1,10 @@
 'use client';
-import { DataContext } from '@/app/context/DataContext';
-import { DataContextType } from '@/app/types/DataContextTypes';
+import { setOpenAddReviewModal, setOpenOrderEditModal, setSingleDataId } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch } from '@/app/lib/hooks';
 import { OrderDataType } from '@/app/types/DataTypes';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { FaRegCreditCard } from "react-icons/fa";
 import { FaShop } from 'react-icons/fa6';
@@ -15,8 +14,8 @@ import { TbProgressCheck, TbShoppingBagEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
 const OrdersTable = ({ orders, refetch }: { orders: OrderDataType[] | any, refetch: any }) => {
-    const { openOrderEditModal, setOpenOrderEditModal, setSingleDataId, openAddReviewModal, setOpenAddReviewModal } = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
+    const dispatch = useAppDispatch();
     const handleCancelOrder = async (orderId: string | undefined, orderStatus: string) => {
         const isConfirmed = window.confirm('Do you agree to Cancel this order?');
         if (orderStatus !== 'Processing') {
@@ -112,8 +111,8 @@ const OrdersTable = ({ orders, refetch }: { orders: OrderDataType[] | any, refet
                                                                 className='w-6 h-6 text-green-600 cursor-pointer'
                                                                 title='Modify Order'
                                                                 onClick={() => {
-                                                                    setOpenOrderEditModal(!openOrderEditModal)
-                                                                    setSingleDataId(order._id)
+                                                                    dispatch(setOpenOrderEditModal())
+                                                                    dispatch(setSingleDataId(order._id))
                                                                 }}
                                                             />
                                                         </div> :
@@ -130,8 +129,8 @@ const OrdersTable = ({ orders, refetch }: { orders: OrderDataType[] | any, refet
                                                                     className='w-6 h-6 cursor-pointer'
                                                                     title='Write a Review'
                                                                     onClick={() => {
-                                                                        setOpenAddReviewModal(!openAddReviewModal)
-                                                                        setSingleDataId(order._id)
+                                                                        dispatch(setOpenAddReviewModal())
+                                                                        dispatch(setSingleDataId(order._id))
                                                                     }}
                                                                 />
                                                             </div>
