@@ -1,13 +1,13 @@
 'use client'
-import { setAdminData } from '../lib/features/adminDataSlice';
+import { setUserData } from '../lib/features/userDataSlice';
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
 
 export const useHandleDashboardSearch = () => {
-    const { initialData } = useAppSelector((state) => state.adminData);
+    const { initialData } = useAppSelector((state) => state.userData);
     const dispatch = useAppDispatch();
     const handleDashboardSearch = (text: string) => {
         if (text === "") {
-            dispatch(setAdminData(initialData));
+            dispatch(setUserData(initialData));
         } else {
             const lowerCaseText = text.toLowerCase();
             const foundItems = initialData.filter((data: any) =>
@@ -17,7 +17,7 @@ export const useHandleDashboardSearch = () => {
                         value.toString().toLowerCase().includes(lowerCaseText))
                 )
             );
-            dispatch(setAdminData(foundItems));
+            dispatch(setUserData(foundItems));
         }
     }
     return handleDashboardSearch;

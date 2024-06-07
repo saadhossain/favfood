@@ -3,7 +3,7 @@ import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import ReviewCard from '@/app/components/ui/reviews/ReviewCard';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
-import { useGetDataQuery, useGetSingleFoodQuery } from '@/app/lib/features/api/apiSlice';
+import { useGetDataQuery, useGetSingleDataQuery } from '@/app/lib/features/api/apiSlice';
 import { FoodData, ReviewData } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ interface paramsTypes {
 
 const FoodSinglePage = ({ params }: { params: paramsTypes }) => {
   //Get the Single food from ther server
-  const { data } = useGetSingleFoodQuery(`/foods/single?restaurant=${params.restaurant}&slug=${params.slug}`)
+  const { data } = useGetSingleDataQuery(`/foods/single?restaurant=${params.restaurant}&slug=${params.slug}`)
   const singleFood: FoodData | any = data;
   const handleAddToCart = useHandleAddToCart();
   const handleAddToWishlist = useHandleAddToWishlist();

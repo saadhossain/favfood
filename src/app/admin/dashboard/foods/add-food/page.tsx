@@ -3,7 +3,7 @@ import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
-import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
+import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { uploadImgToImgbb } from '@/app/utils/uploadImgToImgbb';
@@ -15,8 +15,8 @@ const AddFood = () => {
     const { setLoading, loading, formData } = useContext(DataContext) as DataContextType;
     const [error, setError] = useState('');
     //Get Restaurant Data from server
-    const { data: restaurants } = useGetAdminDataQuery('/restaurants');
-    const { refetch } = useGetAdminDataQuery('/foods');
+    const { data: restaurants } = useGetDataQuery('/restaurants');
+    const { refetch } = useGetDataQuery('/foods');
     // const restaurants = data
     const categories = ["Burger", "Pizza", "Sandwich", "Fries", "Chicken"];
 

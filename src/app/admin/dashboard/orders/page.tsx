@@ -4,7 +4,7 @@ import AddButton from '@/app/components/shared/buttons/AddButton';
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import TableSkeletonLoader from '@/app/components/spinner/TableSkeletonLoader';
 import OrdersTable from '@/app/components/tables/OrdersTable';
-import { useSetAdminData } from '@/app/hooks/useSetAdminData';
+import { useSetUserData } from '@/app/hooks/useSetUserData';
 import { useAppSelector } from '@/app/lib/hooks';
 import { useSession } from 'next-auth/react';
 
@@ -12,9 +12,9 @@ import { useSession } from 'next-auth/react';
 const AllOrders = () => {
   const { data: session } = useSession();
   //Get the Orders from the server
-  const { adminData:orders } = useAppSelector((state) => state.adminData);
+  const { userData: orders } = useAppSelector((state) => state.userData);
   // Enable Search Functionality
-  const { isLoading, refetch } = useSetAdminData('/orders');
+  const { isLoading, refetch } = useSetUserData('/orders');
   return (
     <div>
       <div className='flex gap-5 items-start justify-between'>

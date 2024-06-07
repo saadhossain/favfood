@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
-import adminDataReducer from './features/adminDataSlice'
 import { dataApiSlice } from './features/api/apiSlice'
 import cartReducer from './features/cartSlice'
 import commonFeaturesReducer from './features/commonFeaturesSlice'
 import foodReducer from './features/foodSlice'
 import searchReducer from './features/searchSlice'
+import userDataReducer from './features/userDataSlice'
 import wishlistReducer from './features/wishlistSlice'
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      adminData: adminDataReducer,
+      userData: userDataReducer,
       cart: cartReducer,
       wishlist: wishlistReducer,
       search: searchReducer,

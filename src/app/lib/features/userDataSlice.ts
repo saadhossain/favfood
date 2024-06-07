@@ -1,21 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface initialState {
-    adminData: any[];
+    userData: any[];
     initialData: any[];
 }
 
 const initialState = {
-    adminData: [],
+    userData: [],
     initialData: []
 }
 
-export const adminDataSlice = createSlice({
-    name: 'adminData',
+export const userDataSlice = createSlice({
+    name: 'userData',
     initialState,
     reducers: {
-        setAdminData: (state, action) => {
-            state.adminData = action.payload;
+        setUserData: (state, action) => {
+            state.userData = action.payload;
         },
         setInitialData: (state, action) => {
             state.initialData = action.payload;
@@ -23,5 +23,5 @@ export const adminDataSlice = createSlice({
     }
 })
 
-export const { setAdminData, setInitialData } = adminDataSlice.actions;
-export default adminDataSlice.reducer
+export const { setUserData, setInitialData } = userDataSlice.actions;
+export default userDataSlice.reducer

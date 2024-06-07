@@ -1,7 +1,7 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
-import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
+import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
 import { setOpenOrderEditModal } from '@/app/lib/features/commonFeaturesSlice';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
@@ -17,7 +17,7 @@ const EditOrderModal = () => {
     const { formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get Orders Data from server
-    const { data: orders, refetch } = useGetAdminDataQuery('/orders');
+    const { data: orders, refetch } = useGetDataQuery('/orders');
     const { openOrderEditModal, singleDataId } = useAppSelector((state) => state.commonFeatures)
     const dispatch = useAppDispatch();
     //GEt single order

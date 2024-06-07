@@ -1,7 +1,7 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
-import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
+import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
 import { setOpenAddReviewModal } from '@/app/lib/features/commonFeaturesSlice';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
@@ -19,7 +19,7 @@ const AddReviewModal = () => {
     const { data: session } = useSession();
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get Foods Data from server
-    const { data: orders } = useGetAdminDataQuery('/orders');
+    const { data: orders } = useGetDataQuery('/orders');
     const dispatch = useAppDispatch();
     const { openAddReviewModal, singleDataId } = useAppSelector((state) => state.commonFeatures);
 

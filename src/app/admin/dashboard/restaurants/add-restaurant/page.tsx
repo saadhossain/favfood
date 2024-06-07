@@ -3,7 +3,7 @@ import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
-import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
+import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { uploadImgToImgbb } from '@/app/utils/uploadImgToImgbb';
@@ -31,7 +31,7 @@ const AddRestaurant = () => {
         setSelectedCategories(selectedCategories || []);
     };
     //Get the refetch function from redux to update restaurant list after add new
-    const {refetch} = useGetAdminDataQuery('/restaurants');
+    const { refetch } = useGetDataQuery('/restaurants');
     //Get useHandleInputChange hook to handle input values
     const handleInputChange = useHandleInputChange();
     const handleAddRestaurant = async (e: FormEvent<HTMLFormElement>) => {

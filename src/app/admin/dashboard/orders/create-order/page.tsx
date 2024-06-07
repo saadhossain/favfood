@@ -2,7 +2,7 @@
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
-import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
+import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { FoodData, UserData } from '@/app/types/DataTypes';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
@@ -15,11 +15,11 @@ const CreateOrder = () => {
   const route = useRouter();
 
   //Get Foods Data from server
-  const { data: foods } = useGetAdminDataQuery('/foods');
+  const { data: foods } = useGetDataQuery('/foods');
 
-  const { refetch } = useGetAdminDataQuery('/orders');
+  const { refetch } = useGetDataQuery('/orders');
   //Get the Registered Users from the server
-  const { data: users } = useGetAdminDataQuery('/users');
+  const { data: users } = useGetDataQuery('/users');
   //Set the selected Restaurant to the state
   const [selectedFood, setSelectedFood] = useState<FoodData | any>(null);
   //Set the selected Restaurant to the state

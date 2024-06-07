@@ -1,7 +1,7 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
-import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
+import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
 import { setOpenEditReviewModal } from '@/app/lib/features/commonFeaturesSlice';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
@@ -17,7 +17,7 @@ const EditReviewModal = () => {
     const { formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get Reviews Data from server
-    const { data: reviews, refetch } = useGetAdminDataQuery('/reviews');
+    const { data: reviews, refetch } = useGetDataQuery('/reviews');
     const dispatch = useAppDispatch();
     const { singleDataId, openEditReviewModal } = useAppSelector((state) => state.commonFeatures)
     //GEt single Review

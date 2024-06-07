@@ -3,7 +3,7 @@ import SubHeading from '@/app/components/shared/headings/SubHeading';
 import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
-import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
+import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
 import { setShowPassword } from '@/app/lib/features/commonFeaturesSlice';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
@@ -20,7 +20,7 @@ const AddUser = () => {
     const route = useRouter();
 
     //Get the user refetch function from redux to update list after add new user
-    const { refetch } = useGetAdminDataQuery('/users')
+    const { refetch } = useGetDataQuery('/users')
     const dispatch = useAppDispatch();
     const { showPassword } = useAppSelector((state) => state.commonFeatures)
 
