@@ -4,6 +4,8 @@ import Processing from '@/app/components/spinner/Processing';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleInputChange } from '@/app/hooks/useHandleInputChange';
 import { useGetAdminDataQuery } from '@/app/lib/features/api/apiSlice';
+import { setShowPassword } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { uploadImgToImgbb } from '@/app/utils/uploadImgToImgbb';
@@ -13,12 +15,14 @@ import toast from 'react-hot-toast';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const AddUser = () => {
-    const { showPassword, setShowPassword, loading, setLoading, formData } = useContext(DataContext) as DataContextType;
+    const { loading, setLoading, formData } = useContext(DataContext) as DataContextType;
     const [error, setError] = useState('');
     const route = useRouter();
 
     //Get the user refetch function from redux to update list after add new user
-    const {refetch} = useGetAdminDataQuery('/users')
+    const { refetch } = useGetAdminDataQuery('/users')
+    const dispatch = useAppDispatch();
+    const { showPassword } = useAppSelector((state) => state.commonFeatures)
 
     //Get the useHandleInputChange hook to get all the input
     const handleInputChange = useHandleInputChange();
@@ -103,7 +107,7 @@ const AddUser = () => {
                         />
                         {/* Eye button for hide and show password */}
                         <div
-                            onClick={() => setShowPassword(!showPassword)}
+                            onClick={() => dispatch(setShowPassword())}
                             className='cursor-pointer absolute top-9 right-2'
                         >
                             {

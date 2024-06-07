@@ -5,18 +5,23 @@ import Link from 'next/link';
 import { redirect, useSearchParams } from 'next/navigation';
 import { FormEvent, Suspense, useContext, useEffect } from 'react';
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
+import LoadingSpinner from '../components/spinner/LoadingSpinner';
 import Processing from '../components/spinner/Processing';
 import { DataContext } from '../context/DataContext';
+import { setShowPassword } from '../lib/features/commonFeaturesSlice';
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import { DataContextType } from '../types/DataContextTypes';
 import LoginBg from '/public/login-bg.jpg';
-import LoadingSpinner from '../components/spinner/LoadingSpinner';
 const LoginPage = () => {
     const { data: session } = useSession();
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get('callbackUrl');
     const redirectEndpoint = callbackUrl?.split('3000')[1];
     // State for processing status
-    const { showPassword, setShowPassword, loading, setLoading } = useContext(DataContext) as DataContextType;
+    const { loading, setLoading } = useContext(DataContext) as DataContextType;
+
+    const dispatch = useAppDispatch();
+    const { showPassword } = useAppSelector((state) => state.commonFeatures)
 
     // Handle login form submission
     const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
@@ -46,7 +51,7 @@ const LoginPage = () => {
             } else {
                 if (session?.user.role === 'admin') {
                     redirect('/admin/dashboard');
-                }else{
+                } else {
                     redirect('/account');
                 }
             }
@@ -72,7 +77,7 @@ const LoginPage = () => {
                                 <Link href="/login" className="text-md hover:text-primary">Forgot password?</Link>
                             </div>
                             <input type={`${showPassword ? 'password' : 'text'}`} name="password" id="password" placeholder="***********" className="w-full px-3 py-2 rounded-md bg-gray-300 text-gray-900 focus:outline-none" />
-                            <div onClick={() => setShowPassword(!showPassword)} className='cursor-pointer absolute top-11 right-2'>
+                            <div onClick={() => dispatch(setShowPassword())} className='cursor-pointer absolute top-11 right-2'>
                                 {showPassword ? <FaEye /> : <FaEyeSlash />}
                             </div>
                         </div>
@@ -101,9 +106,9 @@ const LoginPage = () => {
 // export default LoginPage;
 
 const LoginPageWrapper = () => (
-    <Suspense fallback={<LoadingSpinner/>}>
-      <LoginPage />
+    <Suspense fallback={<LoadingSpinner />}>
+        <LoginPage />
     </Suspense>
-  );
-  
-  export default LoginPageWrapper;
+);
+
+export default LoginPageWrapper;

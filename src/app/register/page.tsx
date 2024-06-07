@@ -9,13 +9,17 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Processing from '../components/spinner/Processing';
 import { DataContext } from '../context/DataContext';
 import { useHandleInputChange } from '../hooks/useHandleInputChange';
+import { setShowPassword } from '../lib/features/commonFeaturesSlice';
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import { DataContextType } from '../types/DataContextTypes';
 import { saveToDatabase } from '../utils/saveToDatabase';
 import { uploadImgToImgbb } from '../utils/uploadImgToImgbb';
 import LoginBg from '/public/login-bg.jpg';
 
 const RegisterPage = () => {
-    const { showPassword, setShowPassword, loading, setLoading, formData } = useContext(DataContext) as DataContextType;
+    const { loading, setLoading, formData } = useContext(DataContext) as DataContextType;
+    const dispatch = useAppDispatch();
+    const { showPassword } = useAppSelector((state) => state.commonFeatures)
     const { data: session } = useSession();
     const [error, setError] = useState('');
     //Get the useHandleInputChange hook to get all the input
@@ -112,7 +116,7 @@ const RegisterPage = () => {
                             />
                             {/* Eye button for hide and show password */}
                             <div
-                                onClick={() => setShowPassword(!showPassword)}
+                                onClick={() => dispatch(setShowPassword())}
                                 className='cursor-pointer absolute top-9 right-2'
                             >
                                 {

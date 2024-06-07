@@ -4,7 +4,6 @@ import { dataApiSlice } from './features/api/apiSlice'
 import cartReducer from './features/cartSlice'
 import commonFeaturesReducer from './features/commonFeaturesSlice'
 import foodReducer from './features/foodSlice'
-import formReducer from './features/formSlice'
 import searchReducer from './features/searchSlice'
 import wishlistReducer from './features/wishlistSlice'
 
@@ -16,7 +15,6 @@ export const makeStore = () => {
       wishlist: wishlistReducer,
       search: searchReducer,
       food: foodReducer,
-      form: formReducer,
       commonFeatures: commonFeaturesReducer,
       [dataApiSlice.reducerPath]: dataApiSlice.reducer,
     },
