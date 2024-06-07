@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from 'react';
-import { FoodData } from './DataTypes';
 
 export interface DataContextType {
     loading: boolean;
@@ -10,12 +9,6 @@ export interface DataContextType {
     setTabQuery: Dispatch<SetStateAction<string>>;
     paymentMethod: string;
     setPaymentMethod: Dispatch<SetStateAction<string>>;
-    searchedFoods: [] | any;
-    setSearchedFoods: Dispatch<SetStateAction<[] | any>>;
-    searchText: FoodData[] | any;
-    setSearchText: Dispatch<SetStateAction<FoodData[] | any>>;
-    isSearchModalOpen: boolean;
-    setIsSearchModalOpen: Dispatch<SetStateAction<boolean>>;
     openAddressBoxModal: boolean;
     setOpenAddressBoxModal: Dispatch<SetStateAction<boolean>>;
     showPassword: boolean;

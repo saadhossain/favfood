@@ -1,13 +1,11 @@
 'use client'
 import SubHeading from '@/app/components/shared/headings/SubHeading'
 import SearchedFoodCard from '@/app/components/ui/searchPage/SearchedFoodCard'
-import { DataContext } from '@/app/context/DataContext'
-import { DataContextType } from '@/app/types/DataContextTypes'
+import { useAppSelector } from '@/app/lib/hooks'
 import { FoodData } from '@/app/types/DataTypes'
-import { useContext } from 'react'
 
 const FoodSearch = () => {
-    const { searchedFoods, searchText } = useContext(DataContext) as DataContextType;
+    const { searchText, searchedFoods } = useAppSelector((state) => state.search);
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-2 md:my-5'>
             {
