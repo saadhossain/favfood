@@ -15,8 +15,7 @@ const EditOrderModal = () => {
     const { openOrderEditModal, setOpenOrderEditModal, singleDataId, formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get Orders Data from server
-    const { data, refetch } = useGetAdminDataQuery('/orders');
-    const orders = data?.result;
+    const { data:orders, refetch } = useGetAdminDataQuery('/orders');
 
     //GEt single order
     const [singleOrder, setSingleOrder] = useState<OrderDataType>();

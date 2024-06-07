@@ -1,6 +1,6 @@
 'use client';
 import toast from 'react-hot-toast';
-import { setWishlistCount } from '../lib/features/wishlist/wishlistSlice';
+import { setWishlistCount } from '../lib/features/wishlistSlice';
 import { useAppDispatch } from '../lib/hooks';
 import { WishlistData } from '../types/DataTypes';
 

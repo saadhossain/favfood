@@ -6,8 +6,7 @@ import { DataContextType } from '../types/DataContextTypes';
 import { CartDataType, FoodData } from '../types/DataTypes';
 //Get the matched products in the localStorage
 export const getProductsInWishlist = () => {
-    const { data } = useGetDataQuery('/foods');
-    const foods = data?.result;
+    const { data:foods } = useGetDataQuery('/foods');
     const { wishlistProducts } = useContext(DataContext) as DataContextType;
     return wishlistProducts?.map((item: CartDataType) => {
         const foundProduct = foods?.find((food: FoodData) => food._id === item.productId);

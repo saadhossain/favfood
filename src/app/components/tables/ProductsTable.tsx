@@ -1,5 +1,5 @@
 'use client';
-import { setCartCount } from '@/app/lib/features/cart/cartSlice';
+import { setCartCount } from '@/app/lib/features/cartSlice';
 import { useAppDispatch } from '@/app/lib/hooks';
 import { CartDataType } from '@/app/types/DataTypes';
 import Image from 'next/image';

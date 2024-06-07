@@ -15,8 +15,7 @@ interface Props {
 const page = ({ params }: Props) => {
   const { loading } = useContext(DataContext) as DataContextType;
   const restaurantName = decodeURIComponent(params.restaurantName);
-  const {data} = useGetDataQuery('/foods');
-  const foods = data?.result;
+  const {data:foods} = useGetDataQuery('/foods');
   const restaurantFoods = foods?.filter((food: FoodData) => food.restaurant.toLocaleLowerCase() === restaurantName);
   if (loading) {
     return <ProductLoader />;

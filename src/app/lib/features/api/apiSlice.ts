@@ -1,4 +1,4 @@
-import { AdminDataType, FetchedDataType } from '@/app/types/DataTypes';
+import { FoodData, RestaurantData } from '@/app/types/DataTypes';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // Define a service using a base URL and expected endpoints
@@ -6,21 +6,25 @@ export const dataApiSlice = createApi({
     reducerPath: 'dataApi',
     baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
     endpoints: (builder) => ({
-        getAdminData: builder.query<AdminDataType, any>({
+        getAdminData: builder.query<[], any>({
             query: (endpint) => `${endpint}`,
-            transformResponse: (res:any) => res.result,
+            transformResponse: (res: any) => res.result
         }),
-        getData: builder.query<FetchedDataType, any>({
+        getData: builder.query<[], any>({
             query: (endpint) => `${endpint}`,
+            transformResponse: (res: any) => res.result
         }),
-        getSingleFood: builder.query<FetchedDataType, any>({
-            query: (endpoint) => `${endpoint}`
+        getSingleFood: builder.query<FoodData, any>({
+            query: (endpoint) => `${endpoint}`,
+            transformResponse: (res: any) => res.result[0]
         }),
-        getSingleRestaurant: builder.query<FetchedDataType, any>({
-            query: (endpoint) => `${endpoint}`
+        getSingleRestaurant: builder.query<RestaurantData, any>({
+            query: (endpoint) => `${endpoint}`,
+            transformResponse: (res: any) => res.result[0]
         }),
-        getUsersData: builder.query<FetchedDataType, any>({
-            query: (endpoint) => `${endpoint}`
+        getUsersData: builder.query<[], any>({
+            query: (endpoint) => `${endpoint}`,
+            transformResponse: (res: any) => res.result
         }),
     }),
 })

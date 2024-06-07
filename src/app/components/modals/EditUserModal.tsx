@@ -16,8 +16,7 @@ const EditUserModal = () => {
     const { openUserEditModal, setOpenUserEditModal, singleDataId, showPassword, setShowPassword, formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get Reviews Data from server
-    const { data, refetch } = useGetAdminDataQuery('/users');
-    const users = data?.result;
+    const { data:users, refetch } = useGetAdminDataQuery('/users');
 
     //GEt single order
     const [singleUser, setSingleUser] = useState<UserData>();

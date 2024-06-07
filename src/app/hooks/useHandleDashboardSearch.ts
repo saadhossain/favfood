@@ -1,5 +1,5 @@
 'use client'
-import { setAdminData } from '../lib/features/adminData/adminDataSlice';
+import { setAdminData } from '../lib/features/adminDataSlice';
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
 
 export const useHandleDashboardSearch = () => {

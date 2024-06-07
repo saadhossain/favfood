@@ -14,7 +14,7 @@ import { MdOutlineRateReview } from "react-icons/md";
 import { TbProgressCheck, TbShoppingBagEdit } from "react-icons/tb";
 import { TiDelete } from "react-icons/ti";
 
-const OrdersTable = ({ orders, refetch }: { orders: OrderDataType[], refetch: any }) => {
+const OrdersTable = ({ orders, refetch }: { orders: OrderDataType[] | any, refetch: any }) => {
     const { openOrderEditModal, setOpenOrderEditModal, setSingleDataId, openAddReviewModal, setOpenAddReviewModal } = useContext(DataContext) as DataContextType;
     const { data: session } = useSession();
     const handleCancelOrder = async (orderId: string | undefined, orderStatus: string) => {

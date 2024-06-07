@@ -115,12 +115,3 @@ export interface ReviewData {
     userProfileImage: string,
     addedOn: string
 }
-
-export interface AdminDataType {
-   map(arg0: (restaurant: any) => import("react").JSX.Element): import("react").ReactNode;
-   result: [] | any
-}
-
-export interface FetchedDataType {
-    result: [] | any;
-}

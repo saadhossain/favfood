@@ -14,8 +14,7 @@ type Props = {
 
 const SingleFoodReviews = ({ params }: Props) => {
   //Get the Restaurant Reviews from the Server
-  const { data, isLoading } = useGetDataQuery(`/reviews/restaurantsReview?id=${params.id}`)
-  const reviews = data?.result;
+  const { data:reviews, isLoading } = useGetDataQuery(`/reviews/restaurantsReview?id=${params.id}`)
 
   if (isLoading) {
     return <LoadingSpinner />;

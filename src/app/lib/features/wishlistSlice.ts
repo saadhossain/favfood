@@ -4,8 +4,11 @@ export interface initialState {
     wishlistCount: number
 }
 const getWishlistLength = () => {
-    const wishlist = localStorage.getItem('favFoodWishlist');
-    return wishlist ? JSON.parse(wishlist).length : 0;
+    if (typeof window !== "undefined") {
+        const wishlist = localStorage.getItem('favFoodWishlist');
+        return wishlist ? JSON.parse(wishlist).length : 0;
+    }
+    return 0
 }
 
 const initialState: initialState = {

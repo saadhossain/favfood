@@ -4,7 +4,7 @@ import ReviewCard from '@/app/components/ui/reviews/ReviewCard';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
 import { useGetDataQuery, useGetSingleFoodQuery } from '@/app/lib/features/api/apiSlice';
-import { ReviewData } from '@/app/types/DataTypes';
+import { FoodData, ReviewData } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
@@ -17,13 +17,12 @@ interface paramsTypes {
 
 const FoodSinglePage = ({ params }: { params: paramsTypes }) => {
   //Get the Single food from ther server
-  const { data: foodData } = useGetSingleFoodQuery(`/foods/single?restaurant=${params.restaurant}&slug=${params.slug}`)
-  const singleFood = foodData?.result[0];
+  const { data } = useGetSingleFoodQuery(`/foods/single?restaurant=${params.restaurant}&slug=${params.slug}`)
+  const singleFood: FoodData | any = data;
   const handleAddToCart = useHandleAddToCart();
   const handleAddToWishlist = useHandleAddToWishlist();
   //Get the Foods Reviews from the Server
-  const { data, isLoading } = useGetDataQuery(`/reviews/foodsReview?id=${singleFood?._id}`)
-  const reviews = data?.result;
+  const { data: reviews, isLoading } = useGetDataQuery(`/reviews/foodsReview?id=${singleFood?._id}`);
 
   if (isLoading) {
     return <LoadingSpinner />;

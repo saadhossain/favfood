@@ -6,13 +6,12 @@ import { useGetUsersDataQuery } from '@/app/lib/features/api/apiSlice';
 import { useSession } from 'next-auth/react';
 const Orders = () => {
   const { data: session } = useSession();
-  const { data, refetch, isLoading } = useGetUsersDataQuery(`/orders/user/?userId=${session?.user._id}`);
-  const userOrders = data?.result;
+  const { data:orders, refetch, isLoading } = useGetUsersDataQuery(`/orders/user/?userId=${session?.user._id}`);
   return (
     <div>
       <SubHeading heading={'Orders'} />
       {
-        (isLoading || !session) ? <TableSkeletonLoader /> : <OrdersTable orders={userOrders} refetch={refetch} />
+        (isLoading || !session) ? <TableSkeletonLoader /> : <OrdersTable orders={orders} refetch={refetch} />
       }
     </div>
   )

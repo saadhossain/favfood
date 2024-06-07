@@ -17,8 +17,7 @@ const AddReviewModal = () => {
     const { data: session } = useSession();
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get Foods Data from server
-    const { data } = useGetAdminDataQuery('/orders');
-    const orders = data?.result;
+    const { data:orders } = useGetAdminDataQuery('/orders');
 
     //GEt single order
     const [singleOrder, setSingleOrder] = useState<OrderDataType>();

@@ -15,8 +15,7 @@ const EditReviewModal = () => {
     const { openEditReviewModal, setOpenEditReviewModal, singleDataId, formData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get Reviews Data from server
-    const { data, refetch } = useGetAdminDataQuery('/reviews');
-    const reviews = data?.result;
+    const { data:reviews, refetch } = useGetAdminDataQuery('/reviews');
     //GEt single Review
     const [singleReview, setSingleReview] = useState<ReviewData>();
     useEffect(() => {

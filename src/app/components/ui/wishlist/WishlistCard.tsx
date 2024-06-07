@@ -1,7 +1,7 @@
 'use client';
 import { DataContext } from '@/app/context/DataContext';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
-import { setWishlistCount } from '@/app/lib/features/wishlist/wishlistSlice';
+import { setWishlistCount } from '@/app/lib/features/wishlistSlice';
 import { useAppDispatch } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
 import { CartDataType, FoodData } from '@/app/types/DataTypes';

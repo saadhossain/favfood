@@ -1,6 +1,6 @@
 'use client';
 import { ReactNode, createContext, useEffect, useState } from 'react';
-import { setCartCount } from '../lib/features/cart/cartSlice';
+import { setCartCount } from '../lib/features/cartSlice';
 import { useAppDispatch } from '../lib/hooks';
 import { DataContextType } from '../types/DataContextTypes';
 

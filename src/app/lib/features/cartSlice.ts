@@ -5,8 +5,11 @@ export interface initialState {
 }
 
 const getCartLength = () => {
-    const cart = localStorage.getItem('favFoodCart');
-    return cart ? JSON.parse(cart).length : 0;
+    if(typeof window !== "undefined"){
+        const cart = localStorage.getItem('favFoodCart');
+        return cart ? JSON.parse(cart).length : 0;
+    }
+    return 0;
 }
 
 const initialState: initialState = {

@@ -2,6 +2,7 @@
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import { RestaurantCard } from '@/app/components/ui/restaurant/RestaurantCard';
 import { useGetSingleRestaurantQuery } from '@/app/lib/features/api/apiSlice';
+import { RestaurantData } from '@/app/types/DataTypes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ReactNode } from 'react';
@@ -13,7 +14,7 @@ interface LayoutProps {
 
 const SingleRestaurantLayout: React.FC<LayoutProps> = ({ children, params }) => {
     const { data } = useGetSingleRestaurantQuery(`/restaurants/single?name=${params.restaurantName}`);
-    const singleRestaurant = data?.result[0];
+    const singleRestaurant:RestaurantData | any = data;
     const activePath = usePathname();
     if (!singleRestaurant?._id) {
         return <LoadingSpinner />

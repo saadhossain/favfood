@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import adminDataReducer from './features/adminData/adminDataSlice'
+import adminDataReducer from './features/adminDataSlice'
 import { dataApiSlice } from './features/api/apiSlice'
-import cartReducer from './features/cart/cartSlice'
-import wishlistReducer from './features/wishlist/wishlistSlice'
+import cartReducer from './features/cartSlice'
+import wishlistReducer from './features/wishlistSlice'
 
 export const makeStore = () => {
   return configureStore({

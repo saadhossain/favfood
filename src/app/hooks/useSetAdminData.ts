@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react';
-import { setAdminData, setInitialData } from '../lib/features/adminData/adminDataSlice';
+import { setAdminData, setInitialData } from '../lib/features/adminDataSlice';
 import { useGetAdminDataQuery } from '../lib/features/api/apiSlice';
 import { useAppDispatch } from '../lib/hooks';
 
