@@ -1,17 +1,18 @@
 'use client';
+import Link from 'next/link';
 import { useContext } from 'react';
 import Heading from '../components/shared/headings/Heading';
 import TableSkeletonLoader from '../components/spinner/TableSkeletonLoader';
 import WishlistCard from '../components/ui/wishlist/WishlistCard';
 import { DataContext } from '../context/DataContext';
+import { setWishlistProducts } from '../lib/features/wishlistSlice';
 import { DataContextType } from '../types/DataContextTypes';
 import { FoodData } from '../types/DataTypes';
 import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';
 import { getProductsInWishlist } from '../utils/getProductsInWishlist';
-import Link from 'next/link';
 
 const Wishlist = () => {
-    const { loading, setWishlistProducts } = useContext(DataContext) as DataContextType;
+    const { loading } = useContext(DataContext) as DataContextType;
     // Get products from localstorage and set them to setWishlistInLocalStorage state
     getDataFromLocalStorage('favFoodWishlist', setWishlistProducts);
     //Get all wishlist products in the cart
@@ -25,7 +26,7 @@ const Wishlist = () => {
                     (loading) ? <TableSkeletonLoader /> :
                         <div className='rounded-md grid grid-cols-2 md:block gap-2 md:gap-0'>
                             {
-                                productsInWishlist?.map((product: FoodData) => <WishlistCard key={product?._id} product={product} />)
+                                productsInWishlist?.map((product: FoodData | any) => <WishlistCard key={product?._id} product={product} />)
                             }
                         </div>
                 }

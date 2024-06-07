@@ -48,7 +48,7 @@ export interface SessionData {
 
 export interface CartDataType {
     productId: string;
-    quantity: number;
+    quantity?: number;
 }
 
 export interface WishlistData {

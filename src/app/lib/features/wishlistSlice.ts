@@ -1,7 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export interface ProdType {
+    productId: string;
+}
 export interface initialState {
-    wishlistCount: number
+    wishlistCount: number,
+    wishlistProducts: ProdType[];
 }
 const getWishlistLength = () => {
     if (typeof window !== "undefined") {
@@ -13,6 +17,7 @@ const getWishlistLength = () => {
 
 const initialState: initialState = {
     wishlistCount: getWishlistLength(),
+    wishlistProducts: []
 }
 
 export const wishlistSlice = createSlice({
@@ -21,9 +26,12 @@ export const wishlistSlice = createSlice({
     reducers: {
         setWishlistCount: (state, action) => {
             state.wishlistCount = action.payload;
+        },
+        setWishlistProducts: (state, action) => {
+            state.wishlistProducts = action.payload;
         }
     }
 })
 
-export const { setWishlistCount } = wishlistSlice.actions;
+export const { setWishlistCount, setWishlistProducts } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

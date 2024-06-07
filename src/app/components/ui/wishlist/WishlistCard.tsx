@@ -1,20 +1,16 @@
 'use client';
-import { DataContext } from '@/app/context/DataContext';
 import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
-import { setWishlistCount } from '@/app/lib/features/wishlistSlice';
+import { setWishlistCount, setWishlistProducts } from '@/app/lib/features/wishlistSlice';
 import { useAppDispatch } from '@/app/lib/hooks';
-import { DataContextType } from '@/app/types/DataContextTypes';
 import { CartDataType, FoodData } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { FaCheckCircle } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 
 const WishlistCard = ({ product }: { product: FoodData }) => {
     const dispatch = useAppDispatch();
-    const { setWishlistProducts } = useContext(DataContext) as DataContextType;
     const handleAddToCart = useHandleAddToCart();
 
     const handleRemoveProductFromWishlist = (id: string) => {
@@ -27,8 +23,8 @@ const WishlistCard = ({ product }: { product: FoodData }) => {
         // if (updatedProducts.length <= 0) {
         //     localStorage.removeItem('favFoodWishlist');
         // }
-        setWishlistProducts(updatedProducts);
-        dispatch(setWishlistCount(updatedProducts.length))
+        dispatch(setWishlistProducts(updatedProducts));
+        dispatch(setWishlistCount(updatedProducts.length));
         toast.error('Food removed from Wishlist.');
     };
     return (

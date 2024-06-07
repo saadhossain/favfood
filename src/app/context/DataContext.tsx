@@ -12,9 +12,6 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //Set fetched food data to the state
     const [foods, setFoods] = useState([]);
     const [tabQuery, setTabQuery] = useState('all-food');
-    //Set the wishlist product to the state from localStorage
-    const [wishlistProducts, setWishlistProducts] = useState();
-
     //Get the payment method
     const [paymentMethod, setPaymentMethod] = useState('');
 
@@ -61,7 +58,7 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //Set the FormData to the State as object when input changes
     const [formData, setFormData] = useState<any>({});
 
-    const allData = { loading, setLoading, foods, setFoods, tabQuery, setTabQuery, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData, openAddReviewModal, setOpenAddReviewModal, openEditReviewModal, setOpenEditReviewModal };
+    const allData = { loading, setLoading, foods, setFoods, tabQuery, setTabQuery, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData, openAddReviewModal, setOpenAddReviewModal, openEditReviewModal, setOpenEditReviewModal };
     return (
         <div>
             <DataContext.Provider value={allData}>
