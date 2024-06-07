@@ -1,6 +1,6 @@
 'use client';
 import { ReactNode, createContext, useEffect, useState } from 'react';
-import { setCartCount } from '../lib/features/cartSlice';
+import { setCartCount, setCartProducts } from '../lib/features/cartSlice';
 import { useAppDispatch } from '../lib/hooks';
 import { DataContextType } from '../types/DataContextTypes';
 
@@ -12,8 +12,6 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //Set fetched food data to the state
     const [foods, setFoods] = useState([]);
     const [tabQuery, setTabQuery] = useState('all-food');
-    //Set the product to the state from localStorage
-    const [cartProducts, setCartProducts] = useState([]);
     //Set the wishlist product to the state from localStorage
     const [wishlistProducts, setWishlistProducts] = useState();
 
@@ -25,7 +23,7 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //Update the cart products and cart count based on order confirmation
     useEffect(() => {
         if (isOrderConfirm) {
-            setCartProducts([]);
+            dispatch(setCartProducts([]));
             dispatch(setCartCount(0))
         }
     }, [isOrderConfirm]);
@@ -63,7 +61,7 @@ const DataProvider = ({ children }: { children: ReactNode }) => {
     //Set the FormData to the State as object when input changes
     const [formData, setFormData] = useState<any>({});
 
-    const allData = { loading, setLoading, foods, setFoods, tabQuery, setTabQuery, cartProducts, setCartProducts, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData, openAddReviewModal, setOpenAddReviewModal, openEditReviewModal, setOpenEditReviewModal };
+    const allData = { loading, setLoading, foods, setFoods, tabQuery, setTabQuery, wishlistProducts, setWishlistProducts, paymentMethod, setPaymentMethod, isOrderConfirm, setIsOrderConfirm, searchedFoods, setSearchedFoods, searchText, setSearchText, isSearchModalOpen, setIsSearchModalOpen, openAddressBoxModal, setOpenAddressBoxModal, showPassword, setShowPassword, openOrderEditModal, setOpenOrderEditModal, singleDataId, setSingleDataId, openUserEditModal, setOpenUserEditModal, formData, setFormData, openAddReviewModal, setOpenAddReviewModal, openEditReviewModal, setOpenEditReviewModal };
     return (
         <div>
             <DataContext.Provider value={allData}>

@@ -1,19 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface initialState {
+export interface ProdType {
+    productId: string;
+    quantity: number;
+}
+
+export interface InitialStateType {
     cartCount: number;
+    cartProducts: ProdType[];
 }
 
 const getCartLength = () => {
-    if(typeof window !== "undefined"){
+    if (typeof window !== "undefined") {
         const cart = localStorage.getItem('favFoodCart');
         return cart ? JSON.parse(cart).length : 0;
     }
     return 0;
 }
 
-const initialState: initialState = {
+const initialState: InitialStateType = {
     cartCount: getCartLength(),
+    cartProducts: []
 }
 export const cartSlice = createSlice({
     name: 'cart',
@@ -21,9 +28,12 @@ export const cartSlice = createSlice({
     reducers: {
         setCartCount: (state, action) => {
             state.cartCount = action.payload;
-        }
+        },
+        setCartProducts: (state, action) => {
+            state.cartProducts = action.payload;
+        },
     }
 })
 
-export const { setCartCount } = cartSlice.actions;
+export const { setCartCount, setCartProducts } = cartSlice.actions;
 export default cartSlice.reducer;

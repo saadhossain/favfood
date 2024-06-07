@@ -11,9 +11,10 @@ import { getTotalPrice } from '../utils/getTotalPrice';
 import Heading from '../components/shared/headings/Heading';
 import SubHeading from '../components/shared/headings/SubHeading';
 import TableSkeletonLoader from '../components/spinner/TableSkeletonLoader';
+import { setCartProducts } from '../lib/features/cartSlice';
 
 const CartPage = () => {
-    const { loading, setCartProducts } = useContext(DataContext) as DataContextType;
+    const { loading } = useContext(DataContext) as DataContextType;
     // Get products from localstorage and set them to setProductsInLocalStorage state
     getDataFromLocalStorage('favFoodCart', setCartProducts);
 

@@ -26,7 +26,7 @@ const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: an
             if (productInLocalStorage[existingProduct].quantity + change > 0) {
                 productInLocalStorage[existingProduct].quantity += change;
                 localStorage.setItem('favFoodCart', JSON.stringify(productInLocalStorage));
-                setCartProducts(productInLocalStorage);
+                dispatch(setCartProducts(productInLocalStorage))
             }
         }
     };
@@ -41,7 +41,7 @@ const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: an
         // if (updatedProducts.length <= 0) {
         //     localStorage.removeItem('favFoodCart');
         // }
-        setCartProducts(updatedProducts);
+        dispatch(setCartProducts(updatedProducts))
         dispatch(setCartCount(updatedProducts.length))
         toast.error('Food removed from cart.');
     };

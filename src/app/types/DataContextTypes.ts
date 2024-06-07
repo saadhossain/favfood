@@ -8,8 +8,6 @@ export interface DataContextType {
     setFoods: Dispatch<SetStateAction<[] | any>>;
     tabQuery: string;
     setTabQuery: Dispatch<SetStateAction<string>>;
-    cartProducts: [] | any;
-    setCartProducts: Dispatch<SetStateAction<[] | any>>;
     wishlistProducts: [] | any;
     setWishlistProducts: Dispatch<SetStateAction<[] | any>>;
     paymentMethod: string;

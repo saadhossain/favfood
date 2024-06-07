@@ -11,10 +11,11 @@ import { DataContextType } from '../types/DataContextTypes';
 import { SessionData } from '../types/DataTypes';
 import { getDataFromLocalStorage } from '../utils/getDataFromLocalStorage';
 import { getTotalPrice } from '../utils/getTotalPrice';
+import { setCartProducts } from '../lib/features/cartSlice';
 
 const CheckoutPage = () => {
     const { data: session } = useSession<SessionData | any>();
-    const { setCartProducts, setOpenAddressBoxModal } = useContext(DataContext) as DataContextType;
+    const { setOpenAddressBoxModal } = useContext(DataContext) as DataContextType;
     // Get products from localstorage and set them to setProductsInLocalStorage state
     getDataFromLocalStorage('favFoodCart', setCartProducts);
     //Calculate total price of all product in the cart
