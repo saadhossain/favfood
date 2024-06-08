@@ -8,7 +8,8 @@ export interface initialState {
     openUserEditModal: boolean,
     openAddReviewModal: boolean,
     openEditReviewModal: boolean,
-    singleDataId: string
+    singleDataId: string,
+    openEditFoodModal: boolean,
 
 }
 
@@ -20,7 +21,8 @@ const initialState = {
     openUserEditModal: false,
     openAddReviewModal: false,
     openEditReviewModal: false,
-    singleDataId: ''
+    singleDataId: '',
+    openEditFoodModal: false,
 }
 
 export const commonFeaturesSlice = createSlice({
@@ -50,10 +52,13 @@ export const commonFeaturesSlice = createSlice({
         },
         setSingleDataId: (state, action) => {
             state.singleDataId = action.payload
+        },
+        setOpenEditFoodModal: (state) => {
+            state.openEditFoodModal = !state.openEditFoodModal
         }
     }
 })
 
-export const { setPaymentMethod, setShowPassword, setOpenAddressBoxModal, setOpenOrderEditModal, setOpenUserEditModal, setOpenAddReviewModal, setOpenEditReviewModal, setSingleDataId } = commonFeaturesSlice.actions;
+export const { setPaymentMethod, setShowPassword, setOpenAddressBoxModal, setOpenOrderEditModal, setOpenUserEditModal, setOpenAddReviewModal, setOpenEditReviewModal, setSingleDataId, setOpenEditFoodModal } = commonFeaturesSlice.actions;
 
 export default commonFeaturesSlice.reducer;

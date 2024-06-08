@@ -1,4 +1,5 @@
-import { FoodData } from '@/app/types/DataTypes';
+import { setOpenEditFoodModal, setSingleDataId } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch } from '@/app/lib/hooks';
 import Image from 'next/image';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const FoodsTable = ({ foods, refetch }: Props) => {
+    const dispatch = useAppDispatch();
     const handleDeleteFood = async (foodId: string) => {
         const isConfirmed = window.confirm('Do you want to Delete this Food?');
         if (isConfirmed) {
@@ -69,10 +71,14 @@ const FoodsTable = ({ foods, refetch }: Props) => {
                                                 <div className='flex gap-1 items-center justify-center'>
                                                     <TiDelete
                                                         onClick={() => handleDeleteFood(food._id)}
-                                                        className='w-8 h-8 cursor-pointer text-red-500' title='Delete User'
+                                                        className='w-8 h-8 cursor-pointer text-red-500' title='Delete Food'
                                                     />
                                                     <TbEdit
-                                                        className='w-6 h-6 cursor-pointer text-green-600' title='Edit User'
+                                                        className='w-6 h-6 cursor-pointer text-green-600' title='Edit Food'
+                                                        onClick={() => {
+                                                            dispatch(setOpenEditFoodModal())
+                                                            dispatch(setSingleDataId(food._id))
+                                                        }}
                                                     />
                                                 </div>
                                             </th>

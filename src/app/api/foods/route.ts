@@ -46,6 +46,17 @@ export const POST = async (request: NextRequest) => {
     return NextResponse.json({ status: true, result });
 };
 
+export const PATCH = async (request: NextRequest) => {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    const payload = await request.json();
+    //Connect to database
+    await mongoose.connect(mongoUrl);
+    //Update the Food
+    const result = await foodSchema.updateOne({ _id: id }, { $set: payload });
+    return NextResponse.json({ status: true, result });
+}
+
 
 export const DELETE = async (request: NextRequest) => {
     const { searchParams } = new URL(request.url);

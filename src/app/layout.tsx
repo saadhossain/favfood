@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import AddAddressModal from './components/modals/AddAddressModal';
 import AddReviewModal from './components/modals/AddReviewModal';
+import EditFoodModal from './components/modals/EditFoodModal';
 import EditOrderModal from './components/modals/EditOrderModal';
 import EditReviewModal from './components/modals/EditReviewModal';
 import EditUserModal from './components/modals/EditUserModal';
@@ -51,6 +52,7 @@ export default function RootLayout({
               <EditUserModal />
               <AddReviewModal />
               <EditReviewModal />
+              <EditFoodModal />
             </DataProvider>
           </AuthProvider>
           <Toaster />
