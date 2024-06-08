@@ -80,9 +80,12 @@ const EditFoodModal = () => {
                                         </div>
                                         <div className='w-full md:w-1/5'>
                                             <label htmlFor="price" className="font-semibold block mb-2 text-sm">Price</label>
-                                            <input type="text" name="price" id="price" className={`${inputStyle}`} defaultValue={singleFood?.price}
-                                                onChange={handleInputChange}
-                                            />
+                                            <div className='w-full px-2 flex items-center rounded-md bg-gray-300 text-gray-900'>
+                                                <span className='font-semibold'>$</span>
+                                                <input type="text" name="price" id="price" className={`${inputStyle}`} defaultValue={singleFood?.price}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     {/* Category, Restaurant Name */}
@@ -124,12 +127,15 @@ const EditFoodModal = () => {
                                             </select>
                                         </div>
                                         <div className='w-full md:w-1/5'>
-                                            <label htmlFor="discountPercentage" className="font-semibold block mb-2 text-sm">Discount</label>
-                                            <input type="text" name="discountPercentage" id="discountPercentage"
-                                                className={`${inputStyle}`}
-                                                defaultValue={singleFood?.discountPercentage}
-                                                onChange={handleInputChange}
-                                            />
+                                            <label htmlFor="discountPercentage" className="font-semibold block mb-2 text-sm">Discount %</label>
+                                            <div className='w-full px-2 flex items-center rounded-md bg-gray-300 text-gray-900'>
+                                                <span className='font-semibold'>%</span>
+                                                <input type="text" name="discountPercentage" id="discountPercentage"
+                                                    className={`${inputStyle}`}
+                                                    defaultValue={singleFood?.discountPercentage}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div>
