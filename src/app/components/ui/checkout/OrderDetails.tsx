@@ -1,5 +1,6 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
+import { useSetUserData } from '@/app/hooks/useSetUserData';
 import { setCartCount, setCartProducts } from '@/app/lib/features/cartSlice';
 import { setPaymentMethod } from '@/app/lib/features/commonFeaturesSlice';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
@@ -21,9 +22,11 @@ import stripe from '/public/stripe-payment.png';
 const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
 const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
+    const { data: session } = useSession();
     //Get the necessary states from datacontext
     const { loading, setLoading } = useContext(DataContext) as DataContextType;
     const dispatch = useAppDispatch();
+    const { refetch } = useSetUserData(`/orders/user/?userId=${session?.user._id}`);
     const { paymentMethod } = useAppSelector((state) => state.commonFeatures)
     const taxAmount = (totalPrice * 5 / 100);
     const grandTotal = (totalPrice + taxAmount).toFixed(2);
@@ -34,7 +37,6 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     };
     //Get all products in the cart
     const productsInCart = getProductsInCart();
-    const { data: session } = useSession();
     const route = useRouter();
     //Arrange Product Informations
     const productData = productsInCart.map((item: any) => ({
@@ -72,10 +74,11 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
             if (data.status) {
                 localStorage.removeItem('favFoodCart');
                 toast.success('Order has been placed successfully.');
-                route.push('/account/orders');
                 dispatch(setCartProducts([]));
                 dispatch(setCartCount(0))
                 setLoading(false);
+                route.push('/account/orders');
+                refetch()
             }
         } catch (error: any) {
             console.log(error.message);
@@ -122,6 +125,7 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
                         loading={loading}
                         setLoading={setLoading}
                         route={route}
+                        refetch={refetch}
                     />
                 </Elements>
             }

@@ -1,4 +1,3 @@
-import { FoodData } from '@/app/types/DataTypes';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // Define a service using a base URL and expected endpoints
@@ -10,7 +9,7 @@ export const dataApiSlice = createApi({
             query: (endpint) => `${endpint}`,
             transformResponse: (res: any) => res.result
         }),
-        getSingleData: builder.query<FoodData, any>({
+        getSingleData: builder.query<[], any>({
             query: (endpoint) => `${endpoint}`,
             transformResponse: (res: any) => res.result[0]
         }),

@@ -16,10 +16,11 @@ interface CheckoutProps {
     loading: boolean;
     setLoading: Dispatch<SetStateAction<boolean>>;
     route: AppRouterInstance;
+    refetch: any
 }
 
 
-const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, route }: CheckoutProps) => {
+const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, route, refetch }: CheckoutProps) => {
     const dispatch = useAppDispatch();
     const stripe = useStripe()
     const elements = useElements();
@@ -83,6 +84,7 @@ const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, 
                 dispatch(setCartProducts([]));
                 dispatch(setCartCount(0))
                 setLoading(false);
+                refetch()
             }
         } catch (error: any) {
             console.log(error.message);

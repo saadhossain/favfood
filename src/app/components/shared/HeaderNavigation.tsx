@@ -15,9 +15,8 @@ import FavFood from '/public/favfood-for-web.png';
 
 const HeaderNavigation = () => {
   const { data: session, status } = useSession() as any;
-  const state = useAppSelector((state) => state);
-  const cartCount = state.cart.cartCount;
-  const wishlistCount = state.wishlist.wishlistCount;
+  const { cartCount } = useAppSelector((state) => state.cart);
+  const { wishlistCount } = useAppSelector((state) => state.wishlist);
   const dispatch = useAppDispatch();
   const activePath = usePathname();
   const navStyle = `hover:text-secondary duration-300 ease-in-out}`;
