@@ -1,4 +1,6 @@
 'use client'
+import { setOpenEditRestaurantModal, setSingleDataId } from '@/app/lib/features/commonFeaturesSlice';
+import { useAppDispatch } from '@/app/lib/hooks';
 import { updateData } from '@/app/utils/updateData';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,6 +15,7 @@ interface Props {
 }
 
 const RestaurantsTable = ({ restaurants, refetch }: Props) => {
+    const dispatch = useAppDispatch();
     const handleDeleteRestaurant = async (restaurantId: string) => {
         const isConfirmed = window.confirm('Do you want to Delete this Restaurant?');
         if (isConfirmed) {
@@ -104,6 +107,10 @@ const RestaurantsTable = ({ restaurants, refetch }: Props) => {
                                                     />
                                                     <TbEdit
                                                         className='w-6 h-6 cursor-pointer text-green-600' title='Edit Restaurant'
+                                                        onClick={() => {
+                                                            dispatch(setSingleDataId(restaurant._id))
+                                                            dispatch(setOpenEditRestaurantModal())
+                                                        }}
                                                     />
                                                 </div>
                                             </th>

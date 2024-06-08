@@ -5,7 +5,7 @@ import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
 import { setOpenEditFoodModal, setSingleDataId } from '@/app/lib/features/commonFeaturesSlice';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
-import { FoodData, OrderDataType } from '@/app/types/DataTypes';
+import { FoodData } from '@/app/types/DataTypes';
 import { updateData } from '@/app/utils/updateData';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -19,18 +19,18 @@ const EditFoodModal = () => {
     const dispatch = useAppDispatch();
     // const restaurants = data
     const categories = ["Burger", "Pizza", "Sandwich", "Fries", "Chicken"];
-    //Get Orders Data from server
+    //Get Foods Data from server
     const { data: foods, refetch } = useGetDataQuery('/foods');
     const { data: restaurants } = useGetDataQuery('/restaurants');
     const { openEditFoodModal, singleDataId } = useAppSelector((state) => state.commonFeatures)
-    //GEt single order
+    //GEt single Food
     const [singleFood, setSingleFood] = useState<FoodData>();
     useEffect(() => {
-        const getSingleOrder = async () => {
-            const singleFood = foods?.find((order: OrderDataType) => order._id === singleDataId);
+        const getSingleFood = async () => {
+            const singleFood = foods?.find((food: FoodData) => food._id === singleDataId);
             setSingleFood(singleFood);
         }
-        getSingleOrder();
+        getSingleFood();
     }, [singleDataId, openEditFoodModal, setOpenEditFoodModal]);
     const [isUpdating, setIsUpdating] = useState(false);
     //Handle Input Change for Update or Add New Data.
@@ -40,7 +40,7 @@ const EditFoodModal = () => {
         // console.log(formData);
         setIsUpdating(true);
         const form = e.target as HTMLFormElement;
-        //Update the order in the database
+        //Update the food in the database
         const data = await updateData(`/foods?id=${singleFood?._id}`, formData);
         if (data.acknowledged) {
             toast.success('Food Updated Successfully.');

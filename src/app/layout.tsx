@@ -8,6 +8,7 @@ import AddAddressModal from './components/modals/AddAddressModal';
 import AddReviewModal from './components/modals/AddReviewModal';
 import EditFoodModal from './components/modals/EditFoodModal';
 import EditOrderModal from './components/modals/EditOrderModal';
+import EditRestaurantModal from './components/modals/EditRestaurantModal';
 import EditReviewModal from './components/modals/EditReviewModal';
 import EditUserModal from './components/modals/EditUserModal';
 import SearchModal from './components/modals/SearchModal';
@@ -53,6 +54,7 @@ export default function RootLayout({
               <AddReviewModal />
               <EditReviewModal />
               <EditFoodModal />
+              <EditRestaurantModal />
             </DataProvider>
           </AuthProvider>
           <Toaster />
