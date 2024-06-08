@@ -1,5 +1,6 @@
 import { setOpenEditFoodModal, setSingleDataId } from '@/app/lib/features/commonFeaturesSlice';
 import { useAppDispatch } from '@/app/lib/hooks';
+import { FoodData } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -46,6 +47,7 @@ const FoodsTable = ({ foods, refetch }: Props) => {
                                         {/* Product Remove Button */}
                                         <th className="p-3">Image, Name & Email</th>
                                         <th className="md:p-3">Price</th>
+                                        <th className="md:p-3">Discount</th>
                                         <th className="p-3">Restaurant</th>
                                         <th className="p-3">Category</th>
                                         <th className="p-3">Actions</th>
@@ -53,17 +55,18 @@ const FoodsTable = ({ foods, refetch }: Props) => {
                                 </thead>
                                 <tbody>
                                     {
-                                        foods?.map((food: any) => <tr
+                                        foods?.map((food: FoodData) => <tr
                                             key={food._id}
                                             className="text-center border-b-2 border-gray-200">
                                             {/* Product Image and product name */}
                                             <th className="md:p-3 p-2">
                                                 <div className='flex gap-2 items-center min-w-72 md:min-w-0'>
                                                     <Image src={food.image} alt={food.name} width={60} height={60} className='rounded-md max-h-16' />
-                                                    <p>{food.name}</p>
+                                                    <p className='text-left'>{food.name}</p>
                                                 </div>
                                             </th>
                                             <th className="md:p-3 p-2">${food.price}</th>
+                                            <th className="md:p-3 p-2">{food.discountPercentage}%</th>
                                             <th className="md:p-3 p-2 min-w-36 md:min-w-0">{food.restaurant}</th>
                                             <th className="md:p-3 p-2">{food.category}</th>
                                             {/* Product Action Buttons */}

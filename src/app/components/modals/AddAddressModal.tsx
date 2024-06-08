@@ -16,7 +16,7 @@ interface CountryPros {
 }
 
 const AddAddressModal = () => {
-    const { loading, formData } = useContext(DataContext) as DataContextType;
+    const { loading, formData, setFormData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get the logged in user from the session
     const { data: session } = useSession();
@@ -43,6 +43,7 @@ const AddAddressModal = () => {
             toast.success('New Address added successfully');
             form.reset();
             dispatch(setOpenAddressBoxModal())
+            setFormData({})
         }
     }
     return (
