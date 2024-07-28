@@ -1,23 +1,15 @@
-'use client'
-import SubHeading from '@/app/components/shared/headings/SubHeading'
-import SearchedFoodCard from '@/app/components/ui/searchPage/SearchedFoodCard'
-import { useAppSelector } from '@/app/lib/hooks'
-import { FoodData } from '@/app/types/DataTypes'
+import SearchedFoods from '@/app/components/ui/searchPage/SearchedFoods'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: 'Search Foods - FavFood',
+    description: 'Discover our innovative web app designed for food lovers! Easily purchase and order your favorite foods, add items to your wishlist, and search for delicious options. Leave feedback and enjoy a seamless e-commerce experience. Perfect for food enthusiasts seeking convenience and variety in one place.'
+}
 
 const FoodSearch = () => {
-    const { searchText, searchedFoods } = useAppSelector((state) => state.search);
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-2 md:my-5'>
-            {
-                (searchedFoods && searchedFoods.length > 0) ? <SubHeading heading={`Search Result for "${searchText}"`} /> : <SubHeading heading={`No Foods Found for the keyword "${searchText}". Please make a search...`} />
-            }
-            {/* Display Search foods */}
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-5'>
-                {searchedFoods?.map((food: FoodData) => <SearchedFoodCard
-                    key={food._id}
-                    food={food}
-                />)}
-            </div>
+            <SearchedFoods />
         </div>
     )
 }

@@ -1,19 +1,16 @@
-'use client'
 import DashboardSearch from '@/app/components/common/DashboardSearch'
 import AddButton from '@/app/components/shared/buttons/AddButton'
 import SubHeading from '@/app/components/shared/headings/SubHeading'
-import TableSkeletonLoader from '@/app/components/spinner/TableSkeletonLoader'
-import RestaurantsTable from '@/app/components/tables/RestaurantsTable'
-import { useSetUserData } from '@/app/hooks/useSetUserData'
-import { useAppSelector } from '@/app/lib/hooks'
-import { useSession } from 'next-auth/react'
+import RestaurantLists from '@/app/components/ui/admin/RestaurantLists'
+import { Metadata } from 'next'
+
+
+export const metadata: Metadata = {
+  title: 'Restaurants - FavFood',
+  description: 'Discover our innovative web app designed for food lovers! Easily purchase and order your favorite foods, add items to your wishlist, and search for delicious options. Leave feedback and enjoy a seamless e-commerce experience. Perfect for food enthusiasts seeking convenience and variety in one place.'
+}
 
 const Restaurants = () => {
-  const { data: session } = useSession();
-  //Get the Restaurants from the server
-  const { userData } = useAppSelector((state) => state.userData);
-  // Enable Search Functionality
-  const { isLoading, refetch } = useSetUserData('/restaurants');
   return (
     <div>
       <div className='flex gap-5 items-center justify-between'>
@@ -23,9 +20,7 @@ const Restaurants = () => {
           <DashboardSearch />
         </div>
       </div>
-      {
-        (isLoading || !session) ? <TableSkeletonLoader /> : <RestaurantsTable restaurants={userData} refetch={refetch} />
-      }
+      <RestaurantLists />
     </div>
   )
 }

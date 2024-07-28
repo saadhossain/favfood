@@ -1,5 +1,11 @@
 import SubHeading from '@/app/components/shared/headings/SubHeading';
+import { Metadata } from 'next';
 import { FaEnvelope, FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+
+export const metadata:Metadata = {
+  title: 'Support - FavFood',
+  description: 'Get the Quick Support You need.'
+}
 
 const Support = () => {
   return (

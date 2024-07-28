@@ -1,12 +1,5 @@
-'use client'
-
 import Heading from '@/app/components/shared/headings/Heading'
-import LoadingSpinner from '@/app/components/spinner/LoadingSpinner'
-import SearchedFoodCard from '@/app/components/ui/searchPage/SearchedFoodCard'
-import { DataContext } from '@/app/context/DataContext'
-import { DataContextType } from '@/app/types/DataContextTypes'
-import { FoodData } from '@/app/types/DataTypes'
-import { useContext, useEffect, useState } from 'react'
+import DisplayCatFoods from '@/app/components/ui/searchPage/DisplayCatFoods';
 
 interface Props {
     params: {
@@ -14,43 +7,22 @@ interface Props {
     }
 }
 
-const SingleCategoryFoods = ({ params }: Props) => {
-    const categoryName = params.categoryName;
-    const { loading, setLoading } = useContext(DataContext) as DataContextType;
-    //Get the category based foods from the api
-    const [categoryFoods, setCategoryFoods] = useState([]);
-    useEffect(() => {
-        const getSearchFoods = async () => {
-            try {
-                setLoading(true);
-                const res = await fetch(`/api/foods/search?query=${categoryName}`, { cache: 'no-store' });
-                if (!res.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const { result } = await res.json();
-                setCategoryFoods(result);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            }
-        };
-        getSearchFoods();
-
-    }, [categoryName]);
-    if (loading) {
-        return <LoadingSpinner />
+export const generateMetadata = ({ params }: Props) => {
+    const catName = params.categoryName;
+    return {
+        title: `${catName.toUpperCase()} - FavFood`,
+        description: 'Discover our innovative web app designed for food lovers! Easily purchase and order your favorite foods, add items to your wishlist, and search for delicious options. Leave feedback and enjoy a seamless e-commerce experience. Perfect for food enthusiasts seeking convenience and variety in one place.'
     }
+
+}
+
+const SingleCategoryFoods = ({ params }: Props) => {
+    const catName = params.categoryName;
     return (
         <div className='w-11/12 md:w-10/12 mx-auto my-5'>
-            <Heading heading={`Foods for ${categoryName.toUpperCase()}`}/>
+            <Heading heading={`Foods for ${catName.toUpperCase()}`} />
             {/* Display Category foods */}
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-5'>
-                {categoryFoods?.map((food: FoodData) => <SearchedFoodCard
-                    key={food._id}
-                    food={food}
-                />)}
-            </div>
+            <DisplayCatFoods catName={catName} />
         </div>
     )
 }

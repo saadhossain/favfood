@@ -25,7 +25,11 @@ const SearchModal = () => {
     useEffect(() => {
         const getSearchFoods = async () => {
             try {
-                const res = await fetch(`/api/foods/search?query=${searchText}`, { cache: 'no-store' });
+                const res = await fetch(`/api/foods/search?query=${searchText}`, {
+                    next: {
+                        revalidate: 3600
+                    }
+                });
                 if (!res.ok) {
                     throw new Error('Failed to fetch data');
                 }
