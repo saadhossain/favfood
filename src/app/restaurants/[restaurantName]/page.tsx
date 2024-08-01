@@ -1,30 +1,24 @@
-'use client'
-import ProductLoader from '@/app/components/spinner/ProductLoader';
-import FoodCard from '@/app/components/ui/homecomp/FoodCard';
-import { DataContext } from '@/app/context/DataContext';
-import { useGetDataQuery } from '@/app/lib/features/api/apiSlice';
-import { DataContextType } from '@/app/types/DataContextTypes';
-import { FoodData } from '@/app/types/DataTypes';
-import { useContext } from 'react';
+import DisplayRestaurantInfo from '@/app/components/ui/restaurant/DisplayRestaurantInfo';
+
 interface Props {
   params: {
     restaurantName: string
   }
 }
 
-const page = ({ params }: Props) => {
-  const { loading } = useContext(DataContext) as DataContextType;
+export const generateMetadata = ({ params }: Props) => {
   const restaurantName = decodeURIComponent(params.restaurantName);
-  const {data:foods} = useGetDataQuery('/foods');
-  const restaurantFoods = foods?.filter((food: FoodData) => food.restaurant.toLocaleLowerCase() === restaurantName);
-  if (loading) {
-    return <ProductLoader />;
+  return {
+    title: `${restaurantName.toUpperCase()} - FavFood`,
+    description: 'Discover our innovative web app designed for food lovers! Easily purchase and order your favorite foods, add items to your wishlist, and search for delicious options. Leave feedback and enjoy a seamless e-commerce experience. Perfect for food enthusiasts seeking convenience and variety in one place.'
   }
+}
+
+const page = ({ params }: Props) => {
+  const restaurantName = decodeURIComponent(params.restaurantName);
   return (
     <div className='grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 my-5'>
-      {
-        restaurantFoods?.map((food: FoodData) => <FoodCard key={food._id} food={food} />)
-      }
+      <DisplayRestaurantInfo restaurantName={restaurantName} />
     </div>
   )
 }
