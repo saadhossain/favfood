@@ -6,9 +6,10 @@ import { DataContextType } from '@/app/types/DataContextTypes';
 import { signIn, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { redirect, useSearchParams } from 'next/navigation';
-import { FormEvent, useContext, useEffect } from 'react';
+import { FormEvent, Suspense, useContext, useEffect } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Processing from '../../spinner/Processing';
+import LoadingSpinner from '../../spinner/LoadingSpinner';
 
 const LoginForm = () => {
     const { data: session } = useSession();
@@ -85,4 +86,10 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+const LoginPageWrapper = () => (
+    <Suspense fallback={<LoadingSpinner />}>
+        <LoginForm />
+    </Suspense>
+);
+
+export default LoginPageWrapper;

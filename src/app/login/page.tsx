@@ -34,12 +34,4 @@ const LoginPage = () => {
     );
 };
 
-// export default LoginPage;
-
-const LoginPageWrapper = () => (
-    <Suspense fallback={<LoadingSpinner />}>
-        <LoginPage />
-    </Suspense>
-);
-
-export default LoginPageWrapper;
+export default LoginPage;

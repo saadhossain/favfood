@@ -60,9 +60,10 @@ const RegisterForm = () => {
             isActive: true,
             address: null
         };
+        console.log(userData);
         try {
             //Save user data to database
-            const data = await saveToDatabase('/api/users', userData);
+            const data = await saveToDatabase('/api/register', userData);
             if (data.status) {
                 form.reset();
                 setLoading(false);
