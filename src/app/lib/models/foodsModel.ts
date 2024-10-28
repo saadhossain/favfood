@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const foodsModel = new mongoose.Schema({
+const foodSchema = new mongoose.Schema({
     name: String,
     slug: String,
     description: String,
@@ -14,4 +14,4 @@ const foodsModel = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
 })
 
-export const foodSchema = mongoose.models.foods || mongoose.model('foods', foodsModel);
+export const Foods = mongoose.models.foods || mongoose.model('foods', foodSchema);

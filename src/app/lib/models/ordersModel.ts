@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const ordersModel = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     products: [
         {
             _id: String,
@@ -27,4 +27,4 @@ const ordersModel = new mongoose.Schema({
     paymentStatus: String
 });
 
-export const orderSchema = mongoose.models.orders || mongoose.model('orders', ordersModel);
+export const Orders = mongoose.models.orders || mongoose.model('orders', orderSchema);

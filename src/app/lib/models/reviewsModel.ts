@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const reviewsModel = new mongoose.Schema({
+const reviewSchema = new mongoose.Schema({
     title: String,
     description: String,
     rating: Number,
@@ -14,4 +14,4 @@ const reviewsModel = new mongoose.Schema({
     addedOn: { type: Date, default: Date.now }
 })
 
-export const reviewSchema = mongoose.models.reviews || mongoose.model('reviews', reviewsModel);
+export const Reviews = mongoose.models.reviews || mongoose.model('reviews', reviewSchema);

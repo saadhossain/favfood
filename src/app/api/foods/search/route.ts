@@ -1,5 +1,5 @@
 import { mongoUrl } from '@/app/lib/db';
-import { foodSchema } from '@/app/lib/models/foodsModel';
+import { Foods } from '@/app/lib/models/foodsModel';
 import mongoose from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -21,7 +21,7 @@ export const GET = async (request: NextRequest) => {
             }))
         };
         // Query the database with the filter
-        const result = await foodSchema.find(filter);
+        const result = await Foods.find(filter);
         // Return the result as JSON
         return NextResponse.json({ status: true, result });
     } catch (error: any) {

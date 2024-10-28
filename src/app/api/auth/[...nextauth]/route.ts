@@ -1,6 +1,6 @@
 // imports
 import { mongoUrl } from '@/app/lib/db';
-import { userSchema } from '@/app/lib/models/usersModel';
+import { Users } from '@/app/lib/models/usersModel';
 import { compare } from 'bcrypt';
 import mongoose from 'mongoose';
 import NextAuth from "next-auth";
@@ -34,7 +34,7 @@ const handler = NextAuth({
                     // Connect MongoDB database
                     await mongoose.connect(mongoUrl);
                     // Find the user from the Database
-                    const user = await userSchema.findOne({ email: credentials?.email });
+                    const user = await Users.findOne({ email: credentials?.email });
                     if (!user) {
                         throw new Error('You are not registered. Please Signup')
                     }
@@ -74,7 +74,7 @@ const handler = NextAuth({
         },
         async session({ session, token }) {
             await mongoose.connect(mongoUrl);
-            const user = await userSchema.findOne({ _id: token._id });
+            const user = await Users.findOne({ _id: token._id });
             if (user) {
                 session.user = {
                     _id: user._id?.toString(),

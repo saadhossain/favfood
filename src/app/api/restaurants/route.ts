@@ -1,5 +1,5 @@
 import { mongoUrl } from '@/app/lib/db';
-import { restaurantSchema } from '@/app/lib/models/restaurantModel';
+import { Restaurants } from '@/app/lib/models/restaurantModel';
 import mongoose from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export const POST = async (request: NextRequest) => {
     await mongoose.connect(mongoUrl);
     const payload = await request.json();
-    const restaurant = new restaurantSchema(payload);
+    const restaurant = new Restaurants(payload);
     const result = await restaurant.save();
     return NextResponse.json({ status: true, result });
 }
@@ -15,7 +15,7 @@ export const POST = async (request: NextRequest) => {
 export const GET = async (request: NextRequest) => {
     await mongoose.connect(mongoUrl);
 
-    const result = await restaurantSchema.find();
+    const result = await Restaurants.find();
     return NextResponse.json({ status: true, result });
 };
 
@@ -26,7 +26,7 @@ export const PATCH = async (request: NextRequest) => {
     //Connect to database
     await mongoose.connect(mongoUrl);
     //Update the Restaurant
-    const result = await restaurantSchema.updateOne({ _id: id }, { $set: payload });
+    const result = await Restaurants.updateOne({ _id: id }, { $set: payload });
     return NextResponse.json({ status: true, result });
 }
 
@@ -36,6 +36,6 @@ export const DELETE = async (request: NextRequest) => {
     //Connect to database
     await mongoose.connect(mongoUrl);
     //Delete the Restaurant
-    const result = await restaurantSchema.deleteOne({ _id: id });
+    const result = await Restaurants.deleteOne({ _id: id });
     return NextResponse.json({ status: true, result });
 }

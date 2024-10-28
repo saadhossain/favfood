@@ -1,12 +1,12 @@
 import { mongoUrl } from '@/app/lib/db';
-import { userSchema } from '@/app/lib/models/usersModel';
+import { Users } from '@/app/lib/models/usersModel';
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async () => {
     await mongoose.connect(mongoUrl);
-    const result = await userSchema.find();
+    const result = await Users.find();
     return NextResponse.json({ status: true, result });
 };
 
@@ -24,7 +24,7 @@ export const PATCH = async (request: NextRequest) => {
         hashPassword = makehash;
     }
     //Update the user
-    const result = await userSchema.updateOne({ _id: userId }, { $set: { ...payload, password: hashPassword } });
+    const result = await Users.updateOne({ _id: userId }, { $set: { ...payload, password: hashPassword } });
     return NextResponse.json({ status: true, result });
 }
 
@@ -32,6 +32,6 @@ export const DELETE = async (request: NextRequest) => {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
     await mongoose.connect(mongoUrl);
-    const result = await userSchema.deleteOne({ _id: userId });
+    const result = await Users.deleteOne({ _id: userId });
     return NextResponse.json({ status: true, result });
 }

@@ -1,5 +1,5 @@
 import { mongoUrl } from '@/app/lib/db';
-import { orderSchema } from '@/app/lib/models/ordersModel';
+import { Orders } from '@/app/lib/models/ordersModel';
 import mongoose from 'mongoose';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -11,6 +11,6 @@ export const GET = async (request: NextRequest) => {
     //Connect MongoDB Database
     await mongoose.connect(mongoUrl);
     //Find and return the matched orders
-    const result = await orderSchema.find({ 'userInfo._id': queryParams });
+    const result = await Orders.find({ 'userInfo._id': queryParams });
     return NextResponse.json({ status: true, result });
 }

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const restaurantModel = new mongoose.Schema({
+const restaurantSchema = new mongoose.Schema({
     name: String,
     foodCategory: [],
     minOrderAmount: String,
@@ -11,4 +11,4 @@ const restaurantModel = new mongoose.Schema({
     isActive: Boolean
 })
 
-export const restaurantSchema = mongoose.models.restaurants || mongoose.model('restaurants', restaurantModel);
+export const Restaurants = mongoose.models.restaurants || mongoose.model('restaurants', restaurantSchema);
