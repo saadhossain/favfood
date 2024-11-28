@@ -19,7 +19,7 @@ const AddAddressModal = () => {
     const { loading, formData, setFormData } = useContext(DataContext) as DataContextType;
     const inputStyle = 'w-full px-3 py-2 rounded-md text-gray-900 bg-gray-300 focus:outline-none';
     //Get the logged in user from the session
-    const { data: session } = useSession();
+    const { data: session, update } = useSession();
 
     const { openAddressBoxModal } = useAppSelector((state) => state.commonFeatures)
     const dispatch = useAppDispatch();
@@ -44,6 +44,7 @@ const AddAddressModal = () => {
             form.reset();
             dispatch(setOpenAddressBoxModal())
             setFormData({})
+            update();
         }
     }
     return (

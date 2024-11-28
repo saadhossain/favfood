@@ -15,7 +15,7 @@ const AddToCartBtn = ({ product }: { product: FoodData }) => {
             _id: prod._id,
             name: prod.name,
             slug: prod.slug,
-            restaurantName: prod.restaurant,
+            restaurant: prod.restaurant,
             price: prod.price,
             image: prod.image
         };
