@@ -23,6 +23,15 @@ export const makeStore = () => {
   })
 }
 
+makeStore().subscribe(() => {
+  const { productsInCart } = makeStore().getState().cart;
+  try {
+    localStorage.setItem('cart', JSON.stringify(productsInCart));
+  } catch (error) {
+    console.error("Error saving cart to localStorage:", error);
+  }
+});
+
 // Infer the type of makeStore
 export type AppStore = ReturnType<typeof makeStore>
 // Infer the `RootState` and `AppDispatch` types from the store itself

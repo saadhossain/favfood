@@ -1,15 +1,14 @@
 'use client';
-import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
 import { FoodData } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaHeart } from 'react-icons/fa';
-import { FaCartShopping, FaShop, FaStar } from "react-icons/fa6";
+import { FaShop, FaStar } from "react-icons/fa6";
 import { MdSell } from "react-icons/md";
+import AddToCartBtn from '../buttons/AddToCartBtn';
 
 const FoodCard = ({ food }: { food: FoodData }) => {
-    const handleAddToCart = useHandleAddToCart();
     const handleAddToWishlist = useHandleAddToWishlist();
     return (
         <div className='bg-gray-100 border-gray-100 rounded-md h-56 md:h-[350px] relative'>
@@ -35,17 +34,10 @@ const FoodCard = ({ food }: { food: FoodData }) => {
                     <p className='w-3/12 md:flex gap-1 items-center hidden'><MdSell className='text-primary' />{food.itemSold}</p>
                 </div>
                 {/* Price and Order Button */}
-                <div className='w-full flex items-end absolute bottom-2 md:bottom-3'>
+                <div className='w-11/12 flex items-center justify-between absolute bottom-2 md:bottom-3'>
                     <h5 className='font-semibold text-primary'>${food.price}</h5>
-                    {/* Cart button for pc */}
-                    <button
-                        onClick={() => handleAddToCart(food._id)}
-                        className='hidden md:flex gap-1 items-center justify-center p-2 rounded-md bg-primary text-white hover:bg-secondary duration-200 ease-in-out absolute right-7'><FaCartShopping />Get</button>
-                    {/* Cart button for mobile */}
-                    <FaCartShopping
-                        onClick={() => handleAddToCart(food._id)}
-                        className='text-primary hover:text-secondary duration-200 ease-in-out md:hidden absolute right-7'
-                    />
+                    {/* Cart button */}
+                    <AddToCartBtn prodId={food._id} />
                 </div>
             </div>
         </div>

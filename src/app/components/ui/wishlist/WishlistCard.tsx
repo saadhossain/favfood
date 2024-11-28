@@ -1,5 +1,4 @@
 'use client';
-import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import { setWishlistCount, setWishlistProducts } from '@/app/lib/features/wishlistSlice';
 import { useAppDispatch } from '@/app/lib/hooks';
 import { CartDataType, FoodData } from '@/app/types/DataTypes';
@@ -7,11 +6,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import { FaCheckCircle } from "react-icons/fa";
-import { FaCartShopping } from "react-icons/fa6";
+import AddToCartBtn from '../buttons/AddToCartBtn';
 
 const WishlistCard = ({ product }: { product: FoodData }) => {
     const dispatch = useAppDispatch();
-    const handleAddToCart = useHandleAddToCart();
 
     const handleRemoveProductFromWishlist = (id: string) => {
         let productsInWishlist = JSON.parse(localStorage.getItem('favFoodWishlist') as string);
@@ -19,10 +17,6 @@ const WishlistCard = ({ product }: { product: FoodData }) => {
         // Update local storage with the updated products
         localStorage.setItem('favFoodWishlist', JSON.stringify(updatedProducts));
 
-        //If there is no product in the favFoodWishlist then completely remove the array
-        // if (updatedProducts.length <= 0) {
-        //     localStorage.removeItem('favFoodWishlist');
-        // }
         dispatch(setWishlistProducts(updatedProducts));
         dispatch(setWishlistCount(updatedProducts.length));
         toast.error('Food removed from Wishlist.');
@@ -52,9 +46,7 @@ const WishlistCard = ({ product }: { product: FoodData }) => {
                     <FaCheckCircle />
                     In Stock
                 </div>
-                <button
-                    onClick={() => handleAddToCart(product?._id)}
-                    className='w-1/4 md:w-6/12 flex gap-1 items-center bg-primary text-white py-2 px-2 md:px-3 rounded-md my-3 hover:bg-secondary duration-300 ease-in-out'><FaCartShopping /><span className='hidden md:block'>Add to Cart</span></button>
+                <AddToCartBtn prodId={product?._id} />
             </div>
         </div>
     );

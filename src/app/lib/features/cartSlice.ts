@@ -6,29 +6,24 @@ export interface ProdType {
 }
 
 export interface InitialStateType {
-    cartCount: number;
     productsInCart: ProdType[];
 }
 
-const getCartLength = () => {
+const getCartFromLocalStorage = () => {
     if (typeof window !== "undefined") {
-        const cart = localStorage.getItem('favFoodCart');
-        return cart ? JSON.parse(cart).length : 0;
+        const cart = localStorage.getItem('cart');
+        return cart ? JSON.parse(cart) : [];
     }
-    return 0;
+    return [];
 }
 
 const initialState: InitialStateType = {
-    cartCount: getCartLength(),
-    productsInCart: []
+    productsInCart: getCartFromLocalStorage()
 }
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        setCartCount: (state, action) => {
-            state.cartCount = action.payload;
-        },
         addToCart: (state, action) => {
             const existingProduct = state.productsInCart.find((prod: ProdType) => prod._id === action.payload._id);
             if (existingProduct) {
@@ -42,5 +37,5 @@ export const cartSlice = createSlice({
     }
 })
 
-export const { addToCart, setCartCount, setCartProducts } = cartSlice.actions;
+export const { addToCart, setCartProducts } = cartSlice.actions;
 export default cartSlice.reducer;

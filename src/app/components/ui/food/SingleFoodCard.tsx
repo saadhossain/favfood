@@ -1,14 +1,14 @@
 'use client';
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import ReviewCard from '@/app/components/ui/reviews/ReviewCard';
-import { useHandleAddToCart } from '@/app/hooks/useHandleAddToCart';
 import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
 import { useGetDataQuery, useGetSingleDataQuery } from '@/app/lib/features/api/apiSlice';
 import { FoodData, ReviewData } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
-import { FaCartShopping, FaShop, FaStar } from "react-icons/fa6";
+import { FaShop, FaStar } from "react-icons/fa6";
+import AddToCartBtn from '../buttons/AddToCartBtn';
 
 interface paramsTypes {
     restaurant: string;
@@ -19,7 +19,6 @@ const SingleFoodCard = ({ params }: { params: paramsTypes }) => {
     //Get the Single food from ther server
     const { data } = useGetSingleDataQuery(`/foods/single?restaurant=${params.restaurant}&slug=${params.slug}`)
     const singleFood: FoodData | any = data;
-    const handleAddToCart = useHandleAddToCart();
     const handleAddToWishlist = useHandleAddToWishlist();
     //Get the Foods Reviews from the Server
     const { data: reviews, isLoading } = useGetDataQuery(`/reviews/foodsReview?id=${singleFood?._id}`);
@@ -50,9 +49,10 @@ const SingleFoodCard = ({ params }: { params: paramsTypes }) => {
                             <p>{singleFood.description}</p>
                             {/* //Action Buttons */}
                             <div className='flex gap-2 items-center'>
-                                <button
+                                {/* <button
                                     onClick={() => handleAddToCart(singleFood?._id)}
-                                    className='flex gap-2 items-center bg-primary text-white py-2 px-5 rounded-md my-3 hover:bg-secondary duration-300 ease-in-out'><FaCartShopping />Add to Cart</button>
+                                    className='flex gap-2 items-center bg-primary text-white py-2 px-5 rounded-md my-3 hover:bg-secondary duration-300 ease-in-out'><FaCartShopping />Add to Cart</button> */}
+                                <AddToCartBtn prodId={singleFood?._id} />
                                 <button
                                     onClick={() => handleAddToWishlist(singleFood?._id)}
                                     className='flex gap-2 items-center border-2 border-primary text-primary py-[6px] px-5 rounded-md my-3 hover:bg-primary hover:text-white duration-300 ease-in-out'><FaHeart />Wishlist</button>
