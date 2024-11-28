@@ -7,24 +7,22 @@ import searchReducer from './features/searchSlice'
 import userDataReducer from './features/userDataSlice'
 import wishlistReducer from './features/wishlistSlice'
 
-export const makeStore = () => {
-  return configureStore({
-    reducer: {
-      userData: userDataReducer,
-      cart: cartReducer,
-      wishlist: wishlistReducer,
-      search: searchReducer,
-      food: foodReducer,
-      commonFeatures: commonFeaturesReducer,
-      [dataApiSlice.reducerPath]: dataApiSlice.reducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(dataApiSlice.middleware),
-  })
-}
+export const store = configureStore({
+  reducer: {
+    userData: userDataReducer,
+    cart: cartReducer,
+    wishlist: wishlistReducer,
+    search: searchReducer,
+    food: foodReducer,
+    commonFeatures: commonFeaturesReducer,
+    [dataApiSlice.reducerPath]: dataApiSlice.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(dataApiSlice.middleware),
+})
 
-makeStore().subscribe(() => {
-  const { productsInCart } = makeStore().getState().cart;
+store.subscribe(() => {
+  const { productsInCart } = store.getState().cart;
   try {
     localStorage.setItem('cart', JSON.stringify(productsInCart));
   } catch (error) {
@@ -33,7 +31,7 @@ makeStore().subscribe(() => {
 });
 
 // Infer the type of makeStore
-export type AppStore = ReturnType<typeof makeStore>
+export type AppStore = typeof store
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<AppStore['getState']>
-export type AppDispatch = AppStore['dispatch']
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
