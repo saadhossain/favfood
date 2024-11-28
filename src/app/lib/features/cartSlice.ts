@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface ProdType {
-    productId: string;
+    _id: string;
     quantity: number;
 }
 
 export interface InitialStateType {
     cartCount: number;
-    cartProducts: ProdType[];
+    productsInCart: ProdType[];
 }
 
 const getCartLength = () => {
@@ -20,7 +20,7 @@ const getCartLength = () => {
 
 const initialState: InitialStateType = {
     cartCount: getCartLength(),
-    cartProducts: []
+    productsInCart: []
 }
 export const cartSlice = createSlice({
     name: 'cart',
@@ -29,11 +29,18 @@ export const cartSlice = createSlice({
         setCartCount: (state, action) => {
             state.cartCount = action.payload;
         },
+        addToCart: (state, action) => {
+            const existingProduct = state.productsInCart.find((prod: ProdType) => prod._id === action.payload._id);
+            if (existingProduct) {
+                existingProduct.quantity++
+            }
+            state.productsInCart.push({ ...action.payload });
+        },
         setCartProducts: (state, action) => {
-            state.cartProducts = action.payload;
+            state.productsInCart = action.payload;
         },
     }
 })
 
-export const { setCartCount, setCartProducts } = cartSlice.actions;
+export const { addToCart, setCartCount, setCartProducts } = cartSlice.actions;
 export default cartSlice.reducer;
