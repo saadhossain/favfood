@@ -1,37 +1,34 @@
+import { CartProdType } from '@/app/types/DataTypes';
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface ProdType {
-    productId: string;
+export interface InitialStateType {
+    productsInWishlist: CartProdType[];
 }
-export interface initialState {
-    wishlistCount: number,
-    wishlistProducts: ProdType[];
-}
-const getWishlistLength = () => {
+
+const getWishlistFromLocalStorage = () => {
     if (typeof window !== "undefined") {
-        const wishlist = localStorage.getItem('favFoodWishlist');
-        return wishlist ? JSON.parse(wishlist).length : 0;
+        const cart = localStorage.getItem('wishlist');
+        return cart ? JSON.parse(cart) : [];
     }
-    return 0
+    return [];
 }
 
-const initialState: initialState = {
-    wishlistCount: getWishlistLength(),
-    wishlistProducts: []
+const initialState: InitialStateType = {
+    productsInWishlist: getWishlistFromLocalStorage()
 }
-
 export const wishlistSlice = createSlice({
     name: 'wishlist',
     initialState,
     reducers: {
-        setWishlistCount: (state, action) => {
-            state.wishlistCount = action.payload;
+        addToWishlist: (state, action) => {
+            state.productsInWishlist.push({ ...action.payload });
         },
-        setWishlistProducts: (state, action) => {
-            state.wishlistProducts = action.payload;
+        removeFromWishlist: (state, action) => {
+            const productsAfterRemove = state.productsInWishlist.filter((prod: CartProdType) => prod._id !== action.payload);
+            state.productsInWishlist = productsAfterRemove;
         }
     }
 })
 
-export const { setWishlistCount, setWishlistProducts } = wishlistSlice.actions;
+export const { addToWishlist, removeFromWishlist } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

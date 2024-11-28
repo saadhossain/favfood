@@ -1,5 +1,4 @@
 'use client';
-import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
 import { FoodData } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,18 +6,18 @@ import { FaHeart } from 'react-icons/fa';
 import { FaShop, FaStar } from "react-icons/fa6";
 import { MdSell } from "react-icons/md";
 import AddToCartBtn from '../buttons/AddToCartBtn';
+import AddToWishlistBtn from '../buttons/AddToWishlistBtn';
 
 const FoodCard = ({ food }: { food: FoodData }) => {
-    const handleAddToWishlist = useHandleAddToWishlist();
     return (
         <div className='bg-gray-100 border-gray-100 rounded-md h-56 md:h-[350px] relative'>
             <Link href={`/foods/${food.restaurant.toLowerCase()}/${food.slug}`}>
                 <Image src={food.image} alt={food.name} width={400} height={250} className='rounded-t-md relative h-28 md:h-44' />
             </Link>
             {/* Wishlist Button */}
-            <FaHeart
-                onClick={() => handleAddToWishlist(food._id)}
-                className='w-5 h-5 text-primary absolute top-1 left-1 cursor-pointer hover:text-secondary' />
+            <AddToWishlistBtn product={food}>
+                <FaHeart className='w-5 h-5 text-primary absolute top-1 left-1 cursor-pointer hover:text-secondary' />
+            </AddToWishlistBtn>
             <Link href={`/foods/reviews/${food._id}`} className='flex gap-1 items-center md:hidden absolute top-1 right-1 bg-gray-100 rounded-md px-2'><FaStar className='text-primary' />{food.reviewCount}</Link>
             <div className='flex flex-col justify-between p-2 md:p-4'>
                 {/* Food name and its Reviews */}

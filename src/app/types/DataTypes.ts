@@ -50,7 +50,7 @@ export interface CartProdType {
     _id: string;
     name: string;
     slug: string;
-    restaurantName: string;
+    restaurant: string;
     price: number;
     image: string;
     quantity: number;

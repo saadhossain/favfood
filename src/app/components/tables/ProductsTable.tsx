@@ -9,8 +9,11 @@ import toast from 'react-hot-toast';
 const ProductsTable = ({ productsInCart }: { productsInCart: CartProdType[] }) => {
     const dispatch = useAppDispatch();
     const handleRemoveFromCart = (id: string) => {
-        dispatch(removeFromCart(id))
-        toast.success('Product Removed from Cart.')
+        const confirmation = window.confirm('Would you like to Remove this Product?');
+        if (confirmation) {
+            dispatch(removeFromCart(id))
+            toast.success('Product Removed from Cart.')
+        }
     }
     return (
         <div>

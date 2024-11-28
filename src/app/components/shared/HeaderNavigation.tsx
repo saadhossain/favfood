@@ -16,7 +16,7 @@ import FavFood from '/public/favfood-for-web.png';
 const HeaderNavigation = () => {
   const { data: session, status } = useSession() as any;
   const { productsInCart } = useAppSelector((state) => state.cart);
-  const { wishlistCount } = useAppSelector((state) => state.wishlist);
+  const { productsInWishlist } = useAppSelector((state) => state.wishlist)
   const dispatch = useAppDispatch();
   const activePath = usePathname();
   const navStyle = `hover:text-secondary duration-300 ease-in-out}`;
@@ -32,7 +32,7 @@ const HeaderNavigation = () => {
             className='w-6 h-6 text-gray-700 hover:text-secondary cursor-pointer duration-300'
             onClick={() => dispatch(setIsSearchModalOpen())}
           />
-          <Link href='/wishlist' className={`${navStyle} ${activePath === '/favourite' ? 'text-secondary' : 'text-gray-700'}`}><FaHeart className='w-6 h-6' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${wishlistCount <= 0 && 'hidden'}`}>{wishlistCount}</span></Link>
+          <Link href='/wishlist' className={`${navStyle} ${activePath === '/favourite' ? 'text-secondary' : 'text-gray-700'}`}><FaHeart className='w-6 h-6' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${productsInWishlist.length <= 0 && 'hidden'}`}>{productsInWishlist.length}</span></Link>
           <Link href='/cart' className={`${navStyle} ${activePath === '/cart' ? 'text-secondary' : 'text-gray-700'}`}><FaCartShopping className='w-6 h-6 relative' /><span className={`absolute top-2 bg-primary text-white px-2 py-1 rounded-full text-xs ml-3 ${productsInCart.length <= 0 && 'hidden'}`}>{productsInCart.length}</span></Link>
           {/* Login Button and User Image */}
           <div>

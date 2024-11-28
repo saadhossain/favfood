@@ -1,7 +1,6 @@
 'use client';
 import LoadingSpinner from '@/app/components/spinner/LoadingSpinner';
 import ReviewCard from '@/app/components/ui/reviews/ReviewCard';
-import { useHandleAddToWishlist } from '@/app/hooks/useHandleAddToWishlist';
 import { useGetDataQuery, useGetSingleDataQuery } from '@/app/lib/features/api/apiSlice';
 import { FoodData, ReviewData } from '@/app/types/DataTypes';
 import Image from 'next/image';
@@ -9,6 +8,7 @@ import Link from 'next/link';
 import { FaCheckCircle, FaHeart } from "react-icons/fa";
 import { FaShop, FaStar } from "react-icons/fa6";
 import AddToCartBtn from '../buttons/AddToCartBtn';
+import AddToWishlistBtn from '../buttons/AddToWishlistBtn';
 
 interface paramsTypes {
     restaurant: string;
@@ -19,7 +19,6 @@ const SingleFoodCard = ({ params }: { params: paramsTypes }) => {
     //Get the Single food from ther server
     const { data } = useGetSingleDataQuery(`/foods/single?restaurant=${params.restaurant}&slug=${params.slug}`)
     const singleFood: FoodData | any = data;
-    const handleAddToWishlist = useHandleAddToWishlist();
     //Get the Foods Reviews from the Server
     const { data: reviews, isLoading } = useGetDataQuery(`/reviews/foodsReview?id=${singleFood?._id}`);
 
@@ -50,9 +49,10 @@ const SingleFoodCard = ({ params }: { params: paramsTypes }) => {
                             {/* //Action Buttons */}
                             <div className='flex gap-2 items-center'>
                                 <AddToCartBtn product={singleFood} />
-                                <button
-                                    onClick={() => handleAddToWishlist(singleFood?._id)}
-                                    className='flex gap-2 items-center border-2 border-primary text-primary py-[6px] px-5 rounded-md my-3 hover:bg-primary hover:text-white duration-300 ease-in-out'><FaHeart />Wishlist</button>
+                                <AddToWishlistBtn product={singleFood}>
+                                    <span
+                                        className='flex gap-2 items-center border-2 border-primary text-primary py-[6px] px-5 rounded-md my-3 hover:bg-primary hover:text-white duration-300 ease-in-out'><FaHeart />Wishlist</span>
+                                </AddToWishlistBtn>
                             </div>
                         </div>
                     </div>

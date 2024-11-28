@@ -1,20 +1,23 @@
 'use client';
-import { DataContext } from '@/app/context/DataContext';
 import { useAppSelector } from '@/app/lib/hooks';
-import { DataContextType } from '@/app/types/DataContextTypes';
-import { useContext } from 'react';
+import { useState } from 'react';
 import TableSkeletonLoader from '../../spinner/TableSkeletonLoader';
 import ProductsTable from '../../tables/ProductsTable';
 
 const CartLists = () => {
-    const { loading } = useContext(DataContext) as DataContextType;
+    const [isLoading, setIsLoading] = useState(true);
 
     //Get all products from the cart
     const { productsInCart } = useAppSelector((state) => state.cart);
+
+    //Set a timeout while getting cart data from the localstorage
+    setTimeout(() => {
+        setIsLoading(false);
+    }, 10);
     return (
         <div>
             {
-                (loading || !productsInCart) ? <TableSkeletonLoader /> : <ProductsTable
+                (isLoading || !productsInCart) ? <TableSkeletonLoader /> : <ProductsTable
                     productsInCart={productsInCart}
                 />
             }

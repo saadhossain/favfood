@@ -63,7 +63,6 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
             if (data.status) {
                 toast.success('Order has been placed successfully.');
                 dispatch(resetCart())
-                localStorage.removeItem('cart');
                 setLoading(false);
                 route.push('/account/orders');
                 refetch()

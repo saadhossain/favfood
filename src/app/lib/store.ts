@@ -21,10 +21,13 @@ export const store = configureStore({
     getDefaultMiddleware().concat(dataApiSlice.middleware),
 })
 
+//Save Cart and Wishlist to localstorage
 store.subscribe(() => {
   const { productsInCart } = store.getState().cart;
+  const { productsInWishlist } = store.getState().wishlist;
   try {
     localStorage.setItem('cart', JSON.stringify(productsInCart));
+    localStorage.setItem('wishlist', JSON.stringify(productsInWishlist));
   } catch (error) {
     console.error("Error saving cart to localStorage:", error);
   }
