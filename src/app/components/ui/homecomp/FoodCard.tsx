@@ -37,7 +37,7 @@ const FoodCard = ({ food }: { food: FoodData }) => {
                 <div className='w-11/12 flex items-center justify-between absolute bottom-2 md:bottom-3'>
                     <h5 className='font-semibold text-primary'>${food.price}</h5>
                     {/* Cart button */}
-                    <AddToCartBtn prodId={food._id} />
+                    <AddToCartBtn product={food} />
                 </div>
             </div>
         </div>

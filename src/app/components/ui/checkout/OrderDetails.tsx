@@ -1,11 +1,10 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { useSetUserData } from '@/app/hooks/useSetUserData';
-import { setCartCount, setCartProducts } from '@/app/lib/features/cartSlice';
+import { setCartProducts } from '@/app/lib/features/cartSlice';
 import { setPaymentMethod } from '@/app/lib/features/commonFeaturesSlice';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
-import { getProductsInCart } from '@/app/utils/getProductsInCart';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -36,7 +35,6 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
         dispatch(setPaymentMethod(event.target.id))
     };
     //Get all products in the cart
-    const productsInCart = getProductsInCart();
     const route = useRouter();
     //Arrange Product Informations
     const productData = productsInCart.map((item: any) => ({

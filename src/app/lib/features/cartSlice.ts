@@ -1,12 +1,8 @@
+import { CartProdType } from '@/app/types/DataTypes';
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface ProdType {
-    _id: string;
-    quantity: number;
-}
-
 export interface InitialStateType {
-    productsInCart: ProdType[];
+    productsInCart: CartProdType[];
 }
 
 const getCartFromLocalStorage = () => {
@@ -25,17 +21,36 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action) => {
-            const existingProduct = state.productsInCart.find((prod: ProdType) => prod._id === action.payload._id);
+            const existingProduct = state.productsInCart.find((prod: CartProdType) => prod._id === action.payload._id);
             if (existingProduct) {
                 existingProduct.quantity++
             }
             state.productsInCart.push({ ...action.payload });
         },
-        setCartProducts: (state, action) => {
-            state.productsInCart = action.payload;
+        incrementQuantity: (state, action) => {
+            const productInCart = state.productsInCart.find((prod: CartProdType) => prod._id === action.payload);
+            if (productInCart) {
+                productInCart.quantity++;
+            }
         },
+        decrementQuantity: (state, action) => {
+            const productInCart = state.productsInCart.find((prod: CartProdType) => prod._id === action.payload);
+            if (productInCart && productInCart.quantity > 1) {
+                productInCart.quantity--;
+            }
+        },
+        removeFromCart: (state, action) => {
+            const productsAfterRemove = state.productsInCart.filter((prod: CartProdType) => prod._id !== action.payload);
+            state.productsInCart = productsAfterRemove;
+        },
+        incrementQuantityByNumber: (state, action) => {
+            const productInCart = state.productsInCart.find((prod: CartProdType) => prod._id === action.payload.id);
+            if (productInCart?.quantity) {
+                productInCart.quantity = action.payload.quantity;
+            }
+        }
     }
 })
 
-export const { addToCart, setCartProducts } = cartSlice.actions;
+export const { addToCart, incrementQuantity, decrementQuantity, removeFromCart, incrementQuantityByNumber } = cartSlice.actions;
 export default cartSlice.reducer;

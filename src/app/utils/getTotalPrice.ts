@@ -1,7 +1,5 @@
-import { getProductsInCart } from './getProductsInCart';
 
-export const getTotalPrice = () => {
-    const productsInCart = getProductsInCart();
+export const getTotalPrice = (productsInCart: any) => {
     return productsInCart?.reduce((total: number, cartItem: any) => {
         // Calculate subtotal for each item (product price * quantity)
         const subtotal = cartItem?.product?.price * cartItem?.quantity;

@@ -19,7 +19,7 @@ const SearchedFoodCard = ({ food }: { food: FoodData }) => {
                 <Link href={`/restaurants/${food.restaurant.toLowerCase()}`} className='flex gap-2 items-center font-semibold text-gray-600 hover:text-secondary'><FaShop />{food.restaurant}</Link>
                 <div className='flex items-center justify-between'>
                     <p className='font-semibold text-primary'>${food.price}</p>
-                    <AddToCartBtn prodId={food._id} />
+                    <AddToCartBtn product={food} />
                 </div>
             </div>
         </div>

@@ -46,7 +46,7 @@ const WishlistCard = ({ product }: { product: FoodData }) => {
                     <FaCheckCircle />
                     In Stock
                 </div>
-                <AddToCartBtn prodId={product?._id} />
+                <AddToCartBtn product={product} />
             </div>
         </div>
     );
