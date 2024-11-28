@@ -1,9 +1,7 @@
 'use client';
 import { DataContext } from '@/app/context/DataContext';
-import { setCartProducts } from '@/app/lib/features/cartSlice';
 import { useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
-import { getDataFromLocalStorage } from '@/app/utils/getDataFromLocalStorage';
 import { getTotalPrice } from '@/app/utils/getTotalPrice';
 import { useContext } from 'react';
 import SubHeading from '../../shared/headings/SubHeading';
@@ -12,8 +10,6 @@ import CartSummery from './CartSummery';
 
 const CartCalculation = () => {
     const { loading } = useContext(DataContext) as DataContextType;
-    // Get products from localstorage and set them to setProductsInLocalStorage state
-    getDataFromLocalStorage('favFoodCart', setCartProducts);
 
     //Get all products in the cart
     const { productsInCart } = useAppSelector((state) => state.cart);

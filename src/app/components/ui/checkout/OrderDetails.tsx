@@ -1,7 +1,7 @@
 'use client'
 import { DataContext } from '@/app/context/DataContext';
 import { useSetUserData } from '@/app/hooks/useSetUserData';
-import { setCartProducts } from '@/app/lib/features/cartSlice';
+import { resetCart } from '@/app/lib/features/cartSlice';
 import { setPaymentMethod } from '@/app/lib/features/commonFeaturesSlice';
 import { useAppDispatch, useAppSelector } from '@/app/lib/hooks';
 import { DataContextType } from '@/app/types/DataContextTypes';
@@ -22,9 +22,11 @@ const stripePromise = loadStripe(`${process.env.STRIPE_PUBLIC_KEY}`);
 
 const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     const { data: session } = useSession();
+    const dispatch = useAppDispatch();
+    //Get all products in the cart
+    const { productsInCart } = useAppSelector((state) => state.cart);
     //Get the necessary states from datacontext
     const { loading, setLoading } = useContext(DataContext) as DataContextType;
-    const dispatch = useAppDispatch();
     const { refetch } = useSetUserData(`/orders/user/?userId=${session?.user._id}`);
     const { paymentMethod } = useAppSelector((state) => state.commonFeatures)
     const taxAmount = (totalPrice * 5 / 100);
@@ -34,21 +36,10 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
     const handlePaymentMethod = (event: ChangeEvent<HTMLInputElement>) => {
         dispatch(setPaymentMethod(event.target.id))
     };
-    //Get all products in the cart
     const route = useRouter();
-    //Arrange Product Informations
-    const productData = productsInCart.map((item: any) => ({
-        _id: item.product._id,
-        name: item.product.name,
-        slug: item.product.slug,
-        restaurantName: item.product.restaurant,
-        price: item.product.price,
-        image: item.product.image,
-        quantity: item.quantity
-    }));
     //Arrange order data to save to database
     const orderData = {
-        products: productData,
+        products: productsInCart,
         orderAmount: grandTotal,
         userInfo: {
             _id: session?.user?._id,
@@ -70,10 +61,9 @@ const OrderDetails = ({ totalPrice }: { totalPrice: number }) => {
             }
             const data = await saveToDatabase('/api/orders', modifiedOrderData);
             if (data.status) {
-                localStorage.removeItem('favFoodCart');
                 toast.success('Order has been placed successfully.');
-                dispatch(setCartProducts([]));
-                dispatch(setCartCount(0))
+                dispatch(resetCart())
+                localStorage.removeItem('cart');
                 setLoading(false);
                 route.push('/account/orders');
                 refetch()
