@@ -15,14 +15,14 @@ export const GET = async (request: NextRequest) => {
     const url = new URL(request.url);
     const searchParams = new URLSearchParams(url.searchParams);
 
-    const queryParams = searchParams.get('tabQuery');
+    const queryParams = searchParams.get('category');
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '0');
 
     const query: QueryType = {};
 
     if (queryParams === 'promotions') {
-        query.discountPercentage = { $gt: 0 };
+        query.discountPercentage = { $gt: 5 };
     } else if (queryParams === 'best-seller') {
         query.itemSold = { $gt: 100 };
     } else if (queryParams === 'top-rated') {

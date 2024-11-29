@@ -9,7 +9,7 @@ const DisplayFoodData = ({ searchParams }: { searchParams: { category: string | 
     const [page, setPage] = useState(1);
     const category = searchParams.category || 'all-food'
     //Get the foods data...
-    const { data: foods, isLoading } = useGetDataQuery(`/foods?tabQuery=${category}&page=${page}&limit=12`);
+    const { data: foods, isLoading } = useGetDataQuery(`/foods?category=${category}&page=${page}&limit=12`);
 
     //Return a Loading Skeleton while fetching the data
     if (isLoading) {
