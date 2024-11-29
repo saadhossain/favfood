@@ -15,7 +15,7 @@ const AddToWishlistBtn = ({ product, children }: { product: FoodData, children: 
             _id: prod._id,
             name: prod.name,
             slug: prod.slug,
-            restaurant: prod.restaurant,
+            restaurantName: prod.restaurant,
             price: prod.price,
             image: prod.image
         };

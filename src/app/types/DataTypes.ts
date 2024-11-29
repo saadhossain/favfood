@@ -4,7 +4,8 @@ export interface FoodData {
     slug: string;
     description: string;
     price: number;
-    restaurant: string;
+    restaurant?: string;
+    restaurantName?: string;
     image: string;
     category: string;
     reviewCount: number;
@@ -50,7 +51,7 @@ export interface CartProdType {
     _id: string;
     name: string;
     slug: string;
-    restaurant: string;
+    restaurantName: string;
     price: number;
     image: string;
     quantity: number;
