@@ -7,10 +7,10 @@ import { DataContextType } from '@/app/types/DataContextTypes';
 import { FoodData } from '@/app/types/DataTypes';
 import { useContext } from 'react';
 
-const DisplayRestaurantInfo = ({restaurantName}: {restaurantName: string}) => {
+const DisplayRestaurantInfo = ({ restaurantName }: { restaurantName: string }) => {
     const { loading } = useContext(DataContext) as DataContextType;
     const { data: foods } = useGetDataQuery('/foods');
-    const restaurantFoods = foods?.filter((food: FoodData) => food.restaurant.toLocaleLowerCase() === restaurantName);
+    const restaurantFoods = foods?.filter((food: FoodData) => food?.restaurant?.toLocaleLowerCase() === restaurantName);
     if (loading) {
         return <ProductLoader />;
     }
