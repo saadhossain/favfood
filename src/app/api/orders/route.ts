@@ -11,6 +11,7 @@ export const GET = async () => {
 
 export const POST = async (request: NextRequest) => {
     const orderData = await request.json();
+    console.log(orderData);
     await mongoose.connect(mongoUrl);
     const order = new Orders(orderData);
     const result = await order.save();

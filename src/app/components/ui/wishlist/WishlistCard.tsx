@@ -29,10 +29,10 @@ const WishlistCard = ({ product }: { product: CartProdType | any }) => {
                 onClick={() => dispatch(removeFromWishlist(product._id))}
                 className='text-red-600 font-semibold text-xl absolute top-3 left-3 bg-gray-100 py-1 px-3 rounded-full md:hidden'
             >X</button>
-            <Link className='w-full md:w-16' href={`/food/${product?.restaurantName?.toLowerCase()}/${product?.slug}`}>
+            <Link className='w-full md:w-16' href={`/foods/${product?.restaurantName?.toLowerCase()}/${product?.slug}`}>
                 <Image src={product?.image} alt={product?.name} width={60} height={40} className='w-full md:w-16 rounded-md' />
             </Link>
-            <Link className='w-full md:w-6/12 ' href={`/food/${product?.restaurantName?.toLowerCase()}/${product?.slug}`}>
+            <Link className='w-full md:w-6/12 ' href={`/foods/${product?.restaurantName?.toLowerCase()}/${product?.slug}`}>
                 <h4>{product?.name}</h4>
             </Link>
             {/* Price, Stock and Action Button */}
