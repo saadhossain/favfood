@@ -6,7 +6,7 @@ const orderSchema = new mongoose.Schema({
             _id: String,
             name: String,
             slug: String,
-            restaurantName: String,
+            restaurantName: { type: String, required: true },
             price: Number,
             image: String,
             quantity: Number

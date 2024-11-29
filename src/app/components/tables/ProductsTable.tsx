@@ -51,7 +51,7 @@ const ProductsTable = ({ productsInCart }: { productsInCart: CartProdType[] }) =
                                                     className='text-red-600 font-bold'>X</button>
                                             </td>
                                             <td className="p-3 hidden md:block">
-                                                <Link href={`/food/${cartProduct?.restaurantName?.toLowerCase()}/${cartProduct?.slug}`}>
+                                                <Link href={`/foods/${cartProduct?.restaurantName?.toLowerCase()}/${cartProduct?.slug}`}>
                                                     <Image src={cartProduct?.image} alt={cartProduct?.name} width={60} height={40} className='rounded-md' />
                                                 </Link>
                                             </td>
@@ -59,7 +59,7 @@ const ProductsTable = ({ productsInCart }: { productsInCart: CartProdType[] }) =
                                                 <Image src={cartProduct?.image} alt={cartProduct?.name} width={60} height={40} className='rounded-md' />
                                             </div>
                                             <td className="p-3 text-left">
-                                                <Link href={`/food/${cartProduct?.restaurantName?.toLowerCase()}/${cartProduct?.slug}`}>{cartProduct?.name}</Link>
+                                                <Link href={`/foods/${cartProduct?.restaurantName?.toLowerCase()}/${cartProduct?.slug}`}>{cartProduct?.name}</Link>
                                             </td>
                                             <td className="p-3">
                                                 <p>$ {cartProduct?.price}</p>
