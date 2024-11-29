@@ -34,7 +34,6 @@ const OrdersTable = ({ orders, refetch }: { orders: OrderDataType[] | any, refet
             }
         }
     }
-    console.log(orders);
     return (
         <div className='w-full'>
             {
