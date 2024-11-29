@@ -71,7 +71,7 @@ const ReviewsTable = ({ reviews, refetch }: Props) => {
                                                 {review.userName}
                                             </th>
                                             <th className="md:p-3 p-2 min-w-36 md:min-w-0">
-                                                {review.restaurantName}
+                                                {review?.restaurantName}
                                             </th>
                                             {/* Restaurant Action Buttons */}
                                             <th className="p-3">
