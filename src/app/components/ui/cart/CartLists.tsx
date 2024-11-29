@@ -1,26 +1,24 @@
 'use client';
-import { DataContext } from '@/app/context/DataContext';
-import { setCartProducts } from '@/app/lib/features/cartSlice';
-import { DataContextType } from '@/app/types/DataContextTypes';
-import { getDataFromLocalStorage } from '@/app/utils/getDataFromLocalStorage';
-import { getProductsInCart } from '@/app/utils/getProductsInCart';
-import { useContext } from 'react';
+import { useAppSelector } from '@/app/lib/hooks';
+import { useState } from 'react';
 import TableSkeletonLoader from '../../spinner/TableSkeletonLoader';
 import ProductsTable from '../../tables/ProductsTable';
 
 const CartLists = () => {
-    const { loading } = useContext(DataContext) as DataContextType;
-    // Get products from localstorage and set them to setProductsInLocalStorage state
-    getDataFromLocalStorage('favFoodCart', setCartProducts);
+    const [isLoading, setIsLoading] = useState(true);
 
-    //Get all products in the cart
-    const productsInCart = getProductsInCart();
+    //Get all products from the cart
+    const { productsInCart } = useAppSelector((state) => state.cart);
+
+    //Set a timeout while getting cart data from the localstorage
+    setTimeout(() => {
+        setIsLoading(false);
+    }, 10);
     return (
         <div>
             {
-                (loading || !productsInCart) ? <TableSkeletonLoader /> : <ProductsTable
+                (isLoading || !productsInCart) ? <TableSkeletonLoader /> : <ProductsTable
                     productsInCart={productsInCart}
-                    setCartProducts={setCartProducts}
                 />
             }
         </div>

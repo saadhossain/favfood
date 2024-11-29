@@ -1,51 +1,20 @@
 'use client';
-import { setCartCount } from '@/app/lib/features/cartSlice';
+import { decrementQuantity, incrementQuantity, removeFromCart } from '@/app/lib/features/cartSlice';
 import { useAppDispatch } from '@/app/lib/hooks';
-import { CartDataType } from '@/app/types/DataTypes';
+import { CartProdType } from '@/app/types/DataTypes';
 import Image from 'next/image';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
-const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: any, setCartProducts: any }) => {
+const ProductsTable = ({ productsInCart }: { productsInCart: CartProdType[] }) => {
     const dispatch = useAppDispatch();
-    const handleDecrementQuantity = (id: string) => {
-        // Update local storage and state
-        updateLocalStorage(id, -1);
-    };
-
-    const handleIncrementQuantity = (id: string) => {
-        // Update local storage and state
-        updateLocalStorage(id, 1);
-    };
-
-    const updateLocalStorage = (id: string, change: number) => {
-        let productInLocalStorage = JSON.parse(localStorage.getItem('favFoodCart') as string);
-        const existingProduct = productInLocalStorage.findIndex((item: CartDataType) => item.productId === id);
-
-        if (existingProduct >= 0) {
-            if (productInLocalStorage[existingProduct].quantity + change > 0) {
-                productInLocalStorage[existingProduct].quantity += change;
-                localStorage.setItem('favFoodCart', JSON.stringify(productInLocalStorage));
-                dispatch(setCartProducts(productInLocalStorage))
-            }
+    const handleRemoveFromCart = (id: string) => {
+        const confirmation = window.confirm('Would you like to Remove this Product?');
+        if (confirmation) {
+            dispatch(removeFromCart(id))
+            toast.success('Product Removed from Cart.')
         }
-    };
-
-    const handleRemoveProductFromCart = (id: string) => {
-        let productsInLocalStorage = JSON.parse(localStorage.getItem('favFoodCart') as string);
-        const updatedProducts = productsInLocalStorage.filter((item: CartDataType) => item.productId !== id);
-        // Update local storage with the updated products
-        localStorage.setItem('favFoodCart', JSON.stringify(updatedProducts));
-
-        // //If there is no product in the favFoodCart then completely remove the array
-        // if (updatedProducts.length <= 0) {
-        //     localStorage.removeItem('favFoodCart');
-        // }
-        dispatch(setCartProducts(updatedProducts))
-        dispatch(setCartCount(updatedProducts.length))
-        toast.error('Food removed from cart.');
-    };
-
+    }
     return (
         <div>
             {
@@ -75,33 +44,41 @@ const ProductsTable = ({ productsInCart, setCartProducts }: { productsInCart: an
                                 </thead>
                                 <tbody>
                                     {
-                                        productsInCart?.map((cartProduct: any) => <tr key={cartProduct?.product?._id} className="text-center border-b border-opacity-20 border-gray-500 bg-gray-100">
+                                        productsInCart?.map((cartProduct: any) => <tr key={cartProduct?._id} className="text-center border-b border-opacity-20 border-gray-500 bg-gray-100">
                                             <td className="p-3">
-                                                <button onClick={() => handleRemoveProductFromCart(cartProduct?.product?._id)} className='text-red-600 font-bold'>X</button>
+                                                <button
+                                                    onClick={() => handleRemoveFromCart(cartProduct?._id)}
+                                                    className='text-red-600 font-bold'>X</button>
                                             </td>
                                             <td className="p-3 hidden md:block">
-                                                <Link href={`/food/${cartProduct?.product?.restaurant.toLowerCase()}/${cartProduct?.product?.slug}`}>
-                                                    <Image src={cartProduct?.product?.image} alt={cartProduct?.product?.name} width={60} height={40} className='rounded-md' />
+                                                <Link href={`/food/${cartProduct?.restaurantName?.toLowerCase()}/${cartProduct?.slug}`}>
+                                                    <Image src={cartProduct?.image} alt={cartProduct?.name} width={60} height={40} className='rounded-md' />
                                                 </Link>
                                             </td>
                                             <div className='w-16 h-10 mt-2 md:hidden'>
-                                                <Image src={cartProduct?.product?.image} alt={cartProduct?.product?.name} width={60} height={40} className='rounded-md' />
+                                                <Image src={cartProduct?.image} alt={cartProduct?.name} width={60} height={40} className='rounded-md' />
                                             </div>
                                             <td className="p-3 text-left">
-                                                <Link href={`/food/${cartProduct?.product?.restaurant.toLowerCase()}/${cartProduct?.product?.slug}`}>{cartProduct?.product?.name}</Link>
+                                                <Link href={`/food/${cartProduct?.restaurantName?.toLowerCase()}/${cartProduct?.slug}`}>{cartProduct?.name}</Link>
                                             </td>
                                             <td className="p-3">
-                                                <p>$ {cartProduct?.product?.price}</p>
+                                                <p>$ {cartProduct?.price}</p>
                                             </td>
+
+                                            {/* Quantity Amount and Buttons */}
                                             <td className="p-3">
                                                 <div className='flex gap-1 items-center justify-center'>
-                                                    <button onClick={() => handleDecrementQuantity(cartProduct?.product?._id)} className='font-bold text-xl text-gray-800'>-</button>
+                                                    <button
+                                                        onClick={() => dispatch(decrementQuantity(cartProduct?._id))}
+                                                        className='font-bold text-xl text-gray-800'>-</button>
                                                     <p className='px-4 border border-gray-500'>{cartProduct?.quantity}</p>
-                                                    <button onClick={() => handleIncrementQuantity(cartProduct?.product?._id)} className='font-bold text-xl text-gray-800'>+</button>
+                                                    <button
+                                                        onClick={() => dispatch(incrementQuantity(cartProduct?._id))}
+                                                        className='font-bold text-xl text-gray-800'>+</button>
                                                 </div>
                                             </td>
                                             <td className="p-3">
-                                                <p>$ {((cartProduct?.product?.price * cartProduct?.quantity).toFixed(2))}</p>
+                                                <p>$ {((cartProduct?.price * cartProduct?.quantity).toFixed(2))}</p>
                                             </td>
                                         </tr>)
                                     }

@@ -1,5 +1,5 @@
 'use client'
-import { setCartCount, setCartProducts } from '@/app/lib/features/cartSlice';
+import { resetCart } from '@/app/lib/features/cartSlice';
 import { useAppDispatch } from '@/app/lib/hooks';
 import { OrderDataType, SessionData } from '@/app/types/DataTypes';
 import { saveToDatabase } from '@/app/utils/saveToDatabase';
@@ -78,11 +78,9 @@ const CheckoutForm = ({ paymentAmount, session, orderData, loading, setLoading, 
             const modifiedOrderData = { ...orderData, paymentStatus };
             const data = await saveToDatabase('/api/orders', modifiedOrderData);
             if (data.status) {
-                localStorage.removeItem('favFoodCart');
                 toast.success('Order has been placed successfully.');
                 route.push('/account/orders');
-                dispatch(setCartProducts([]));
-                dispatch(setCartCount(0))
+                dispatch(resetCart());
                 setLoading(false);
                 refetch()
             }

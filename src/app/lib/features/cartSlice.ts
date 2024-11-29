@@ -1,39 +1,53 @@
+import { CartProdType } from '@/app/types/DataTypes';
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface ProdType {
-    productId: string;
-    quantity: number;
-}
-
 export interface InitialStateType {
-    cartCount: number;
-    cartProducts: ProdType[];
+    productsInCart: CartProdType[];
 }
 
-const getCartLength = () => {
+const getCartFromLocalStorage = () => {
     if (typeof window !== "undefined") {
-        const cart = localStorage.getItem('favFoodCart');
-        return cart ? JSON.parse(cart).length : 0;
+        const cart = localStorage.getItem('cart');
+        return cart ? JSON.parse(cart) : [];
     }
-    return 0;
+    return [];
 }
 
 const initialState: InitialStateType = {
-    cartCount: getCartLength(),
-    cartProducts: []
+    productsInCart: getCartFromLocalStorage()
 }
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        setCartCount: (state, action) => {
-            state.cartCount = action.payload;
+        addToCart: (state, action) => {
+            const existingProduct = state.productsInCart.find((prod: CartProdType) => prod._id === action.payload._id);
+            if (existingProduct) {
+                existingProduct.quantity++
+            }
+            state.productsInCart.push({ ...action.payload });
         },
-        setCartProducts: (state, action) => {
-            state.cartProducts = action.payload;
+        incrementQuantity: (state, action) => {
+            const productInCart = state.productsInCart.find((prod: CartProdType) => prod._id === action.payload);
+            if (productInCart) {
+                productInCart.quantity++;
+            }
         },
+        decrementQuantity: (state, action) => {
+            const productInCart = state.productsInCart.find((prod: CartProdType) => prod._id === action.payload);
+            if (productInCart && productInCart.quantity > 1) {
+                productInCart.quantity--;
+            }
+        },
+        removeFromCart: (state, action) => {
+            const productsAfterRemove = state.productsInCart.filter((prod: CartProdType) => prod._id !== action.payload);
+            state.productsInCart = productsAfterRemove;
+        },
+        resetCart: (state) => {
+            state.productsInCart = []
+        }
     }
 })
 
-export const { setCartCount, setCartProducts } = cartSlice.actions;
+export const { addToCart, incrementQuantity, decrementQuantity, removeFromCart, resetCart } = cartSlice.actions;
 export default cartSlice.reducer;

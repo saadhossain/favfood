@@ -45,7 +45,7 @@ const AddReviewModal = () => {
             ...formData,
             foodId: singleOrder?.products[0]._id,
             foodSlug: singleOrder?.products[0].slug,
-            restaurantName: singleOrder?.products[0].restaurantName,
+            restaurantName: singleOrder?.products[0]?.restaurantName,
             userId: session?.user._id,
             userName: session?.user.fullName,
             userProfileImage: session?.user.image,
