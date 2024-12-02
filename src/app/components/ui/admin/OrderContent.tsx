@@ -10,7 +10,7 @@ import AddButton from '../../shared/buttons/AddButton';
 import SubHeading from '../../shared/headings/SubHeading';
 import DataTable from '../../tables/DataTable';
 import TableFiltering from '../../tables/TableFiltering';
-import { orderTableColumns } from '../../tables/taleColumns/orderTableColumns';
+import { orderTableColumns } from '../../tables/tableColumns/orderTableColumns';
 
 
 const OrderContent = () => {

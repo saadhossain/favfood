@@ -11,7 +11,7 @@ export const orderTableColumns: ColumnDef<OrderDataType, any>[] = [
         id: 'products',
         cell: (info) => <>
             {
-                info?.row?.original?.products?.map((prod) => <OrderProdCol prod={prod} />)
+                info?.row?.original?.products?.map((prod) => <OrderProdCol key={prod._id} prod={prod} />)
             }
         </>,
         header: () => <p className='flex items-center gap-2 pl-5'><HandPlatter size={18} />Product</p>,

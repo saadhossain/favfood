@@ -21,14 +21,14 @@ export const reviewTableColumns: ColumnDef<ReviewData, any>[] = [
     }),
     columnHelper.accessor('foodSlug', {
         cell: (info) => <Link
-            href={`/foods/${info.row.original.restaurantName.toLowerCase()}/${info.row.original.foodSlug}`}
+            href={`/foods/${info.row.original.restaurantName?.toLowerCase()}/${info.row.original.foodSlug}`}
             className='uppercase'
         >{info.getValue()}</Link>,
         header: () => <p className='flex items-center gap-2 ml-5'><HandPlatter size={18} />Food</p>
     }),
     columnHelper.accessor('restaurantName', {
         cell: (info) => <Link
-            href={`/restaurants/${info.row.original.restaurantName.toLowerCase()}`}
+            href={`/restaurants/${info.row.original.restaurantName?.toLowerCase()}`}
             className='capitalize'
         >{info.getValue()}</Link>,
         header: () => <p className='flex items-center gap-2'><Store size={18} />Restaurant</p>

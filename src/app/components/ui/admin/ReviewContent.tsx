@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import SubHeading from '../../shared/headings/SubHeading'
 import DataTable from '../../tables/DataTable'
 import TableFiltering from '../../tables/TableFiltering'
-import { reviewTableColumns } from '../../tables/taleColumns/reviewTableColumns'
+import { reviewTableColumns } from '../../tables/tableColumns/reviewTableColumns'
 
 const ReviewContent = () => {
     const { data: session } = useSession();
