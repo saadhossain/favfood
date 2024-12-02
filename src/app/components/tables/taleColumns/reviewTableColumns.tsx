@@ -41,7 +41,10 @@ export const reviewTableColumns: ColumnDef<ReviewData, any>[] = [
         id: 'actions',
         cell: (info) => (
             <div className='flex gap-1 items-center justify-center'>
-                <DeleteBtn id={info.row.original._id} />
+                <DeleteBtn
+                    apiEndpoint={`/api/reviews?id=${info.row.original._id}`}
+                    dataEndpoint='/reviews'
+                />
                 <EditBtn
                     id={info.row.original._id}
                     modalType='review'

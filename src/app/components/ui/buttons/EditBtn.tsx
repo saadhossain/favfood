@@ -10,8 +10,10 @@ const EditBtn = ({ id, modalType }: { id: string, modalType: string }) => {
 
     if (modalType === 'review') {
         modalToOpen = setOpenEditReviewModal
-    } else if (modalToOpen === 'order') {
-        modalToOpen === setOpenOrderEditModal
+    } else if (modalType === 'order') {
+        modalToOpen = setOpenOrderEditModal
+    } else {
+        modalToOpen = null
     }
 
     return (

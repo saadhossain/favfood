@@ -61,7 +61,7 @@ export interface WishlistData {
     productId: string;
 }
 export interface OrderDataType {
-    _id?: string;
+    _id: string;
     products: [
         {
             _id: string,

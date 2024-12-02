@@ -6,17 +6,17 @@ import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTa
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import TableFiltering from '../../common/TableFiltering'
 import SubHeading from '../../shared/headings/SubHeading'
 import DataTable from '../../tables/DataTable'
+import TableFiltering from '../../tables/TableFiltering'
 import { reviewTableColumns } from '../../tables/taleColumns/reviewTableColumns'
 
-const ReviewPageContent = () => {
+const ReviewContent = () => {
     const { data: session } = useSession();
     //Get the Reviews from the server
+    const { isLoading } = useSetUserData('/reviews');
     const { userData } = useAppSelector((state) => state.userData);
     // Enable Search Functionality
-    const { isLoading } = useSetUserData('/reviews');
     // Set Default Data to this state
     const [data, setData] = useState(() => [...userData]);
     useEffect(() => { setData(userData) }, [userData])
@@ -42,8 +42,8 @@ const ReviewPageContent = () => {
         getPaginationRowModel: getPaginationRowModel()
     });
     return (
-        <div>
-            <div className='flex gap-5 items-start justify-between'>
+        <>
+            <div className='flex gap-5 items-center justify-between'>
                 <SubHeading heading={'Reviews'} />
                 <TableFiltering table={table} />
             </div>
@@ -57,8 +57,8 @@ const ReviewPageContent = () => {
                     }
                 </div>
             }
-        </div>
+        </>
     )
 }
 
-export default ReviewPageContent;
+export default ReviewContent;

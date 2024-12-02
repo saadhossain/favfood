@@ -1,6 +1,4 @@
-import DashboardSearch from '@/app/components/common/DashboardSearch';
-import SubHeading from '@/app/components/shared/headings/SubHeading';
-import DisplayOrders from '@/app/components/ui/myaccount/DisplayOrders';
+import OrderContent from '@/app/components/ui/admin/OrderContent';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,13 +8,7 @@ export const metadata: Metadata = {
 
 const Orders = () => {
   return (
-    <div>
-      <div className='flex gap-5 items-start justify-between'>
-        <SubHeading heading={'Orders'} />
-        <DashboardSearch />
-      </div>
-      <DisplayOrders />
-    </div>
+    <OrderContent />
   )
 }
 

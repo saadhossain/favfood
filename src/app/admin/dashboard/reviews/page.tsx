@@ -1,4 +1,4 @@
-import ReviewPageContent from '@/app/components/ui/admin/ReviewPageContent'
+import ReviewContent from '@/app/components/ui/admin/ReviewContent'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const Reviews = () => {
   return (
-    <ReviewPageContent />
+    <ReviewContent />
   )
 }
 

@@ -95,7 +95,7 @@ const EditOrderModal = () => {
                                         </select>
                                     </div>
                                     <div className='w-full md:w-1/4'>
-                                        <label htmlFor="paymentStatus" className="block mb-2 text-sm">Payment Status</label>
+                                        <label htmlFor="paymentStatus" className="block mb-2 text-sm">Payment</label>
                                         <select
                                             className={`${inputStyle}`}
                                             value={formData.paymentStatus}
