@@ -1,4 +1,3 @@
-import DashboardSearch from '@/app/components/common/DashboardSearch'
 import AddButton from '@/app/components/shared/buttons/AddButton'
 import SubHeading from '@/app/components/shared/headings/SubHeading'
 import FoodLists from '@/app/components/ui/admin/FoodLists'
@@ -18,7 +17,6 @@ const Foods = () => {
         <SubHeading heading={'Foods'} />
         <div className='flex flex-col gap-2 items-end'>
           <AddButton endpoint='/foods/add-food' title='Add Food' />
-          <DashboardSearch />
         </div>
       </div>
       <FoodLists />

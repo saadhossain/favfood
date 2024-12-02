@@ -1,13 +1,10 @@
-'use client'
-import { useHandleDashboardSearch } from '@/app/hooks/useHandleDashboardSearch'
 import { FaSearch } from "react-icons/fa"
 
-const DashboardSearch = () => {
-    const handleDashboardSearch = useHandleDashboardSearch()
+const TableFiltering = ({ table }: any) => {
     return (
         <div className='w-60 md:w-80 bg-gray-200 rounded-md flex items-center'>
             <input type="text" name="search" id="search"
-                onChange={(e) => handleDashboardSearch(e.target.value as string)}
+                onChange={(e) => table.setGlobalFilter(e.target.value as string)}
                 placeholder='Search Here...'
                 className='w-full p-2 bg-gray-200 rounded-md text-gray-900 focus:outline-none'
             />
@@ -16,4 +13,4 @@ const DashboardSearch = () => {
     )
 }
 
-export default DashboardSearch
+export default TableFiltering

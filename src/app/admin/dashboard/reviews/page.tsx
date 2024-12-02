@@ -1,6 +1,4 @@
-import DashboardSearch from '@/app/components/common/DashboardSearch'
-import SubHeading from '@/app/components/shared/headings/SubHeading'
-import ReviewLists from '@/app/components/ui/admin/ReviewLists'
+import ReviewContent from '@/app/components/ui/admin/ReviewContent'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -10,13 +8,7 @@ export const metadata: Metadata = {
 
 const Reviews = () => {
   return (
-    <div>
-      <div className='flex gap-5 items-center justify-between'>
-        <SubHeading heading={'Reviews'} />
-        <DashboardSearch />
-      </div>
-      <ReviewLists />
-    </div>
+    <ReviewContent />
   )
 }
 

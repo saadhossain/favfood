@@ -1,4 +1,3 @@
-import DashboardSearch from '@/app/components/common/DashboardSearch';
 import AddButton from '@/app/components/shared/buttons/AddButton';
 import SubHeading from '@/app/components/shared/headings/SubHeading';
 import UserLists from '@/app/components/ui/admin/UserLists';
@@ -17,7 +16,6 @@ const Users = () => {
         <SubHeading heading={'Users'} />
         <div className='flex flex-col gap-2 items-end'>
           <AddButton endpoint='/users/add-user' title='Add User' />
-          <DashboardSearch />
         </div>
       </div>
       <UserLists />
